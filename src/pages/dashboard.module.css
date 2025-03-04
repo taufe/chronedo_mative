@@ -1,0 +1,755 @@
+.dashboardContainer {
+    padding: 0px 80px;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+    .dashboardContainer {
+        padding: 0px 40px;
+    }
+
+    .overviewContainer {
+        gap: 20px;
+    }
+
+    .categoryGrid {
+        gap: 15px;
+    }
+
+    .watchImagePurchase {
+        width: 35%;
+    }
+}
+
+@media (max-width: 992px) {
+    .dashboardContainer {
+        padding: 0px 30px;
+    }
+
+    .overviewContainer {
+        flex-direction: column;
+    }
+
+    .leftColumn,
+    .rightColumn {
+        width: 100%;
+    }
+
+    .watchlistCard {
+        height: auto;
+    }
+
+    .watchImage {
+        height: 300px;
+    }
+
+    .categoryGrid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .categoryCard {
+        height: 350px;
+    }
+
+    .purchaseCard {
+        flex-direction: row;
+    }
+
+    .watchImagePurchase {
+        width: 30%;
+    }
+
+    .watchDetails {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .priceAction {
+        margin-top: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboardContainer {
+        padding: 0px 16px;
+    }
+
+    .purchaseCard {
+        flex-direction: column;
+    }
+
+    .watchImagePurchase {
+        width: 100%;
+        height: 200px;
+    }
+
+    .watchDetails {
+        padding: 16px;
+    }
+
+    .categoryGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .categoryCard {
+        height: 300px;
+    }
+
+    .buyButton {
+        width: 100%;
+    }
+}
+
+/* Add specific styles for search container responsiveness */
+@media (max-width: 992px) {
+    .searchContainer {
+        max-width: 600px;
+    }
+}
+
+@media (max-width: 576px) {
+    .searchContainer {
+        max-width: 100%;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .iconsContainer {
+        justify-content: center;
+    }
+}
+
+/* Add specific styles for profile section responsiveness */
+@media (max-width: 992px) {
+    .profileCard {
+        padding: 16px;
+    }
+
+    .profileInfo h3 {
+        font-size: 20px;
+    }
+}
+
+/* Add specific styles for selling section responsiveness */
+@media (max-width: 992px) {
+    .sellCard {
+        padding: 16px;
+    }
+
+    .sellCard h3 {
+        font-size: 20px;
+    }
+
+    .sellCard p {
+        font-size: 16px;
+    }
+}
+
+/* Add specific styles for categories section responsiveness */
+@media (max-width: 992px) {
+    .categories h2 {
+        font-size: 28px;
+    }
+
+    .categories p {
+        font-size: 13px;
+    }
+
+    .navigationArrows {
+        display: none;
+    }
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.searchContainer {
+    flex: 1;
+    max-width: 800px;
+    min-width: 0;
+}
+
+.searchWrapper {
+    position: relative;
+}
+
+.searchInput {
+    width: 90%;
+    max-width: 100%;
+    padding: 10px 16px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 29px;
+    border: none;
+}
+
+.searchInput:focus {
+    outline: none;
+}
+
+.searchButton {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+}
+
+/* .searchIcon {
+    width: 20px;
+    height: 20px;
+    color: #ffffff;
+} */
+
+.iconsContainer {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.overviewContainer {
+    display: flex;
+    gap: 24px;
+    padding: 10px 0px;
+    min-height: calc(80vh - 150px);
+    width: 100%;
+    max-width: 100%;
+}
+
+.overviewContainer h2 {
+    color: white;
+    font-size: 22px;
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+.leftColumn {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+}
+
+.rightColumn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0px;
+}
+
+.iconText {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+}
+
+.viewLink {
+    color: white;
+    text-decoration: none;
+}
+
+/* Profile Section */
+.profileCard {
+    background-color: rgba(31, 28, 28, 0.28);
+    border-radius: 12px;
+    padding: 10px 24px;
+    display: flex;
+    gap: 16px;
+}
+
+.profileImage {
+    position: relative;
+}
+
+.profileImage img {
+    border-radius: 50%;
+}
+
+.verifiedBadge {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #A98754;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profileInfo {
+    align-self: flex-start;
+
+}
+
+.profileInfo h3 {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.location {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #9CA3AF;
+}
+
+/* Selling Section */
+.sellCard {
+    background-color: rgba(31, 28, 28, 0.28);
+    border-radius: 12px;
+    padding: 10px 24px;
+}
+
+.sellCard h3 {
+    color: white;
+    margin-bottom: 12px;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.sellCard p {
+    color: #9CA3AF;
+    margin-bottom: 16px;
+    font-size: 18px;
+}
+
+.sellButton {
+    width: 100%;
+    background-color: #A98754;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* Purchase Section */
+.purchaseCard {
+    background-color: rgba(31, 28, 28, 0.28);
+    border-radius: 12px;
+    padding: 0;
+    min-height: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+.watchImagePurchase {
+    position: relative;
+    width: 25%;
+    /* height: 100%; */
+    min-height: 100%;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    overflow: hidden;
+}
+
+.watchImagePurchase img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+}
+
+.watchDetails {
+    flex: 1;
+    padding: 0px 24px;
+}
+
+.watchDetails h3 {
+    color: white;
+    font-size: 20px;
+}
+
+.watchDetails p {
+    color: #9CA3AF;
+}
+
+.priceAction {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.buyButton {
+    background-color: #A98754;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+    width: 50%;
+}
+
+/* Watchlist Section */
+.watchlistCard {
+    background-color: rgba(31, 28, 28, 0.28);
+    border-radius: 12px;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.watchImage {
+    position: relative;
+    width: 100%;
+    flex: 1;
+}
+
+.watchImg {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+}
+
+.watchActions {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    gap: 8px;
+}
+
+.heartButton,
+.moreButton {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.watchlistInfo {
+    padding: 10px 24px;
+    background-color: rgba(31, 28, 28, 0.28);
+}
+
+.watchlistInfo h3 {
+    color: white;
+    margin-bottom: 16px;
+}
+
+.datePrice {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.date {
+    color: #9CA3AF;
+}
+
+.priceSection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.seeAllButton {
+    width: 100%;
+    background-color: #A98754;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* Categories Section Styling */
+.categories {
+    padding: 20px 0;
+    width: 100%;
+    /* Reduced from 50px to 20px */
+}
+
+.categoriesContainer {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    /* Changed from 1px auto 1px to 0 auto */
+    position: relative;
+}
+
+.categoriesHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.categories h2 {
+    font-size: 34px;
+    color: #A98754;
+    font-weight: 600;
+    margin-bottom: -10px;
+    margin-bottom: -10px;
+}
+
+.categories p {
+    font-size: 14px;
+    color: #fff;
+    font-weight: 400;
+}
+
+.categoryGrid {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 10px;
+    max-width: 100%;
+    flex-wrap: wrap;
+}
+
+.categoryCard {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    height: 400px;
+}
+
+.categoryImageWrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.categoryImageWrapper img {
+    /* width: 100%; */
+    height: 100%;
+    object-fit: cover;
+}
+
+.categoryCard h3 {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 600;
+    z-index: 2;
+}
+
+.seeAllBtn {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: transparent;
+    color: #A98754;
+    border: 1px solid #A98754;
+    padding: 10px 20px;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 2;
+}
+
+.seeAllBtn:hover {
+    background-color: rgba(169, 135, 84, 0.1);
+}
+
+.navigationArrows {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.arrowLeft,
+.arrowRight {
+    background-color: rgba(255, 255, 255, 0);
+    border: 1px solid #fff;
+    color: #fff;
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+}
+
+.arrowLeft {
+    margin-left: -20px;
+}
+
+.arrowRight {
+    margin-right: -20px;
+}
+
+.arrowLeft:hover,
+.arrowRight:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 768px) {
+    .categoryGrid {
+        flex-direction: column;
+    }
+
+    .categoryCard {
+        width: 100%;
+    }
+
+    .navigationArrows {
+        display: none;
+    }
+
+    .newArrivalsHeader {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .seeAllBtn {
+        margin-top: 10px;
+    }
+}
+
+.watchesGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    padding: 24px;
+    margin-top: 20px;
+}
+
+/* Make it responsive */
+@media (max-width: 1200px) {
+    .watchesGrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .watchesGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .watchesGrid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+.filterSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    /* background-color: #2A3543; */
+    border-radius: 8px;
+    margin: 20px 24px 0;
+}
+
+.filterButtons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.filterIcon {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #A98754;
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.filterButton {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.filterButton.active {
+    background-color: #A98754;
+}
+
+.sortDropdown {
+    position: relative;
+}
+
+.sortSelect {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 8px 32px 8px 16px;
+    border: 0.5px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    appearance: none;
+    cursor: pointer;
+    border-bottom: 2px solid #A98754;
+}
+
+.sortSelect option {
+    background-color: #2A3543;
+    color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .filterSection {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .filterButtons {
+        flex-wrap: wrap;
+    }
+}

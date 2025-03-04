@@ -1,0 +1,41 @@
+.brandWatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  padding-right: 20px;
+}
+
+.imageWrapper {
+  overflow: hidden;
+  border-radius: 8px;
+  width: 200; /* Match the image width */
+  height: 230px; 
+}
+
+.imageWrapper img {
+  transition: transform 0.3s ease;
+}
+
+.imageWrapper:hover img {
+  transform: scale(1.1);
+}
+
+.watchName {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.brandName {
+  color: #A98754;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.modelName {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  margin-left: 5px;
+}

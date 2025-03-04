@@ -1,0 +1,331 @@
+.dashboardContainer {
+    padding: 0px 80px;
+}
+
+@media (max-width: 768px) {
+    .dashboardContainer {
+        padding: 0px 0px;  /* Small padding for mobile */
+    }
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.searchContainer {
+    flex: 1;
+    max-width: 800px;
+}
+
+.searchWrapper {
+    position: relative;
+}
+
+.searchInput {
+    width: 90%;
+    padding: 10px 16px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 29px;
+    border: none;
+}
+
+.searchInput:focus {
+    outline: none;
+}
+
+.searchButton {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+}
+
+/* .searchIcon {
+    width: 20px;
+    height: 20px;
+    color: #ffffff;
+} */
+
+.iconsContainer {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.profileSection {
+    padding-top: 2rem;
+}
+
+.profileCard {
+    background: rgba(31, 28, 28, 0.28);
+    border-radius: 1rem;
+    padding: 20px 30px;
+    color: white;
+}
+
+.profileHeader {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.profilePicture {
+    border-radius: 50%;
+}
+
+.profileName {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.profileDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.detailRow {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.1rem;
+}
+
+.stars {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.ratingCount {
+    margin-left: 0.5rem;
+    color: #888;
+}
+
+.divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 0 0;
+}
+
+.ratingsCard {
+    background: rgba(31, 28, 28, 0.28);
+    border-radius: 1rem;
+    padding: 20px 30px;
+    color: white;
+    margin-top: 2rem;
+}
+
+.ratingsTitle {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.overallRating {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.reviewCount {
+    color: #888;
+}
+
+.ratingBars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.ratingBar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.barContainer {
+    flex: 1;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.barFill {
+    height: 100%;
+    background: #B88E2F;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.breakdownTitle {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.ratingBreakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.breakdownItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.breakdownScore {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #B88E2F;
+}
+
+.reviewsList {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.reviewCard {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    padding: 1.5rem;
+}
+
+.reviewHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.reviewerInfo {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.reviewerImage {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.reviewerDetails {
+    display: flex;
+    flex-direction: column;
+}
+
+.reviewerName {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.countryFlag {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.9rem;
+    color: #888;
+}
+
+.reviewRating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ratingScore {
+    color: #B88E2F;
+    font-weight: 600;
+}
+
+.reviewText {
+    font-style: italic;
+    color: #fff;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.reviewDate {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.moreButton {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 2rem;
+    background: transparent;
+    border: 1px solid #B88E2F;
+    color: #B88E2F;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.moreButton:hover {
+    background: rgba(184, 142, 47, 0.1);
+}
+
+@media (max-width: 768px) {
+    .reviewCard {
+        padding: 16px;
+    }
+
+    .reviewHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .reviewerInfo {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .reviewerName {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .stars {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2px;
+        font-size: 14px;  /* Make stars slightly smaller on mobile */
+    }
+
+    .ratingScore {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .reviewCard {
+        padding: 12px;
+    }
+
+    .stars {
+        font-size: 12px;  /* Even smaller stars for very small screens */
+    }
+}

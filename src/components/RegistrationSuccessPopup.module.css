@@ -1,0 +1,112 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup {
+  background-color: #1f252e;
+  background-image: url("/assets/images/popup-bg.png");
+  padding: 20px 70px 20px 70px;
+  margin-bottom: 15%;
+  border-radius: 40px;
+  width: 80%;
+  max-width: 400px;
+  text-align: center;
+  position: relative;
+  margin: 0px 15px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  color: white;
+  background-image: url("/assets/icons/cross.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 20px;
+  height: 20px;
+  font-family: "Poppins";
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.userImage {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.title {
+  color: white;
+  margin-bottom: 0px;
+  font-weight: 600;
+  font-size: 1.3rem;
+  font-family: "Poppins";
+}
+
+.message {
+  color: white;
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Poppins";
+}
+
+.laterButton,
+.nowButton {
+  width: 100%;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Poppins";
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.laterButton {
+  background-color: transparent;
+  border: 1px solid #a98745;
+  color: #a98745;
+}
+
+.nowButton {
+  background-color: #a98745;
+  color: white;
+}
+
+@media (max-width: 576px) {
+  .popup {
+    padding: 10px 70px 10px 70px;
+    margin: 0px 15px;
+  }
+
+  .laterButton,
+  .nowButton {
+    font-size: 15px;
+    font-weight: 400;
+  }
+}
+@media (max-width: 376px) {
+  .popup {
+    max-width: 180px;
+  }
+
+  .laterButton,
+  .nowButton {
+    font-size: 12px;
+    font-weight: 400;
+  }
+}

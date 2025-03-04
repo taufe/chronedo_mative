@@ -1,0 +1,158 @@
+.purchaseCard {
+    background: rgba(31, 28, 28, 0.28);
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.mainContent {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 20px;
+}
+
+.imageContainer {
+    flex-shrink: 0;
+    width: 120px;
+    height: 120px;
+}
+
+.watchImage {
+    border-radius: 8px;
+    object-fit: cover;
+    background: #fff;
+}
+
+.watchDetails {
+    flex-grow: 1;
+}
+
+.watchName {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0 0 16px 0;
+    line-height: 1.2;
+}
+
+.statusContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.statusText {
+    color: #FFB800;
+    font-size: 14px;
+}
+
+.date {
+    color: #8A8F98;
+    font-size: 14px;
+    margin-left: auto;
+}
+
+/* .price {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+} */
+
+.divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 20px 0;
+}
+
+.sellerSection {
+    padding-top: 4px;
+}
+
+.sellerHeader {
+    color: #A98754;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    cursor: pointer;
+}
+
+.sellerDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sellerInfo {
+    display: flex;
+    gap: 8px;
+}
+
+.label {
+    color: 'white';
+    font-size: 16px;
+}
+
+.value {
+    color:'white';
+    font-size: 16px;
+}
+
+.actionButtons {
+    display: flex;
+    gap: 16px;
+    /* padding: 16px; */
+    margin-top: 16px;
+}
+
+.acceptButton {
+    flex: 1;
+    padding: 12px;
+    background: #B38E5D;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.rejectButton {
+    flex: 1;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid #B38E5D;
+    border-radius: 8px;
+    color: #B38E5D;
+    font-size: 16px;
+    cursor: pointer;
+}
+.RocketButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: transparent;
+    cursor: pointer;
+    width:100%;
+    justify-content: space-around;
+
+  }
+  
+  .textContainer {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+  
+  .rocketButtonIcon {
+    font-size: 24px;
+    margin-left: 10px;
+    background: #A98754;
+    border-radius: 50px;
+    padding: 4px;
+    color: white;
+  }

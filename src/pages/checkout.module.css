@@ -1,0 +1,285 @@
+.checkoutContainer {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.title {
+    color: #A98754;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.checkoutCard {
+    background: rgba(31, 28, 28, 0.28);
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.priceSection {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+}
+
+.mainPrice {
+    margin-bottom: 20px;
+}
+
+.priceHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    color: white;
+}
+
+.sellerCurrency {
+    color: #8A94A0;
+    font-size: 14px;
+    text-align: right;
+    margin-top: 4px;
+}
+
+.discountSection {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.discountInput {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 4px;
+    padding: 12px;
+    color: white;
+}
+
+.applyButton {
+    background: #2A3543;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    padding: 0 24px;
+    cursor: pointer;
+}
+
+.section {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 24px 0;
+}
+
+.sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    margin-bottom: 16px;
+}
+
+.close {
+    color: #A98754;
+    cursor: pointer;
+}
+
+.option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 12px;
+    border-radius: 8px;
+}
+
+.optionLeft {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+   
+}
+
+.radioSelected {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #A98754;
+    background: #A98754;
+}
+
+.radio {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.optionRight {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.questionMark {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.shippingTo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.shippingTo select {
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.fees {
+    color: #8A94A0;
+    font-size: 14px;
+}
+
+.feeItem {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+}
+
+.totalSection {
+    padding-top: 24px;
+}
+
+.totalAmount {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.checkoutButton {
+    width: 100%;
+    background: #A98754;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.checkoutButton:hover {
+    background: #b39569;
+}
+
+@media (max-width: 768px) {
+    .checkoutContainer {
+        padding: 16px;
+    }
+    
+    .option {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .optionRight {
+        align-self: flex-end;
+    }
+} 
+
+
+.watchHeader {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    /* background: rgba(31, 28, 28, 0.28); */
+    border-radius: 12px;
+    padding: 24px;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.watchImage {
+    flex-shrink: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    width: 150px;
+    height: 150px;
+    position: relative;
+}
+
+.watchImage img {
+    object-fit: cover;
+}
+
+.watchInfo {
+    flex: 1;
+    background: rgba(31, 28, 28, 0.28);
+    border-radius: 12px;
+    /* padding: 24px; */
+    height: 150px;
+}
+
+.watchInfo h1 {
+    color: white;
+    font-size: 36px;
+    font-weight: 500;
+    margin: 0 0 8px 0;
+    padding: 10px 24px;
+}
+
+.watchInfo p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 20px;
+    margin: 0;
+    padding: 0 24px;
+}
+
+@media (max-width: 768px) {
+    .watchHeader {
+        flex-direction: column;
+        text-align: center;
+        margin: 16px;
+    }
+
+    .watchInfo h1 {
+        font-size: 28px;
+    }
+
+    .watchInfo p {
+        font-size: 16px;
+    }
+}
+
+.productTags {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-bottom: 24px;
+    padding-left: 24px;
+}
+
+.tag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+}

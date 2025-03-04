@@ -1,0 +1,33 @@
+.otpContainer {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.otpInput {
+  width: 70px;
+  height: 60px;
+  font-size: 40px;
+  font-family: "Poppins";
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  border: none;
+  border-bottom: 2px solid #a98754;
+  border-radius: 5px;
+  /* outline: 2px solid #ccc; */
+  background-color: rgba(255, 255, 255, 0.05);
+  margin-bottom: 30px;
+  font-family: 600;
+}
+
+.otpInput:focus {
+  border-color: #a98754;
+}
+
+@media (max-width: 425px) {
+  .otpInput {
+    width: 50px;
+    height: 50px;
+  }
+}

@@ -1,0 +1,267 @@
+.innerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  color: #fff;
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  /* Ensure input takes full width */
+}
+.input {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-bottom: 2px solid #a98754;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  font-family: "Poppins";
+  font-weight: 400;
+}
+
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill:active {
+  -webkit-text-fill-color: #fff !important;
+  -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.1) inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.customPlaceholder::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.userImage {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.title {
+  color: #fff;
+  font-size: 1.1rem;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  font-family: "Poppins-SemiBold";
+  font-weight: 600;
+}
+
+.passwordContainer {
+  position: relative;
+  width: 100%;
+}
+
+.passwordContainer input {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-bottom: 2px solid #a98754;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  font-family: "Poppins";
+  font-weight: 400;
+}
+
+.eyeButton {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.eyeIcon {
+  width: 22px;
+  height: 22px;
+  filter: brightness(0) invert(1);
+}
+
+.conditionsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: 0px;
+}
+
+.condition {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  font-size: 0.8rem;
+  color: #4caf50;
+  margin-top: -15px;
+}
+
+.checkIcon {
+  width: 17;
+  height: 17px;
+  border: 1px solid #4caf50;
+  border-radius: 4px;
+  margin-right: 5px;
+}
+
+.uncheckedIcon {
+  width: 17px;
+  height: 17px;
+  border: 1px solid #c92f26;
+  border-radius: 4px;
+  margin-right: 5px;
+}
+
+.errorText {
+  color: #c92f26;
+  font-size: 0.8rem;
+}
+
+.checkboxContainer {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.checkboxLabel {
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-family: "Poppins";
+  font-weight: 400;
+}
+
+.checkboxLabel input {
+  margin-right: 10px;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 15px;
+  margin-top: 20px;
+  background-color: #a98754;
+  color: #fff;
+  font-family: "Poppins-Regular", sans-serif;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: "Poppins";
+  font-weight: 500;
+}
+
+.orText {
+  color: #fff;
+  margin: 20px 0;
+  font-family: "Poppins";
+  font-weight: 400;
+}
+
+.socialButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Ensures that the text gets centered */
+  padding: 12px;
+  margin: 10px 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+  position: relative;
+  /* Make the button relative for absolute positioning */
+}
+
+.socialRectangle {
+  background-color: transparent;
+  color: #fff;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  border-radius: 2px;
+  border: 1px solid #fff;
+  font-size: 18px;
+  font-weight: 400;
+  position: absolute;
+  left: 10px;
+  font-family: "Poppins";
+  font-weight: 500;
+  /* Position it 15px from the left side */
+}
+
+.socialText {
+  margin: 0 auto;
+  /* Center the text */
+}
+
+.customCheckbox {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #a98754;
+  border-radius: 100%;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.alreadyHaveAccount {
+  background: none;
+  border: none;
+  color: #a98754;
+  font-size: 1rem;
+  font-family: "Poppins";
+  cursor: pointer;
+  margin-top: 10px;
+  padding: 10px;
+  transition: opacity 0.3s ease;
+  text-decoration: underline;
+  font-weight: 400;
+}
+
+.alreadyHaveAccount:hover {
+  opacity: 0.7;
+}
+
+.forgotPasswordContainer {
+  width: 100%;
+  text-align: right;
+  margin-top: 10px;
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-family: "Poppins";
+  font-weight: 400;
+}
+
+.forgotPassword {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+}

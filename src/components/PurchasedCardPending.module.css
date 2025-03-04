@@ -1,0 +1,100 @@
+.purchaseCard {
+    background: rgba(31, 28, 28, 0.28);
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.mainContent {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 20px;
+}
+
+.imageContainer {
+    flex-shrink: 0;
+    width: 120px;
+    height: 120px;
+}
+
+.watchImage {
+    border-radius: 8px;
+    object-fit: cover;
+    background: #fff;
+}
+
+.watchDetails {
+    flex-grow: 1;
+}
+
+.watchName {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0 0 16px 0;
+    line-height: 1.2;
+}
+
+.statusContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.statusText {
+    color: #FFB800;
+    font-size: 14px;
+}
+
+.date {
+    color: #8A8F98;
+    font-size: 14px;
+    margin-left: auto;
+}
+
+.price {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 20px 0;
+}
+
+.sellerSection {
+    padding-top: 4px;
+}
+
+.sellerHeader {
+    color: #fff;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    cursor: pointer;
+}
+
+.sellerDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sellerInfo {
+    display: flex;
+    gap: 8px;
+}
+
+.label {
+    color: #8A8F98;
+    font-size: 16px;
+}
+
+.value {
+    color: #FF8A00;
+    font-size: 16px;
+}

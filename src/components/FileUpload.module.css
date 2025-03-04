@@ -1,0 +1,40 @@
+.fileUploadContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.labelContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.label {
+    margin-left: 0.5rem;
+    font-weight: 600;
+}
+
+.fileInputLabel {
+    cursor: pointer;
+    width: 100%;
+}
+
+.fileInput {
+    display: none;
+}
+
+.uploadButton {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.uploadButton span {
+    margin-left: 0.5rem;
+    color: #666;
+}

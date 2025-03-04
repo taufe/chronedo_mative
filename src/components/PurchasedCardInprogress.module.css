@@ -1,0 +1,129 @@
+.fullContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fullScreenDetails {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.purchaseCard {
+  background: rgba(31, 28, 28, 0.28);
+  border-radius: 12px;
+  padding: 24px;
+  width: 100%; /* Full width of its grid column */
+}
+
+.mainContent {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.imageContainer {
+  flex-shrink: 0;
+  width: 120px;
+  height: 120px;
+}
+
+.watchImage {
+  border-radius: 8px;
+  object-fit: cover;
+  background: #fff;
+}
+
+.watchDetails {
+  flex-grow: 1;
+}
+
+.watchName {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0 0 16px 0;
+  line-height: 1.2;
+}
+
+.statusContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.statusText {
+  color: #0075ff;
+  font-size: 14px;
+}
+
+.date {
+  color: #8a8f98;
+  font-size: 14px;
+  margin-left: auto;
+}
+
+.price {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 20px 0;
+}
+
+.sellerSection {
+  padding-top: 4px;
+}
+
+.sellerHeader {
+  color: #fff;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+
+.sellerDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sellerInfo {
+  display: flex;
+  gap: 8px;
+}
+
+.label {
+  color: #8a8f98;
+  font-size: 16px;
+}
+
+.value {
+  color: #ff8a00;
+  font-size: 16px;
+}
+
+.sellButton {
+  width: 48%;
+  background-color: #a98754;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 12px;
+}
+

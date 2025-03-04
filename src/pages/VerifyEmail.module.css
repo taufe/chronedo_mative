@@ -1,0 +1,116 @@
+.innerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  color: #fff;
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+.innerContainer h4 {
+  color: #fff;
+  font-size: 1rem;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  font-weight: 400;
+  font-family: "Poppins-light", sans-serif;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  /* Ensure input takes full width */
+}
+
+.resendContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.resendContainer h4 {
+  color: #a98754;
+  font-size: 0.9rem;
+  margin: 0;
+  font-weight: 400;
+  font-family: "Poppins-light", sans-serif;
+  text-align: center;
+  line-height: 1;
+}
+
+.resendImage {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.userImage {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.title {
+  color: #fff;
+  font-size: 1.1rem;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  font-family: "Poppins";
+  font-weight: 600;
+}
+
+.errorText {
+  color: #c92f26;
+  font-size: 0.8rem;
+}
+
+.customPlaceholder::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  /* Ensure input takes full width */
+}
+.input {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-bottom: 2px solid #a98754;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  font-family: "Poppins-Regular", sans-serif;
+}
+
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill:active {
+  -webkit-text-fill-color: #fff !important;
+  -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.1) inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.customPlaceholder::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
