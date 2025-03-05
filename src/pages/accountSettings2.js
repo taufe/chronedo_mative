@@ -28,7 +28,6 @@ const AccountSettings2 = () => {
     const [selectedIdType, setSelectedIdType] = useState('id');
     const [showPopup, setShowPopup] = useState(false);
 
-
     const [front, setFront] = useState(null);
     const [back, setBack] = useState(null);
 
@@ -158,7 +157,6 @@ const AccountSettings2 = () => {
                                 className={styles.inputzip}
                                 value={zipCode}
                                 onChange={(e) => setZipCode(e.target.value)}
-                            // style={{ width: '120px' }}
                             />
                         </div>
                         <div className={styles.inputGroup}>
@@ -219,7 +217,13 @@ const AccountSettings2 = () => {
                                 </div>
                                 <label className={styles.uploadArea} htmlFor="frontUpload">
                                     {front ? (
-                                        <img src={front} alt="Front Preview" className={styles.preview} />
+                                        <Image
+                                            src={front}
+                                            alt="Front Preview"
+                                            width={100}
+                                            height={100}
+                                            className={styles.preview}
+                                        />
                                     ) : (
                                         <>
                                             <Image
@@ -255,7 +259,13 @@ const AccountSettings2 = () => {
                                 </div>
                                 <label className={styles.uploadArea} htmlFor="backUpload">
                                     {back ? (
-                                        <img src={back} alt="Back Preview" className={styles.preview} />
+                                        <Image
+                                            src={back}
+                                            alt="Back Preview"
+                                            width={100}
+                                            height={100}
+                                            className={styles.preview}
+                                        />
                                     ) : (
                                         <>
                                             <Image

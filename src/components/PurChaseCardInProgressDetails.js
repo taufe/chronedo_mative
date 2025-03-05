@@ -21,15 +21,12 @@ export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChan
     const [value, setValue] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-
     const handleNextStep = () => {
         if (activeStep < 3) {
             setActiveStep(activeStep + 1);
-        }
-        else {
+        } else {
             setIsModalOpen(true);
         }
-
     };
 
     const [rating, setRating] = useState(0);
@@ -37,8 +34,6 @@ export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChan
     // Catch Rating value
     const handleRating = (rate) => {
         setRating(rate);
-
-        // other logic
     };
 
     const postTextAreaId = useId();
@@ -78,16 +73,14 @@ export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChan
                 return (
                     <>
                         <label className={styles.label}>Payment Method</label>
-                        <div className={styles.cashPayment}>Once you pay cash to the buyer please mark it as paid.
-
-                        </div>
+                        <div className={styles.cashPayment}>Once you pay cash to the buyer please mark it as paid.</div>
                     </>
                 );
             case 2:
                 return (
                     <>
                         <label className={styles.label}>Watch Handover</label>
-                        <div className={styles.inputBox}>If you have received the watch, please mark it as "Watch Received"</div>
+                        <div className={styles.inputBox}>If you have received the watch, please mark it as &quot;Watch Received&quot;</div>
                     </>
                 );
             case 3:
@@ -259,7 +252,3 @@ export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChan
         </div>
     );
 };
-
-
-
-

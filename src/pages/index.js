@@ -227,7 +227,7 @@ const Home = () => {
     } else {
       setFilteredWatches(watches);
     }
-  }, [searchInput]);
+  }, [searchInput, watches]);
 
   const handleFilterClick = (filter) => {
     if (activeFilters.includes(filter)) {
@@ -327,9 +327,8 @@ const Home = () => {
                 {["Used", "New", "Datejust", "Europe"].map((filter) => (
                   <button
                     key={filter}
-                    className={`${styles.filterButton} ${
-                      activeFilters.includes(filter) ? styles.active : ""
-                    }`}
+                    className={`${styles.filterButton} ${activeFilters.includes(filter) ? styles.active : ""
+                      }`}
                     onClick={() => handleFilterClick(filter)}
                   >
                     {filter}

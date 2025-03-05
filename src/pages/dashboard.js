@@ -44,7 +44,7 @@ const Dashboard = () => {
         } else {
             setFilteredWatches(watches);
         }
-    }, [searchInput]);
+    }, [searchInput, watches]);
 
     const handleFilterClick = (filter) => {
         if (activeFilters.includes(filter)) {
