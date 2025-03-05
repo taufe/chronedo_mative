@@ -14,10 +14,11 @@
   margin-top: 5px;
   margin-bottom: 0px;
   font-weight: 400;
-  font-family: "Poppins-light", sans-serif;
+  font-family: "Poppins";
   text-align: left;
   line-height: 1.5;
   width: 100%;
+  font-weight: 300;
 }
 
 .inputWrapper {
@@ -41,9 +42,10 @@
   font-size: 0.9rem;
   margin: 0;
   font-weight: 400;
-  font-family: "Poppins-light", sans-serif;
+  font-family: "Poppins";
   text-align: center;
   line-height: 1;
+  font-weight: 300;
 }
 
 .resendImage {

@@ -2,8 +2,8 @@
   background: rgba(31, 28, 28, 0.28);
   border-radius: 12px;
   padding: 0px 24px 24px 24px; /* 15px vertical padding and 24px horizontal padding */
-  width: 50%;
-  min-width: 890px;
+  /* width: 50%; */
+  /* min-width: 890px; */
 }
 .mainContent {
   display: flex;
@@ -249,7 +249,7 @@
 }
 .ratingContainer {
   color: #fff;
-  padding:0px 10px 10px 10px;
+  padding: 0px 10px 10px 10px;
   border-radius: 8px;
   font-size: 14px;
   /* display: flex; */
@@ -257,7 +257,7 @@
   /* align-items: center; */
   background-color: #1f1c1c47;
   text-align: center;
-  margin-top:20px
+  margin-top: 20px;
 }
 .cashPayment {
   color: #fff;
@@ -273,7 +273,6 @@
   color: #aaa;
   font-size: 18px;
 }
-
 
 .textarea {
   width: 97.5%;
@@ -295,13 +294,13 @@
 }
 
 .textarea::placeholder {
-    color: white;
-    /* opacity: 0.7;  */
+  color: white;
+  /* opacity: 0.7;  */
 }
 
 .textarea {
-    color: white;
-    background-color: transparent; 
+  color: white;
+  background-color: transparent;
 }
 
 .modalOverlay {
@@ -317,7 +316,7 @@
 }
 
 .modalContent {
-  background: #3C4A5C;
+  background: #3c4a5c;
   padding: 20px;
   border-radius: 10px;
   text-align: center;
@@ -337,4 +336,3 @@
 .closeButton:hover {
   background-color: #8b6d40;
 }
-

@@ -100,7 +100,7 @@
   font-size: 14px;
   font-weight: 400;
   color: #fff;
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins";
   position: relative;
   top: 3px;
 }
@@ -182,7 +182,7 @@
   font-size: 12px;
   font-weight: 400;
   color: #fff;
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins";
 }
 
 .statusLine {
