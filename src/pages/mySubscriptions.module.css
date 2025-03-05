@@ -269,3 +269,12 @@
     font-size: 14px;
   }
 }
+@media (max-width: 480px) {
+  .bottomTabBG {
+    width: 100%;
+  }
+  .iconsContainer {
+    margin-left: 30px;
+    margin-right: 16px;
+  }
+}

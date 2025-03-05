@@ -1366,21 +1366,21 @@ const MySelling = () => {
                     </>
                 }
                 {bottomTabIndex === 2 &&
-                    <div className={styles.noWatches}>
-                        <div className={styles.sellingGridEndwatch}>
-                            {OpenWatches.map((purchase, index) => (
-                                <MyOpenWatch
-                                    key={index}
-                                    image={purchase.image}
-                                    name={purchase.name}
-                                    price={purchase.price}
-                                    date={purchase.date}
-                                    email={purchase.email}
-                                    sellerName={purchase.sellerName}
-                                />
-                            ))}
-                        </div>
+                    // <div className={styles.noWatches}>
+                    <div className={styles.sellingGridEndwatch}>
+                        {OpenWatches.map((purchase, index) => (
+                            <MyOpenWatch
+                                key={index}
+                                image={purchase.image}
+                                name={purchase.name}
+                                price={purchase.price}
+                                date={purchase.date}
+                                email={purchase.email}
+                                sellerName={purchase.sellerName}
+                            />
+                        ))}
                     </div>
+                    // </div>
                 }
                 {bottomTabIndex === 3 &&
                     <div className={styles.noWatches}>

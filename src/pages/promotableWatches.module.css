@@ -1,49 +1,49 @@
 .dashboardContainer {
-    padding: 0px 80px;
+  padding: 0px 80px;
 }
 
 @media (max-width: 768px) {
-    .dashboardContainer {
-        padding: 0px 0px;  /* Small padding for mobile */
-    }
+  .dashboardContainer {
+    padding: 0px 0px; /* Small padding for mobile */
+  }
 }
 
 .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .searchContainer {
-    flex: 1;
-    max-width: 800px;
+  flex: 1;
+  max-width: 800px;
 }
 
 .searchWrapper {
-    position: relative;
+  position: relative;
 }
 
 .searchInput {
-    width: 90%;
-    padding: 10px 16px;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
-    border-radius: 29px;
-    border: none;
+  width: 90%;
+  padding: 10px 16px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 29px;
+  border: none;
 }
 
 .searchInput:focus {
-    outline: none;
+  outline: none;
 }
 
 .searchButton {
-    position: absolute;
-    right: 0px;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: transparent;
-    border: none;
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
 }
 
 /* .searchIcon {
@@ -53,78 +53,78 @@
 } */
 
 .iconsContainer {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    margin-left: 16px;
-    margin-right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-left: 16px;
+  margin-right: 16px;
 }
 
 .watchesContainer {
-    padding: 20px 0;
-    height: calc(100vh - 80px);
-    overflow-y: auto;
+  padding: 20px 0;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
 }
 
 .watchesGrid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Two cards per row */
-    gap: 20px;
-    max-width: 1400px; /* Optional: maximum width for larger screens */
-    margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two cards per row */
+  gap: 20px;
+  max-width: 1400px; /* Optional: maximum width for larger screens */
+  margin: 0 auto;
 }
 
 /* Styling the scrollbar */
 .watchesContainer::-webkit-scrollbar {
-    width: 6px;
+  width: 6px;
 }
 
 .watchesContainer::-webkit-scrollbar-track {
-    background: transparent;
+  background: transparent;
 }
 
 .watchesContainer::-webkit-scrollbar-thumb {
-    background-color: #A98754;
-    border-radius: 3px;
+  background-color: #a98754;
+  border-radius: 3px;
 }
 
 /* Responsive styles */
 @media screen and (max-width: 1024px) {
-    .watchesContainer {
-        padding: 15px;
-    }
-    
-    .watchesGrid {
-        gap: 15px;
-    }
+  .watchesContainer {
+    padding: 15px;
+  }
+
+  .watchesGrid {
+    gap: 15px;
+  }
 }
 
 @media screen and (max-width: 768px) {
-    .watchesGrid {
-        grid-template-columns: 1fr; /* Single column on mobile */
-        gap: 15px;
-    }
+  .watchesGrid {
+    grid-template-columns: 1fr; /* Single column on mobile */
+    gap: 15px;
+  }
 }
 
 @media screen and (max-width: 480px) {
-    .watchesContainer {
-        padding: 10px;
-    }
-    
-    .watchesGrid {
-        gap: 10px;
-    }
+  .watchesContainer {
+    padding: 10px;
+  }
+
+  .watchesGrid {
+    gap: 10px;
+  }
 }
 
 .actionsContainer {
-    display: flex;
-    justify-content: flex-end;
-    padding: 0 20px 20px;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 20px 20px;
 }
 
 .actionButtons {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 /* 
 .actionButton {
@@ -150,21 +150,25 @@
 
 /* Responsive styles */
 @media screen and (max-width: 768px) {
-    .actionsContainer {
-        padding: 0 15px 15px;
-    }
+  .actionsContainer {
+    padding: 0 15px 15px;
+  }
 }
 
 @media screen and (max-width: 480px) {
-    .actionsContainer {
-        padding: 0 10px 10px;
-    }
-    
-    .actionButton {
-        padding: 6px 12px;
-    }
-    
-    .actionButton span {
-        font-size: 12px;
-    }
+  .actionsContainer {
+    padding: 0 10px 10px;
+  }
+
+  .actionButton {
+    padding: 6px 12px;
+  }
+
+  .actionButton span {
+    font-size: 12px;
+  }
+  .iconsContainer {
+    margin-left: 30px;
+    margin-right: 16px;
+  }
 }

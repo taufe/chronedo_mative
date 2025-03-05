@@ -1544,6 +1544,9 @@
     padding: 10px 20px;
     font-size: 14px;
   }
+  .bottomTabBG {
+    width: 100%;
+  }
 }
 
 .watchesGrid {
@@ -1570,5 +1573,19 @@
 @media (max-width: 600px) {
   .watchesGrid {
     grid-template-columns: repeat(1, 1fr);
+  }
+  .sellingBar {
+    width: 100%;
+  }
+  .bottomTabImage {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  .bottomTabText {
+    font-size: 12px;
+  }
+  .iconsContainer {
+    margin-left: 30px;
+    margin-right: 16px;
   }
 }

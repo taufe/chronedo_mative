@@ -628,11 +628,15 @@
   background-color: rgba(255, 255, 255, 0.5);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .categoryGrid {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 items per line */
+    gap: 16px;
   }
+}
 
+@media (max-width: 768px) {
   .categoryCard {
     width: 100%;
   }
@@ -749,5 +753,46 @@
 
   .filterButtons {
     flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 500px) {
+  .categoryGrid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* 2 items per line */
+  }
+  .categoryGrid img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+  .categoryCard h3 {
+    left: 20%;
+  }
+  .seeAllBtn {
+    left: 20%;
+  }
+  .profileCard {
+    background-color: rgba(31, 28, 28, 0.28);
+    border-radius: 12px;
+    padding: 0px 4px;
+    display: block;
+    gap: 16px;
+  }
+  .dashboardContainer {
+    padding: 0px 0px;
+  }
+  .watchDetails {
+    padding: 0px 4px;
+  }
+  .buyButton {
+    font-size: 15px;
+    width: 60%;
+    margin-bottom: 10px;
+  }
+  .iconsContainer {
+    margin-left: 30px;
+    margin-right: 16px;
   }
 }

@@ -1,47 +1,48 @@
 .layout {
-    display: flex;
-    min-height: 100vh;
-    position: relative;
+  display: flex;
+  min-height: 100vh;
+  position: relative;
 }
 
 .mainContent {
-    flex: 1;
-    padding: 20px;
-    transition: margin-left 0.3s ease;
-    margin-left: 260px;
+  flex: 1;
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+  margin-left: 15%;
 }
 
 .menuToggle {
-    display: none;
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-    flex-direction: column;
-    gap: 4px;
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .menuToggle span {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background-color: #fff;
-    transition: all 0.3s ease;
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: #fff;
+  transition: all 0.3s ease;
 }
 
 /* Mobile styles */
 @media (max-width: 768px) {
-    .menuToggle {
-        display: flex;
-    }
+  .menuToggle {
+    display: flex;
+  }
 
-    .mainContent {
-        width: 100%;
-        margin-left: 0;
-        padding-top: 70px; /* Space for the menu button */
-    }
-} 
+  .mainContent {
+    /* width: 100%; */
+    margin-left: 0;
+    padding-top: 70px; /* Space for the menu button */
+    background-color: #4d5c73;
+  }
+}

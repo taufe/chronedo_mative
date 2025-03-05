@@ -1,43 +1,43 @@
 .dashboardContainer {
-    padding: 0px 80px;
+  padding: 0px 80px;
 }
 
 .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .searchContainer {
-    flex: 1;
-    max-width: 800px;
+  flex: 1;
+  max-width: 800px;
 }
 
 .searchWrapper {
-    position: relative;
+  position: relative;
 }
 
 .searchInput {
-    width: 90%;
-    padding: 10px 16px;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
-    border-radius: 29px;
-    border: none;
+  width: 90%;
+  padding: 10px 16px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 29px;
+  border: none;
 }
 
 .searchInput:focus {
-    outline: none;
+  outline: none;
 }
 
 .searchButton {
-    position: absolute;
-    right: 0px;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: transparent;
-    border: none;
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
 }
 
 /* .searchIcon {
@@ -47,227 +47,231 @@
 } */
 
 .iconsContainer {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    margin-left: 16px;
-    margin-right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-left: 16px;
+  margin-right: 16px;
 }
 
 .messagesContainer {
-    display: flex;
-    height: calc(100vh - 80px); /* Adjust based on your header height */
-    background: rgba(31, 28, 28, 0.28);
-    margin-top: 20px;
-    border-radius: 12px;
-    overflow: hidden;
+  display: flex;
+  height: calc(100vh - 80px); /* Adjust based on your header height */
+  background: rgba(31, 28, 28, 0.28);
+  margin-top: 20px;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .chatsList {
-    width: 300px;
-    background: rgba(31, 28, 28, 0.2);
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-    overflow-y: auto;
+  width: 300px;
+  background: rgba(31, 28, 28, 0.2);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  overflow-y: auto;
 }
 
 .chatItem {
-    display: flex;
-    padding: 15px;
-    gap: 12px;
-    cursor: pointer;
-    transition: background 0.3s;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  padding: 15px;
+  gap: 12px;
+  cursor: pointer;
+  transition: background 0.3s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .chatItem:hover {
-    background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .userAvatar {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 .chatInfo {
-    flex: 1;
+  flex: 1;
 }
 
 .chatHeaderListItem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
 }
 
 .chatHeaderListItem h4 {
-    color: #fff;
-    margin: 0;
+  color: #fff;
+  margin: 0;
 }
 
 .date {
-    color: #8A8F98;
-    font-size: 12px;
+  color: #8a8f98;
+  font-size: 12px;
 }
 
 .lastMessage {
-    color: #8A8F98;
-    font-size: 14px;
-    margin: 0;
+  color: #8a8f98;
+  font-size: 14px;
+  margin: 0;
 }
 
 .chatWindow {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .chatHeader {
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .chatUser {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .chatUser h3 {
-    color: #fff;
-    margin: 0;
+  color: #fff;
+  margin: 0;
 }
 
 .chatActions {
-    display: flex;
-    gap: 15px;
+  display: flex;
+  gap: 15px;
 }
 
 .messagesList {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .messageItem {
-    display: flex;
-    gap: 12px;
-    max-width: 70%;
+  display: flex;
+  gap: 12px;
+  max-width: 70%;
 }
 
 .ownMessage {
-    align-self: flex-end;
-    flex-direction: row-reverse;
+  align-self: flex-end;
+  flex-direction: row-reverse;
 }
 
 .messageContent {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 12px;
-    border-radius: 12px;
-    position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 12px;
+  position: relative;
 }
 
 .ownMessage .messageContent {
-    background: rgba(169, 135, 84, 0.15);
+  background: rgba(169, 135, 84, 0.15);
 }
 
 .messageContent p {
-    color: #fff;
-    margin: 0;
-    font-size: 14px;
+  color: #fff;
+  margin: 0;
+  font-size: 14px;
 }
 
 .messageTime {
-    color: #8A8F98;
-    font-size: 12px;
-    display: block;
-    margin-top: 4px;
+  color: #8a8f98;
+  font-size: 12px;
+  display: block;
+  margin-top: 4px;
 }
 
 .messageInput {
-    padding: 15px;
-    display: flex;
-    gap: 12px;
-    background: rgba(31, 28, 28, 0.2);
+  padding: 15px;
+  display: flex;
+  gap: 12px;
+  background: rgba(31, 28, 28, 0.2);
 }
 
 .inputField {
-    flex: 1;
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    border-radius: 25px;
-    padding: 12px 20px;
-    color: #fff;
-    font-size: 14px;
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 25px;
+  padding: 12px 20px;
+  color: #fff;
+  font-size: 14px;
 }
 
 .inputField::placeholder {
-    color: #8A8F98;
+  color: #8a8f98;
 }
 
 .sendButton {
-    background: rgba(31, 28, 28, 0.2);
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.3s;
+  background: rgba(31, 28, 28, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
 .sendButton:hover {
-    background: #357ABD;
+  background: #357abd;
 }
 
 @media (max-width: 768px) {
-    .dashboardContainer {
-        padding: 0px 16px;
-    }
+  .dashboardContainer {
+    padding: 0px 16px;
+  }
 
-    .messagesContainer {
-        flex-direction: column;
-        height: calc(100vh - 140px);
-    }
+  .messagesContainer {
+    flex-direction: column;
+    height: calc(100vh - 140px);
+  }
 
-    .chatsList {
-        width: 100%;
-        height: 40%;
-        border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
+  .chatsList {
+    width: 100%;
+    height: 40%;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
 
-    .chatWindow {
-        height: 60%;
-    }
+  .chatWindow {
+    height: 60%;
+  }
 
-    .messageItem {
-        max-width: 85%;
-    }
+  .messageItem {
+    max-width: 85%;
+  }
 }
 
 @media (max-width: 480px) {
-    .dashboardContainer {
-        padding: 0px 8px;
-    }
+  .dashboardContainer {
+    padding: 0px 8px;
+  }
 
-    .header {
-        flex-direction: column;
-        gap: 16px;
-    }
+  .header {
+    flex-direction: column;
+    gap: 16px;
+  }
 
-    .searchContainer {
-        max-width: 100%;
-    }
+  .searchContainer {
+    max-width: 100%;
+  }
 
-    .iconsContainer {
-        width: 100%;
-        justify-content: center;
-    }
+  .iconsContainer {
+    width: 100%;
+    justify-content: center;
+  }
+  .iconsContainer {
+    margin-left: 30px;
+    margin-right: 16px;
+  }
 }

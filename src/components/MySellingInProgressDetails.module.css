@@ -335,6 +335,7 @@
   padding: 10px;
   border-radius: 8px;
   border: 1.5px solid #ffffff;
+  width: 98.5%;
 }
 
 .dateInput,
@@ -358,4 +359,42 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 input:focus {
   outline: none;
   box-shadow: 0 0 3px #a98754;
+}
+
+@media (max-width: 768px) {
+  .purchaseCard {
+    background: rgba(31, 28, 28, 0.28);
+    border-radius: 12px;
+    padding: 0px 5px 5px 5px; /* 15px vertical padding and 24px horizontal padding */
+  }
+}
+
+@media (max-width: 576px) {
+  .purchaseCard {
+    padding: 0px 5px 5px 5px;
+  }
+  .mainContent {
+    display: block;
+    gap: 0px;
+  }
+  .imageContainer {
+    /* width: 120; */
+    height: 120px;
+    margin-top: 10px;
+    margin-bottom: 50px;
+    text-align: center;
+    align-self: center;
+  }
+  .confirmationButtonWrapper {
+    width: 53%;
+  }
+  .pickupDateTimeBox {
+    width: 95%;
+  }
+  .pickupDateTimeBox {
+    width: 90%;
+  }
+  .pickupLocationBox {
+    width: 90%;
+  }
 }

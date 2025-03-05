@@ -127,3 +127,11 @@
   margin-top: 12px;
 }
 
+@media (max-width: 576px) {
+  .purchaseCard {
+    background: rgba(31, 28, 28, 0.28);
+    border-radius: 12px;
+    padding: 10px;
+    width: 100%; /* Full width of its grid column */
+  }
+}

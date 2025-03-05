@@ -246,6 +246,7 @@
   justify-content: space-between;
   align-items: center;
   border: 1.5px solid #ffffff;
+  width: 98.5%;
 }
 .ratingContainer {
   color: #fff;
@@ -335,4 +336,31 @@
 
 .closeButton:hover {
   background-color: #8b6d40;
+}
+
+@media (max-width: 576px) {
+  .purchaseCard {
+    padding: 0px 5px 5px 5px;
+  }
+  .mainContent {
+    display: block;
+    gap: 0px;
+  }
+  .imageContainer {
+    /* width: 120; */
+    height: 120px;
+    margin-top: 10px;
+    margin-bottom: 50px;
+    text-align: center;
+    align-self: center;
+  }
+  .confirmationButtonWrapper {
+    width: 53%;
+  }
+  .pickupDateTimeBox {
+    width: 90%;
+  }
+  .pickupLocationBox {
+    width: 90%;
+  }
 }
