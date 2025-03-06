@@ -214,6 +214,9 @@
   margin: 0 auto;
   padding: 20px;
 }
+.purchasedGridSingleColumn {
+  grid-template-columns: repeat(1, 1fr) !important;
+}
 
 /* Make it responsive */
 @media (max-width: 1024px) {

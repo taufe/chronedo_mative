@@ -8,7 +8,7 @@ const SoldCardPending = ({ image, name, price, date, email, sellerName, onAccept
 
     useEffect(() => {
         const updateSize = () => {
-            setSize(window.innerWidth < 500 ? 15 : 20);
+            setSize(window.innerWidth < 500 ? 105 : 120);
         };
 
         updateSize();
@@ -26,7 +26,7 @@ const SoldCardPending = ({ image, name, price, date, email, sellerName, onAccept
                         height={120}
                         className={styles.watchImage}
                     /> */}
-                    <Image src="/assets/Home/pending.png" alt="Pending" width={size} height={size} />;
+                    <Image src={image} alt={name} width={size} height={size} />
                 </div>
                 <div className={styles.watchDetails}>
                     <h3 className={styles.watchName}>{name}</h3>

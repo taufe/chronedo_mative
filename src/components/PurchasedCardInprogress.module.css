@@ -4,6 +4,10 @@
   justify-content: center;
   align-items: center;
 }
+.fullContainerDetails {
+  width: 100%;
+  display: block;
+}
 
 .fullScreenDetails {
   width: 100%;

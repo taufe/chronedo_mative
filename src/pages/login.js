@@ -9,7 +9,11 @@ import eyeCloseIcon from "../../public/assets/icons/eyeclose.png";
 import eyeOpenIcon from "../../public/assets/icons/eyeopen.png";
 import checkIcon from "../../public/assets/icons/check.png";
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+
+
 const Login = () => {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [secure, setSecure] = useState(true);

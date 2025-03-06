@@ -119,7 +119,7 @@ const Footer = () => {
           <form className="newsletter-form">
             <input type="email" placeholder="Your email address" required />
             <button
-              style={{ fontFamily: "Poppins", fontWeight: 600 }}
+              style={{ fontFamily: "Poppins", fontWeight: 400 }}
               type="submit"
             >
               Subscribe

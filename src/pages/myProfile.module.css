@@ -328,4 +328,8 @@
     .stars {
         font-size: 12px;  /* Even smaller stars for very small screens */
     }
+    .iconsContainer {
+        margin-left: 30px;
+        margin-right: 16px;
+      }
 }

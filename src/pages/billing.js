@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import DashboardLayout from '../components/Layout/DashboardLayout';
-import styles from './billing.module.css';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { useState } from "react";
+import DashboardLayout from "../components/Layout/DashboardLayout";
+import styles from "./billing.module.css";
+import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/router";
 
 const Billing = () => {
     const router = useRouter();
@@ -17,19 +17,19 @@ const Billing = () => {
     };
 
     const [billingAddress, setBillingAddress] = useState({
-        name: 'John Green',
-        street: 'Street 1',
-        zipCity: '769787 Berlin',
-        country: 'Germany',
-        phone: '+49 7676 56 426'
+        name: "John Green",
+        street: "Street 1",
+        zipCity: "769787 Berlin",
+        country: "Germany",
+        phone: "+49 7676 56 426",
     });
 
     const [shippingAddress, setShippingAddress] = useState({
-        name: 'John Green',
-        street: 'Street 1',
-        zipCity: '769787 Berlin',
-        country: 'Germany',
-        phone: '+49 7676 56 426'
+        name: "John Green",
+        street: "Street 1",
+        zipCity: "769787 Berlin",
+        country: "Germany",
+        phone: "+49 7676 56 426",
     });
 
     return (
@@ -52,23 +52,46 @@ const Billing = () => {
 
             <div className={styles.productTags}>
                 <div className={styles.tag}>
-                    <Image src="/assets/ProductPage/original.png" alt="Original" width={24} height={24} style={{ objectFit: 'contain' }} />
+                    <Image
+                        src="/assets/ProductPage/original.png"
+                        alt="Original"
+                        width={24}
+                        height={24}
+                        style={{ objectFit: "contain" }}
+                    />
                     <span>NEW/ORIGINAL PACKED</span>
                 </div>
                 <div className={styles.tag}>
-                    <Image src="/assets/ProductPage/private.png" alt="Private Seller" width={24} height={24} style={{ objectFit: 'contain' }} />
+                    <Image
+                        src="/assets/ProductPage/private.png"
+                        alt="Private Seller"
+                        width={24}
+                        height={24}
+                        style={{ objectFit: "contain" }}
+                    />
                     <span>PRIVATE SELLER</span>
                 </div>
                 <div className={styles.tag}>
-                    <Image src="/assets/ProductPage/days.png" alt="Delivery Days" width={24} height={24} style={{ objectFit: 'contain' }} />
+                    <Image
+                        src="/assets/ProductPage/days.png"
+                        alt="Delivery Days"
+                        width={24}
+                        height={24}
+                        style={{ objectFit: "contain" }}
+                    />
                     <span>≈ 10 DAYS TO YOUR HOME</span>
                 </div>
                 <div className={styles.tag}>
-                    <Image src="/assets/ProductPage/warranty.png" alt="Warranty" width={24} height={24} style={{ objectFit: 'contain' }} />
+                    <Image
+                        src="/assets/ProductPage/warranty.png"
+                        alt="Warranty"
+                        width={24}
+                        height={24}
+                        style={{ objectFit: "contain" }}
+                    />
                     <span>WITH WARRANTY</span>
                 </div>
             </div>
-
 
             <div className={styles.billingContainer}>
                 <div className={styles.billingCard}>
@@ -153,7 +176,7 @@ const Billing = () => {
                                     onChange={(e) => setTermsAccepted(e.target.checked)}
                                 />
                                 <p>
-                                    I hereby acknowledge and accept the{' '}
+                                    I hereby acknowledge and accept the{" "}
                                     <Link href="/terms">Terms and Conditions</Link>.
                                 </p>
                             </div>
@@ -164,7 +187,8 @@ const Billing = () => {
                                     onChange={(e) => setCustomsDutyAccepted(e.target.checked)}
                                 />
                                 <p>
-                                    I am aware that this purchase may incur additional customs duties and import taxes.
+                                    I am aware that this purchase may incur additional customs
+                                    duties and import taxes.
                                 </p>
                             </div>
                             <div className={styles.checkboxRow}>
@@ -174,14 +198,17 @@ const Billing = () => {
                                     onChange={(e) => setLegalBindingAccepted(e.target.checked)}
                                 />
                                 <p>
-                                    I am aware that this is a legally binding purchase request to the seller.
+                                    I am aware that this is a legally binding purchase request to
+                                    the seller.
                                 </p>
                             </div>
                         </div>
 
                         <button
                             className={styles.confirmButton}
-                            disabled={!termsAccepted || !customsDutyAccepted || !legalBindingAccepted}
+                            disabled={
+                                !termsAccepted || !customsDutyAccepted || !legalBindingAccepted
+                            }
                             onClick={handleConfirmPurchase}
                         >
                             CONFIRM PURCHASE
@@ -215,7 +242,7 @@ const Billing = () => {
                                 </div>
                                 <button
                                     className={styles.backToDashboard}
-                                    onClick={() => router.push('/dashboard')}
+                                    onClick={() => router.push("/dashboard")}
                                 >
                                     Back to Dashboard
                                 </button>
@@ -229,4 +256,3 @@ const Billing = () => {
 };
 
 export default Billing;
-

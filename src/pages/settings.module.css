@@ -18,6 +18,10 @@
   position: relative;
 }
 
+.withMarginRight {
+  width: 95% !important;
+}
+
 .searchInput {
   width: 90%;
   padding: 10px 16px;
@@ -223,9 +227,20 @@ input:checked + .slider:before {
 }
 
 /* Responsive Design */
+
+@media (max-width: 1024px) {
+  .settingsContainer {
+    padding: 2rem 2rem 2rem 10rem !important;
+    /* max-width: 1200px; */
+    margin: 0 auto;
+  }
+}
 @media (max-width: 768px) {
   .addressGrid {
     grid-template-columns: 1fr;
+  }
+  .settingsContainer {
+    padding: 2rem !important;
   }
 
   .toggleGroup {
@@ -246,10 +261,15 @@ input:checked + .slider:before {
     align-self: flex-end;
   }
 }
+@media (max-width: 767px) {
+  .withMarginRight {
+    width: 100% !important;
+  }
+}
 
 @media (max-width: 480px) {
   .settingsContainer {
-    padding: 1rem;
+    padding: 1rem !important;
   }
 
   .section {

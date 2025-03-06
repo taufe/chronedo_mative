@@ -2,12 +2,6 @@
   padding: 0px 80px;
 }
 
-@media (max-width: 768px) {
-  .dashboardContainer {
-    padding: 0px 0px; /* Small padding for mobile */
-  }
-}
-
 .header {
   display: flex;
   align-items: center;
@@ -31,6 +25,7 @@
   color: white;
   border-radius: 29px;
   border: none;
+  margin-left: 0px;
 }
 
 .searchInput:focus {
@@ -217,6 +212,12 @@
   .subscriptionCards {
     grid-template-columns: repeat(2, 1fr);
   }
+  .dashboardContainer {
+    padding: 0px 0px 0px 125px;
+  }
+  .searchInput {
+    margin-left: 20px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -231,6 +232,12 @@
 
   .professionalCard:hover {
     transform: translateY(-5px);
+  }
+  .dashboardContainer {
+    padding: 0px 0px; /* Small padding for mobile */
+  }
+  .searchInput {
+    margin-left: 0px;
   }
 }
 
@@ -276,5 +283,11 @@
   .iconsContainer {
     margin-left: 30px;
     margin-right: 16px;
+  }
+  .bottomTabButton {
+    width: 100%;
+  }
+  .bottomTabText {
+    font-size: 11px;
   }
 }

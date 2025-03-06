@@ -257,6 +257,7 @@
   padding: 32px;
   background-color: rgba(31, 28, 28, 0.28);
   border-radius: 16px;
+  margin-left: 0px;
 }
 
 .sectionTitle {
@@ -373,6 +374,12 @@
 }
 
 /* Responsive styles */
+@media (max-width: 1000px) {
+  .basicDataContainer {
+    margin-left: 100px;
+    max-width: 800px;
+  }
+}
 @media (max-width: 768px) {
   .backButtonBasicData,
   .nextButtonBasicData {

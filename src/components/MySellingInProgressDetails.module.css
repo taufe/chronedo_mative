@@ -324,7 +324,6 @@
   font-size: 14px;
   border: 1.5px solid #ffffff;
   background: transparent;
-  width: 100%;
   margin-bottom: 10px;
 }
 
@@ -346,6 +345,10 @@
   font-size: 14px;
   padding: 5px;
   flex-grow: 1;
+}
+
+.downloadIcon {
+  margin-left: 5px;
 }
 
 /* Remove default date/time input arrows */
@@ -392,9 +395,6 @@ input:focus {
     width: 95%;
   }
   .pickupDateTimeBox {
-    width: 90%;
-  }
-  .pickupLocationBox {
     width: 90%;
   }
 }

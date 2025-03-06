@@ -59,12 +59,75 @@ const MyPurchase = () => {
         setSelectedCard(null);
     };
 
+    // const renderPurchasedContent = () => {
+    //     let content;
+
+    //     if (selectedCard) {
+    //         content = (
+    //             <div className={styles.purchasedGrid}>
+    //                 <PurchasedCardInprogress
+    //                     key={selectedCard.id}
+    //                     {...selectedCard}
+    //                     showDetails={true}
+    //                     onBack={handleBack}
+    //                 />
+    //             </div>
+    //         );
+    //     } else {
+    //         content = (
+    //             <div className={styles.purchasedGrid}>
+    //                 {purchaseStatus === 'pending' &&
+    //                     pendingPurchases.map((purchase) => (
+    //                         <PurchasedCardPending
+    //                             key={purchase.id}
+    //                             image={purchase.image}
+    //                             name={purchase.name}
+    //                             price={purchase.price}
+    //                             date={purchase.date}
+    //                             email={purchase.email}
+    //                             sellerName={purchase.sellerName}
+    //                         />
+    //                     ))}
+    //                 {purchaseStatus === 'inProgress' &&
+    //                     pendingPurchases.map((purchase) => (
+    //                         <PurchasedCardInprogress
+    //                             key={purchase.id}
+    //                             image={purchase.image}
+    //                             name={purchase.name}
+    //                             price={purchase.price}
+    //                             date={purchase.date}
+    //                             email={purchase.email}
+    //                             sellerName={purchase.sellerName}
+    //                             onSellNow={handleSellNow}
+    //                             showDetails={false}
+    //                         />
+    //                     ))}
+    //                 {purchaseStatus === 'completed' &&
+    //                     pendingPurchases.map((purchase) => (
+    //                         <PurchasedCardCompleted
+    //                             key={purchase.id}
+    //                             image={purchase.image}
+    //                             name={purchase.name}
+    //                             price={purchase.price}
+    //                             date={purchase.date}
+    //                             email={purchase.email}
+    //                             sellerName={purchase.sellerName}
+    //                         />
+    //                     ))}
+    //             </div>
+    //         );
+    //     }
+
+    //     return content;
+    // };
+
+
     const renderPurchasedContent = () => {
         let content;
 
         if (selectedCard) {
             content = (
-                <div className={styles.purchasedGrid}>
+                <div className={`${styles.purchasedGrid} ${styles.purchasedGridSingleColumn}`}>
                     <PurchasedCardInprogress
                         key={selectedCard.id}
                         {...selectedCard}

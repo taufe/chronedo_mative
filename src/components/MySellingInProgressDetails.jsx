@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./PurChaseCardInProgressDetails.module.css";
 import { LuDownload } from "react-icons/lu";
@@ -28,6 +28,19 @@ export const MySellingInProgressDetails = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [pickupAddress, setPickupAddress] = useState("Write Here");
   const [showDetails, setShowDetails] = useState(false);
+  const [inputWidth, setInputWidth] = useState(
+    window.innerWidth < 767 ? "90%" : "98.5%"
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setInputWidth(window.innerWidth < 786 ? "90%" : "98.5%");
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const handleNextStep = () => {
     if (activeStep < 3) {
       setActiveStep(activeStep + 1);
@@ -71,7 +84,7 @@ export const MySellingInProgressDetails = ({
               value={pickupAddress}
               onChange={(e) => setPickupAddress(e.target.value)}
               className={styles.pickupLocationBox}
-              style={{ width: "98.5%", backgroundColor: "transparent" }}
+              style={{ backgroundColor: "transparent", width: inputWidth }}
               placeholder="Enter pickup address"
             />
 
@@ -229,7 +242,7 @@ export const MySellingInProgressDetails = ({
           <div className={styles.payment}>Payment open</div>
         </div>
         <div className={styles.confirmationButtonWrapper}>
-          <LuDownload style={styles.downloadIcon} />
+          <LuDownload style={{ marginLeft: 10, marginRight: 10 }} />
           Confirmation of sale
         </div>
       </div>
