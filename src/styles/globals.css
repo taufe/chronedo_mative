@@ -10,9 +10,25 @@ html {
   padding: 0;
   height: 100%;
   background-color: #4c5c70;
+  /* scroll-behavior: smooth; */
+  scroll-behavior: auto !important; /* Disable smooth scroll globally */
   scroll-behavior: smooth;
-  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
+
+/* html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+body {
+  overflow-y: scroll !important; 
+  touch-action: manipulation;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+} */
 
 body {
   margin: 0;

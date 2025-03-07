@@ -330,7 +330,7 @@
 }
 
 /* Hide default date picker icon but keep functionality */
-.input[type="date"]::-webkit-calendar-picker-indicator {
+/* .input[type="date"]::-webkit-calendar-picker-indicator {
   opacity: 0;
   position: absolute;
   right: 0;
@@ -338,7 +338,7 @@
   width: 100%;
   height: 100%;
   cursor: pointer;
-}
+} */
 
 /* Ensure the date text remains white */
 .input[type="date"]::-webkit-datetime-edit-text,
@@ -484,7 +484,7 @@
   padding: 20px;
   /* max-width: 1000px; */
   margin: 0 auto;
-  /* width: 100%; */
+  width: 100%;
 }
 
 .uploadContainer {
@@ -583,6 +583,9 @@
   }
   .container {
     max-width: 600px;
+  }
+  .uploadSection {
+    width: auto !important;
   }
 }
 
