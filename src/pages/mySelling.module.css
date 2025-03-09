@@ -252,7 +252,7 @@
 }
 
 .basicDataContainer {
-  max-width: 1000px;
+  /* max-width: 1200px; */
   margin: 0 auto;
   padding: 32px;
   background-color: rgba(31, 28, 28, 0.28);

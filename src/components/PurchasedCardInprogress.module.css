@@ -1,6 +1,6 @@
 .fullContainer {
   width: 100%;
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   align-items: center;
 }
@@ -20,7 +20,7 @@
   background: rgba(31, 28, 28, 0.28);
   border-radius: 12px;
   padding: 24px;
-  width: 100%; /* Full width of its grid column */
+  width: auto;
 }
 
 .mainContent {
@@ -136,6 +136,7 @@
     background: rgba(31, 28, 28, 0.28);
     border-radius: 12px;
     padding: 10px;
-    width: 100%; /* Full width of its grid column */
+    /* width: 100%; */
+    /* Full width of its grid column */
   }
 }
