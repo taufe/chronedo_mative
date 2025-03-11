@@ -17,6 +17,7 @@ const MyPurchase = () => {
   const [inProgressPurchases, setInProgressPurchases] = useState([]);
   const [completedPurchases, setCompletedPurchases] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [openWatch, setOpenWatch] = useState([]);
 
   const getPurchasedWatches = async () => {
     setLoading(true);
@@ -55,6 +56,28 @@ const MyPurchase = () => {
 
   useEffect(() => {
     getPurchasedWatches();
+  }, []);
+
+
+  useEffect(() => {
+    const fetchOpenWatchApi = async () => {
+      const response = await axios.get('https://chronedo.webjerky.com/api/getOpenWatches', {
+        headers: {
+          Authorization: "Bearer 223|fQCZy8Ol01rCyB1aAH7bAM1vqLWG7h1mGUYVEzid85dc39bc"
+        }
+      });
+
+      console.log('response---------', response);
+
+      // Only set the state if response.data.data is an array
+      if (Array.isArray(response.data.data)) {
+        setOpenWatch(response.data.data);
+      } else {
+        console.error('Data is not an array');
+      }
+    };
+
+    fetchOpenWatchApi();
   }, []);
 
   const openWatches = [
@@ -380,7 +403,7 @@ const MyPurchase = () => {
 
         {bottomTabIndex === 1 && (
           <div className={styles.watchesGrid}>
-            {openWatches.slice(0, 8).map((watch, index) => (
+            {/* {openWatch.slice(0, 8).map((watch, index) => (
               <WatchCard
                 key={index}
                 image={watch.image}
@@ -389,7 +412,18 @@ const MyPurchase = () => {
                 buyNowPrice={watch.buyNowPrice}
                 bidPrice={watch.bidPrice}
               />
-            ))}
+            ))} */}
+           {openWatch?.map((watch, index) => (
+  <WatchCard
+    key={index}
+    image={watch.cover}  // Using the 'cover' field for image_url
+    name={watch.reference_no}  // Accessing reference_no directly
+    date={watch.pickup_date_time}
+    buyNowPrice={watch.fixed_price}  // Using 'fixed_price' for the buyNowPrice
+    bidPrice={watch.starting_price}  // Using 'starting_price' for the bidPrice
+  />
+))}
+
           </div>
         )}
         {bottomTabIndex === 2 && (

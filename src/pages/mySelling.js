@@ -67,108 +67,6 @@ const MySelling = () => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  // const getSoldWatches = async () => {
-  //   setLoading(true);
-  //   console.log("Fetching sold watches...");
-  //   const STATIC_TOKEN = "223|fQCZy8Ol01rCyB1aAH7bAM1vqLWG7h1mGUYVEzid85dc39bc";
-  //   try {
-  //     const headers = {
-  //       Authorization: `Bearer ${STATIC_TOKEN}`,
-  //     };
-  //     const url = `https://chronedo.webjerky.com/api/getSoldWatches`; // Replace with the correct API endpoint
-  //     const response = await axios.get(url, { headers });
-
-  //     console.log("Response from getSoldWatches", response.data.data);
-  //     setSoldData(response.data.data);
-
-  //     // Filter data based on order_status
-  //     const pending = response.data.data.filter(
-  //       (sale) => sale.order_status === 0
-  //     );
-  //     const inProgress = response.data.data.filter(
-  //       (sale) => sale.order_status === 1
-  //     );
-  //     const completed = response.data.data.filter(
-  //       (sale) => sale.order_status === 2
-  //     );
-
-  //     setPendingSales(pending);
-  //     setInProgressSales(inProgress);
-  //     setCompletedSales(completed);
-  //   } catch (error) {
-  //     console.error("Error fetching sold watches:", error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getSoldWatches();
-  // }, []);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch(`${baseUrl}/getcloseWatches`, {
-  //         headers: {
-  //           Authorization: `Bearer 223|fQCZy8Ol01rCyB1aAH7bAM1vqLWG7h1mGUYVEzid85dc39bc`, // Add the static token here
-  //         },
-  //       });
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! Status: ${response.status}`);
-  //       }
-
-  //       const data = await response.json();
-  //       console.log("API Response:", data); // Log actual data
-
-  //       if (data.success && Array.isArray(data.data)) {
-  //         setEndedWatches(data.data);
-  //       } else {
-  //         console.error("Unexpected API structure:", data);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching watches:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
-  // useEffect(() => {
-  //   const fetchWatches = async () => {
-  //     try {
-  //       const response = await fetch(`${baseUrl}/getOpenWatches`, {
-  //         headers: {
-  //           Authorization: `Bearer 223|fQCZy8Ol01rCyB1aAH7bAM1vqLWG7h1mGUYVEzid85dc39bc`, // Add the static token here
-  //         },
-  //       });
-  //       console.log("response-----------", response);
-
-  //       // Ensure the response is okay before parsing
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! Status: ${response.status}`);
-  //       }
-
-  //       const data = await response.json();
-  //       console.log("API Response:", data); // Log actual data
-
-  //       if (data.success && Array.isArray(data.data)) {
-  //         setWatches(data.data);
-  //       } else {
-  //         console.error("Unexpected API structure:", data);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching watches:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchWatches();
-  // }, []);
-
   const pendingSelling = [
     {
       image: "/assets/watches/w9.png",
@@ -288,74 +186,6 @@ const MySelling = () => {
       sellerName: "John Doe",
     },
   ];
-
-  // const handleListingComplete = () => {
-  //   setShowSuccessPopup(true);
-  // };
-
-  // const handleSellNow = (card) => {
-  //   setSelectedCard(card);
-  // };
-
-  // const handleNewProduct = () => {
-  //   // Reset all states
-  //   setNewIndex(1);
-  //   setSelectedBox("Original Box");
-  //   setSelectedPapers([]);
-  //   setSelectedPaymentMethods(["Bank payment"]);
-  //   setSelectedAvailability("Ready for delivery in 3-5 workdays");
-  //   setSelectedDelivery("Mandatory: Shipping domestic");
-  //   setSelectedBoosterLevel("Level 1");
-  //   setIsInstantStart(true);
-  //   setIsMaximumEnd(true);
-  //   setSelectedReactivation("none");
-  //   // ... reset other states as needed
-
-  //   // Close popup and navigate
-  //   setShowSuccessPopup(false);
-  //   router.push("/dashboard");
-  // };
-
-  // const toggleCertification = (cert) => {
-  //   setSelectedCertifications((prev) =>
-  //     prev.includes(cert) ? prev.filter((c) => c !== cert) : [...prev, cert]
-  //   );
-  // };
-  // const toggleCaliberCert = (cert) => {
-  //   setSelectedCaliberCerts((prev) =>
-  //     prev.includes(cert) ? prev.filter((c) => c !== cert) : [...prev, cert]
-  //   );
-  // };
-
-  // const toggleFunction = (func) => {
-  //   setSelectedFunctions((prev) =>
-  //     prev.includes(func) ? prev.filter((f) => f !== func) : [...prev, func]
-  //   );
-  // };
-
-  // const handlePhotoUpload = (event, id) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     // Handle the file upload here
-  //     console.log(`Uploading file for ${id}:`, file);
-  //     // You might want to add preview functionality
-  //     // and actual upload logic here
-  //   }
-  // };
-
-  // const togglePaper = (paper) => {
-  //   setSelectedPapers((prev) =>
-  //     prev.includes(paper) ? prev.filter((p) => p !== paper) : [...prev, paper]
-  //   );
-  // };
-
-  // const togglePaymentMethod = (method) => {
-  //   setSelectedPaymentMethods((prev) =>
-  //     prev.includes(method)
-  //       ? prev.filter((m) => m !== method)
-  //       : [...prev, method]
-  //   );
-  // };
 
   const getSoldWatches = async () => {
     setLoading(true);
@@ -2161,7 +1991,7 @@ const MySelling = () => {
             )}
 
             {/* In the inProgress section */}
-            {sellingStatus === "inProgress" &&
+            {/* {sellingStatus === "inProgress" &&
               (selectedCard !== null ? (
                 <MySellingInProgressDetails
                   {...pendingSelling[selectedCard]}
@@ -2174,6 +2004,29 @@ const MySelling = () => {
                       <SoldCardInprogress
                         {...purchase}
                         onSellNow={() => setSelectedCard(index)}
+                      />
+                    </div>
+                  ))}
+                </div>
+              ))} */}
+            {sellingStatus === "inProgress" &&
+              (selectedCard !== null ? (
+                <MySellingInProgressDetails
+                  {...inProgressSales[selectedCard]} // Use inProgressSales instead of pendingSelling
+                  onBack={() => setSelectedCard(null)}
+                />
+              ) : (
+                <div className={styles.sellingGrid}>
+                  {inProgressSales.map((sale, index) => (
+                    <div key={sale.id} className={styles.gridItem}>
+                      <SoldCardInprogress
+                        image={sale.watch.cover}
+                        name={sale.watch.listing_title}
+                        price={sale.watch.fixed_price_value}
+                        date={sale.created_at}
+                        email={sale.buyer.email}
+                        sellerName={`${sale.seller.first_name} ${sale.seller.last_name}`}
+                        onSellNow={() => setSelectedCard(index)} // Pass the index to setSelectedCard
                       />
                     </div>
                   ))}

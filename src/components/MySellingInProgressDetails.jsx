@@ -219,7 +219,7 @@ export const MySellingInProgressDetails = ({
             <span className={styles.statusText}>Sold</span>
             <span className={styles.date}>{date}</span>
           </div>
-          <div className={styles.price}>CHF {price.toLocaleString()}</div>
+          <div className={styles.price}>CHF {price}</div>
         </div>
       </div>
 
