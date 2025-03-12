@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 const Affiliate = () => {
   const router = useRouter();
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [value, setValue] = useState(5);
 
   const handleConfirmPurchase = () => {
     setShowSuccessPopup(true);
@@ -74,8 +75,15 @@ const Affiliate = () => {
                 <span className={{ ...styles.code, backgroud: "red" }}>
                   USD &nbsp;&nbsp;&nbsp;&nbsp; 5,000.00
                 </span>
-                {/* <input type="range" min="0" max="100" value="5" className={styles.slider} />
-                                <span>5%</span> */}
+                <input
+        type="range"
+        min="0"
+        max="100"
+        value={value}
+        className={styles.slider}
+        onChange={(e) => setValue(e.target.value)}
+      />
+      <span>{value}%</span>
               </div>
             </div>
             <div className={styles.affiliateRow}>

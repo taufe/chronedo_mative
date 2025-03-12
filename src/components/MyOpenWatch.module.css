@@ -156,3 +156,45 @@
     padding: 4px;
     color: white;
   }
+
+.statisticsCarousel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.carouselButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.carouselButton:hover {
+    opacity: 0.8;
+}
+
+.statisticSlide {
+    text-align: center;
+    min-width: 100px;
+}
+
+.statLabel {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.statValue {
+    color: #000;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.sellerHeader {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

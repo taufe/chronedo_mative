@@ -3,9 +3,37 @@ import Image from 'next/image';
 import styles from './watchlist.module.css';
 import WatchCard from '../components/WatchCard';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const Watchlist = () => {
     const router = useRouter();
+
+    const [watchList, setWatchList] = useState([]);
+
+    useEffect(() => {
+        const fetchWatchApi = async () => {
+            try {
+                const response = await axios.get(
+                    "https://chronedo.webjerky.com/api/watches?page=1&limit=8",
+                    {
+                        headers: {
+                            Authorization:
+                                "Bearer 222|wq0yIWuRTDsOMPsWwfQLH4WEhVHDCO1RLLzLj0lXb7c13b88",
+                        },
+                    }
+                );
+                setWatchList(response.data.data); // Correctly setting the array from API response
+            } catch (error) {
+                console.error("Error fetching watches:", error);
+            }
+        };
+
+        fetchWatchApi();
+    }, []);
+
+
+
     const watches = [
         { image: '/assets/watches/rolexDatejust.png', name: 'Rolex Datejust Oyster 41mm', date: '24.10.2021, 19:35', buyNowPrice: 5000, bidPrice: 1001 },
         { image: '/assets/watches/omegaSpeedmaster.png', name: 'Omega Speedmaster', date: '24.10.2021, 19:35', buyNowPrice: 5000, bidPrice: 1001 },
@@ -47,14 +75,14 @@ const Watchlist = () => {
                     </div>
                 </div>
                 <div className={styles.watchesGrid}>
-                    {watches.slice(0, 8).map((watch, index) => (
+                    {watchList.slice(0, 8).map((watch, index) => (
                         <WatchCard
-                            key={index}
-                            image={watch.image}
-                            name={watch.name}
-                            date={watch.date}
-                            buyNowPrice={watch.buyNowPrice}
-                            bidPrice={watch.bidPrice}
+                        key={watch.id}
+                        image={watch.cover} // Assuming 'cover' is the image URL
+                        name={watch.listing_title}
+                        date={watch.age_year_of_sale}
+                        buyNowPrice={watch.fixed_price_value}
+                        bidPrice={watch.starting_price}
                             onPress={() => {
                                 router.push(`/product`);
                             }}

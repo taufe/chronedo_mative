@@ -195,28 +195,6 @@ const MyPurchase = () => {
     },
   ];
 
-  // Add dummy data for pending purchases
-  //   const pendingPurchasesDummyData = [
-  //     {
-  //       image: "/assets/watches/w9.png",
-  //       name: "Rolex Datejust Oyster 41mm in very good condition",
-  //       price: 1335.0,
-  //       date: "10.11.2022, 12:14",
-  //       email: "xyz@gmail.com",
-  //       sellerName: "John Doe",
-  //       id: 15,
-  //     },
-  //     {
-  //       image: "/assets/watches/w9.png",
-  //       name: "Rolex Datejust Oyster 41mm in very good condition",
-  //       price: 1335.0,
-  //       date: "10.11.2022, 12:14",
-  //       email: "xyz@gmail.com",
-  //       sellerName: "John Doe",
-  //       id: 16,
-  //     },
-  //   ];
-
   const handleSellNow = (card) => {
     setSelectedCard(card);
   };
@@ -414,15 +392,17 @@ const MyPurchase = () => {
               />
             ))} */}
            {openWatch?.map((watch, index) => (
-  <WatchCard
-    key={index}
-    image={watch.cover}  // Using the 'cover' field for image_url
-    name={watch.reference_no}  // Accessing reference_no directly
-    date={watch.pickup_date_time}
-    buyNowPrice={watch.fixed_price}  // Using 'fixed_price' for the buyNowPrice
-    bidPrice={watch.starting_price}  // Using 'starting_price' for the bidPrice
-  />
-))}
+          <WatchCard
+            key={index}
+            image={watch.cover}  
+            name={watch.reference_no}  
+            date= {watch?.created_at
+              ? `${watch.created_at.split("T")[0]} ${watch.created_at.split("T")[1].split(".")[0]}`
+              : "N/A"}
+            buyNowPrice={watch.fixed_price}  
+            bidPrice={watch.starting_price} 
+          />
+        ))}
 
           </div>
         )}

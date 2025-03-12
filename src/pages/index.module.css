@@ -55,6 +55,13 @@
     border-radius: 4px;
     cursor: pointer;
 }
+.brand-watches-container {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 20px; /* Adjust the gap between items as needed */
+    scroll-behavior: smooth; /* Optional: For smooth scrolling */
+  }
 
 .filterButton {
     background-color: rgba(255, 255, 255, 0.1);

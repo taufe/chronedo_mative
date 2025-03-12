@@ -2,8 +2,58 @@ import DashboardLayout from '../components/Layout/DashboardLayout';
 import Image from 'next/image';
 import styles from './messages.module.css';
 import Link from 'next/link';
+import { useState, useRef, useEffect } from 'react';
 
 const Messages = () => {
+    const [inputMessage, setInputMessage] = useState('');
+    const [messages, setMessages] = useState([
+        {
+            id: 1,
+            text: "Hello, Is it possible to give as a deposit a new Tudor Black bay58 39mm with black dial on steel bracelet plus 3000.-? Kind regards Michelle",
+            sender: "other",
+            timestamp: "01.11.2021",
+            avatar: "/assets/images/person1.png",
+        },
+        {
+            id: 2,
+            text: "Hello Michelle Thank you rather not , the Tudor I would have to sell. Best regards",
+            sender: "self",
+            timestamp: "02.11.2021",
+        }
+    ]);
+
+    const messagesEndRef = useRef(null);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
+
+    const handleSendMessage = (e) => {
+        e.preventDefault();
+        if (!inputMessage.trim()) return;
+
+        const newMessage = {
+            id: messages.length + 1,
+            text: inputMessage,
+            sender: "self",
+            timestamp: new Date().toLocaleDateString(),
+        };
+
+        setMessages([...messages, newMessage]);
+        setInputMessage('');
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSendMessage(e);
+        }
+    };
+
     return (
         <DashboardLayout>
             <div className={styles.dashboardContainer}>
@@ -39,7 +89,9 @@ const Messages = () => {
                                     <h4>Michelle</h4>
                                     <span className={styles.date}>12.02.2022</span>
                                 </div>
-                                <p className={styles.lastMessage}>Hello Mr. Baumberger, the...</p>
+                                <p className={styles.lastMessage}>
+                                    {messages[messages.length - 1]?.text.substring(0, 20)}...
+                                </p>
                             </div>
                         </div>
                         {/* Add more chat items similarly */}
@@ -59,20 +111,27 @@ const Messages = () => {
                         </div>
 
                         <div className={styles.messagesList}>
-                            <div className={styles.messageItem}>
-                                <Image src="/assets/images/person1.png" alt="User" width={32} height={32} className={styles.messageAvatar} />
-                                <div className={styles.messageContent}>
-                                    <p>Hello, Is it possible to give as a deposit a new Tudor Black bay58 39mm with black dial on steel bracelet plus 3000.-? Kind regards Michelle</p>
-                                    <span className={styles.messageTime}>01.11.2021</span>
+                            {messages.map((message) => (
+                                <div 
+                                    key={message.id} 
+                                    className={`${styles.messageItem} ${message.sender === 'self' ? styles.ownMessage : ''}`}
+                                >
+                                    {message.sender !== 'self' && (
+                                        <Image 
+                                            src={message.avatar} 
+                                            alt="User" 
+                                            width={32} 
+                                            height={32} 
+                                            className={styles.messageAvatar} 
+                                        />
+                                    )}
+                                    <div className={styles.messageContent}>
+                                        <p>{message.text}</p>
+                                        <span className={styles.messageTime}>{message.timestamp}</span>
+                                    </div>
                                 </div>
-                            </div>
-                            
-                            <div className={`${styles.messageItem} ${styles.ownMessage}`}>
-                                <div className={styles.messageContent}>
-                                    <p>Hello Michelle Thank you rather not , the Tudor I would have to sell. Best regards</p>
-                                    <span className={styles.messageTime}>02.11.2021</span>
-                                </div>
-                            </div>
+                            ))}
+                            <div ref={messagesEndRef} />
                         </div>
 
                         <div className={styles.messageInput}>
@@ -80,6 +139,9 @@ const Messages = () => {
                                 type="text" 
                                 placeholder="Type Here...." 
                                 className={styles.inputField}
+                                value={inputMessage}
+                                onChange={(e) => setInputMessage(e.target.value)}
+                                onKeyPress={handleKeyPress}
                             />
                             <button className={styles.sendButton}>
                                 <Image src="/assets/icons/send.png" alt="Send" width={45} height={45} />

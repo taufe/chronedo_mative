@@ -8,14 +8,14 @@ import axios from "axios";
 
 const Product = () => {
   const [isMoreExpanded, setIsMoreExpanded] = useState(false);
-  const [productData, setProductData] = useState({});
+  const [productData, setProductData] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
     const fetchProductData = async () => {
       try {
         const response = await axios.get(
-          "https://chronedo.webjerky.com/api/watches/3",
+          "https://chronedo.webjerky.com/api/watches",
           {
             headers: {
               Authorization: `Bearer 229|T82cf8yYBJt9juodKPLIFlLKYMlrDhESB3ue4eXWc2cfa83e`,
@@ -23,10 +23,8 @@ const Product = () => {
           }
         );
 
-        console.log('data-----------', response.data); // Log the response data
-
-        if (response.data.success) {
-          setProductData(response.data.data);
+        if (response.data.success && response.data.data.length > 0) {
+          setProductData(response.data.data[0]); // Set the first product from the list
         }
       } catch (error) {
         console.error("Error fetching product data:", error);
@@ -36,9 +34,6 @@ const Product = () => {
     fetchProductData();
   }, []);
 
-  //   if (!productData) {
-  //     return <div>Loading...</div>;
-  //   }
 
   return (
     <DashboardLayout>
@@ -147,8 +142,7 @@ const Product = () => {
             <div className={styles.mainImage}>
               <Image
                 src={productData?.cover || "/assets/ProductPage/watch1.png"}
-                // alt={productData?.listing_title}
-                alt="Rolex Daytona Main"
+                alt={productData?.listing_title || "Rolex Daytona Main"}
                 layout="fill"
                 objectFit="cover"
               />
@@ -643,21 +637,38 @@ const Product = () => {
               </div>
 
               <div className={styles.sellerRow}>
-                <div className={styles.sellerIconWrapper}>
-                  <Image
-                    src="/assets/ProductPage/original.png"
-                    alt="Rating"
-                    width={24}
-                    height={24}
-                    style={{ objectFit: "contain" }}
-                  />
-                </div>
-                <span className={styles.sellerLabel}>Rating</span>
-                <div className={styles.ratingWrapper}>
-                  <div className={styles.stars}>{"★★★★☆"}</div>
-                  <span className={styles.ratingCount}>(12)</span>
-                </div>
-              </div>
+  <div className={styles.sellerIconWrapper}>
+    <Image
+      src="/assets/ProductPage/original.png"
+      alt="Rating"
+      width={24}
+      height={24}
+      style={{ objectFit: "contain" }}
+    />
+  </div>
+  <span className={styles.sellerLabel}>Rating</span>
+  <div className={styles.ratingWrapper}>
+    <div className={styles.stars}>
+      {Array.from({ length: 5 }, (_, index) => {
+        const ratingValue = index + 1;
+        const overallRating = productData?.seller_ratings?.overall_rating || 0;
+        return (
+          <span
+            key={index}
+            style={{
+              color: ratingValue <= overallRating ? "#ffc107" : "#e4e5e9",
+            }}
+          >
+            ★
+          </span>
+        );
+      })}
+    </div>
+    <span className={styles.ratingCount}>
+      ({productData?.seller_ratings?.total_reviews || 0})
+    </span>
+  </div>
+</div>
 
               <div className={styles.sellerRow}>
                 <div className={styles.sellerIconWrapper}>
@@ -682,7 +693,6 @@ const Product = () => {
 };
 
 export default Product;
-
 
 // import DashboardLayout from '../components/Layout/DashboardLayout';
 // import Image from 'next/image';

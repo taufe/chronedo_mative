@@ -1,16 +1,21 @@
 .brandWatch {
+  flex: 0 0 25%; /* Makes each item take exactly 25% of the container */
+  min-width: 25%; /* Ensures the width doesn't shrink */
+  padding: 0 10px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: auto;
-  padding-right: 20px;
 }
 
 .imageWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
   overflow: hidden;
   border-radius: 8px;
-  width: 200; /* Match the image width */
   height: 230px; 
 }
 
@@ -39,3 +44,18 @@
   font-weight: 500;
   margin-left: 5px;
 }
+
+@media (max-width: 768px) {
+  .imageWrapper {
+    width: auto;
+    display: block;
+    justify-content: center;
+    overflow: hidden;
+    
+  }
+  .brandWatch {
+    flex: 0 0 100%; /* Makes each item take exactly 25% of the container */
+    min-width: auto; /* Ensures the width doesn't shrink */
+  
+  }
+} 

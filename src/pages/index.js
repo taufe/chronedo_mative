@@ -2,212 +2,270 @@ import Head from "next/head";
 import Image from "next/image";
 import WatchCard from "../components/WatchCard";
 import BrandWatch from "../components/BrandWatch";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react"; // Import useRef
 import { useRouter } from "next/router";
 import FilterPopup from "../components/FilterPopup";
 import styles from "./index.module.css";
+
+// Define PopularBrands component outside of Home
+const PopularBrands = () => {
+  const containerRef = useRef(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [maxScroll, setMaxScroll] = useState(0);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      setMaxScroll(
+        containerRef.current.scrollWidth - containerRef.current.clientWidth
+      );
+    }
+  }, []);
+
+  const scrollLeft = () => {
+    if (containerRef.current) {
+      const newPosition = Math.max(scrollPosition - containerRef.current.clientWidth, 0);
+      setScrollPosition(newPosition);
+      containerRef.current.scrollTo({
+        left: newPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const scrollRight = () => {
+    if (containerRef.current) {
+      const newPosition = Math.min(scrollPosition + containerRef.current.clientWidth, maxScroll);
+      setScrollPosition(newPosition);
+      containerRef.current.scrollTo({
+        left: newPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  return (
+    <section className="categories popular-brands">
+      <div className="categories-container">
+        <h2>Popular Brands</h2>
+        <div className="categories-header">
+          <p>
+            Lorem Ipsum is simply dummy text of the
+            <br /> printing and typesetting industry
+          </p>
+          <div className="navigation-arrows">
+            <button 
+              className="arrow-left" 
+              onClick={scrollLeft}
+              disabled={scrollPosition === 0}
+            >
+              <Image
+                src="/assets/icons/leftArrow.png"
+                alt="Left Arrow"
+                width={17}
+                height={10}
+              />
+            </button>
+            <button 
+              className="arrow-right" 
+              onClick={scrollRight}
+              disabled={scrollPosition >= maxScroll}
+            >
+              <Image
+                src="/assets/icons/rightArrow.png"
+                alt="Right Arrow"
+                width={17}
+                height={10}
+              />
+            </button>
+          </div>
+        </div>
+        <div 
+          className="brand-watches-container" 
+          ref={containerRef}
+          style={{
+            display: 'flex',
+            overflow: 'hidden',
+            position: 'relative',
+            width: '100%'
+          }}
+        >
+          {[
+            {
+              img: "/assets/watches/rolexDatejust.png",
+              name: "Rolex Datejust",
+            },
+            {
+              img: "/assets/watches/omegaSpeedmaster.png",
+              name: "Omega Speedmaster",
+            },
+            {
+              img: "/assets/watches/rolexDaydate.png",
+              name: "Rolex Day-date",
+            },
+            {
+              img: "/assets/watches/patekPhilippe.png",
+              name: "PatekPhilippe Nautilus",
+            },
+            {
+              img: "/assets/watches/patekPhilippe.png",
+              name: "PatekPhilippe Nautilus",
+            },
+            {
+              img: "/assets/watches/patekPhilippe.png",
+              name: "PatekPhilippe Nautilus",
+            },
+            {
+              img: "/assets/watches/patekPhilippe.png",
+              name: "PatekPhilippe Nautilus",
+            },
+          ].map((watch, index) => (
+            <BrandWatch key={index} {...watch} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// First, create a new component for CategoryCard
+const CategoryCard = ({ image, title }) => {
+  return (
+    <div className="category-card">
+      <Image
+        src={image}
+        alt={title}
+        width={300}
+        height={400}
+        objectFit="cover"
+      />
+      <h3>{title}</h3>
+      <button className="see-all-btn">
+        See All{" "}
+        <Image
+          src="/assets/icons/rightArrowGolden.png"
+          alt="Right Arrow"
+          width={15}
+          height={8}
+          color="#A98754"
+        />
+      </button>
+    </div>
+  );
+};
+
+// Create a new Categories component
+const Categories = () => {
+  const containerRef = useRef(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [maxScroll, setMaxScroll] = useState(0);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      setMaxScroll(
+        containerRef.current.scrollWidth - containerRef.current.clientWidth
+      );
+    }
+  }, []);
+
+  const scrollLeft = () => {
+    if (containerRef.current) {
+      const newPosition = Math.max(scrollPosition - containerRef.current.clientWidth, 0);
+      setScrollPosition(newPosition);
+      containerRef.current.scrollTo({
+        left: newPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const scrollRight = () => {
+    if (containerRef.current) {
+      const newPosition = Math.min(scrollPosition + containerRef.current.clientWidth, maxScroll);
+      setScrollPosition(newPosition);
+      containerRef.current.scrollTo({
+        left: newPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  // Add more category items for testing
+  const categories = [
+    { title: "Men's Watches", image: "/assets/images/gold-watches.jpg" },
+    { title: "Women's Watches", image: "/assets/images/gold-watches.jpg" },
+    { title: "Gold Watches", image: "/assets/images/gold-watches.jpg" },
+    { title: "Diamond Watches", image: "/assets/images/diamond-watches.jpg" },
+    { title: "Luxury Watches", image: "/assets/images/gold-watches.jpg" },
+    { title: "Sport Watches", image: "/assets/images/gold-watches.jpg" },
+    { title: "Classic Watches", image: "/assets/images/gold-watches.jpg" },
+    { title: "Smart Watches", image: "/assets/images/diamond-watches.jpg" },
+  ];
+
+  return (
+    <section className="categories">
+      <div className="categories-container">
+        <h2>Categories</h2>
+        <div className="categories-header">
+          <p>
+            Lorem Ipsum is simply dummy text of the
+            <br /> printing and typesetting industry
+          </p>
+          <div className="navigation-arrows">
+            <button 
+              className="arrow-left" 
+              onClick={scrollLeft}
+              disabled={scrollPosition === 0}
+            >
+              <Image
+                src="/assets/icons/leftArrow.png"
+                alt="Left Arrow"
+                width={17}
+                height={10}
+              />
+            </button>
+            <button 
+              className="arrow-right" 
+              onClick={scrollRight}
+              disabled={scrollPosition >= maxScroll}
+            >
+              <Image
+                src="/assets/icons/rightArrow.png"
+                alt="Right Arrow"
+                width={17}
+                height={10}
+              />
+            </button>
+          </div>
+        </div>
+        <div 
+          className="category-grid" 
+          ref={containerRef}
+          style={{
+            display: 'flex',
+            overflow: 'hidden',
+            position: 'relative',
+            width: '100%',
+            gap: '20px'
+          }}
+        >
+          {categories.map((category, index) => (
+            <div key={index} style={{ flex: '0 0 25%', minWidth: '25%' }}>
+              <CategoryCard {...category} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const Home = () => {
   const watches = [
-    {
-      image: "/assets/watches/rolexDatejust.png",
-      name: "Rolex Datejust Oyster 41mm",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/omegaSpeedmaster.png",
-      name: "Omega Speedmaster",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/rolexDaydate.png",
-      name: "Rolex Day-Date",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/patekPhilippe.png",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/w1.png",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/w2.jpg",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/w3.jpeg",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/w4.png",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/w5.png",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/w6.png",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/w7.jpg",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/w8.jpg",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/w9.png",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/patekPhilippe.png",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    // Add more watches as needed
+    // Your watches data here
   ];
+
   const newArrivals = [
-    {
-      image: "/assets/watches/rolexDatejust.png",
-      name: "Rolex Datejust Oyster 41mm",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/omegaSpeedmaster.png",
-      name: "Omega Speedmaster",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/rolexDaydate.png",
-      name: "Rolex Day-Date",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/patekPhilippe.png",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/w1.png",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/w2.jpg",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/w3.jpeg",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/w4.png",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/w5.png",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/w6.png",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/w7.jpg",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/w8.jpg",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/w9.png",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    {
-      image: "/assets/watches/patekPhilippe.png",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-    },
-    // Add more watches as needed
+    // Your newArrivals data here
   ];
 
   const router = useRouter();
@@ -327,8 +385,9 @@ const Home = () => {
                 {["Used", "New", "Datejust", "Europe"].map((filter) => (
                   <button
                     key={filter}
-                    className={`${styles.filterButton} ${activeFilters.includes(filter) ? styles.active : ""
-                      }`}
+                    className={`${styles.filterButton} ${
+                      activeFilters.includes(filter) ? styles.active : ""
+                    }`}
                     onClick={() => handleFilterClick(filter)}
                   >
                     {filter}
@@ -382,127 +441,11 @@ const Home = () => {
         </section>
       )}
 
-      {/* Categories Section */}
-      <section className="categories">
-        <div className="categories-container">
-          <h2>Categories</h2>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginRight: "15px",
-            }}
-          >
-            <p>
-              Lorem Ipsum is simply dummy text of the
-              <br /> printing and typesetting industry
-            </p>
-            <div className="navigation-arrows">
-              <button className="arrow-left">
-                <Image
-                  src="/assets/icons/leftArrow.png"
-                  alt="Left Arrow"
-                  width={17}
-                  height={10}
-                />
-              </button>
-              <button className="arrow-right">
-                <Image
-                  src="/assets/icons/rightArrow.png"
-                  alt="Right Arrow"
-                  width={17}
-                  height={10}
-                />
-              </button>
-            </div>
-          </div>
+      {/* Replace the old Categories section with the new component */}
+      <Categories />
 
-          <div className="category-grid">
-            {[
-              "Men's Watches",
-              "Women's Watches",
-              "Gold Watches",
-              "Diamond Watches",
-            ].map((category, index) => (
-              <div key={index} className="category-card">
-                <Image
-                  src={`/assets/images/${category
-                    .toLowerCase()
-                    .replace(" ", "-")}.jpg`}
-                  alt={category}
-                  width={300}
-                  height={400}
-                  objectFit="cover"
-                />
-                <h3>{category}</h3>
-                <button className="see-all-btn">
-                  See All{" "}
-                  <Image
-                    src="/assets/icons/rightArrowGolden.png"
-                    alt="Right Arrow"
-                    width={15}
-                    height={8}
-                    color="#A98754"
-                  />
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="categories popular-brands">
-        <div className="categories-container">
-          <h2>Popular Brands</h2>
-          <div className="categories-header">
-            <p>
-              Lorem Ipsum is simply dummy text of the
-              <br /> printing and typesetting industry
-            </p>
-            <div className="navigation-arrows">
-              <button className="arrow-left">
-                <Image
-                  src="/assets/icons/leftArrow.png"
-                  alt="Left Arrow"
-                  width={17}
-                  height={10}
-                />
-              </button>
-              <button className="arrow-right">
-                <Image
-                  src="/assets/icons/rightArrow.png"
-                  alt="Right Arrow"
-                  width={17}
-                  height={10}
-                />
-              </button>
-            </div>
-          </div>
-          <div className="brand-watches-container">
-            {[
-              {
-                img: "/assets/watches/rolexDatejust.png",
-                name: "Rolex Datejust",
-              },
-              {
-                img: "/assets/watches/omegaSpeedmaster.png",
-                name: "Omega Speedmaster",
-              },
-              {
-                img: "/assets/watches/rolexDaydate.png",
-                name: "Rolex Day-date",
-              },
-              {
-                img: "/assets/watches/patekPhilippe.png",
-                name: "PatekPhilippe Nautilus",
-              },
-            ].map((watch, index) => (
-              <BrandWatch key={index} {...watch} />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Render PopularBrands Component */}
+      <PopularBrands />
 
       <section className="new-arrivals">
         <div className="categories-container">
@@ -512,9 +455,6 @@ const Home = () => {
               Lorem Ipsum is simply dummy text of the
               <br /> printing and typesetting industry
             </p>
-            {/* <button className="see-all-btn">
-              See All <Image src="/assets/icons/rightArrowGolden.png" alt="Right Arrow" width={15} height={8} />
-            </button> */}
           </div>
           <div className="watch-grid">
             {newArrivals.map((watch, index) => (

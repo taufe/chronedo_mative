@@ -122,6 +122,8 @@
   gap: 24px;
   padding: 24px;
   margin-top: 20px;
+  cursor: pointer
+  
 }
 
 /* Make it responsive */
