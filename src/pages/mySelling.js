@@ -56,8 +56,9 @@ const MySelling = () => {
   const [selectedBoosterLevel, setSelectedBoosterLevel] = useState("Level 1");
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [sellingStatus, setSellingStatus] = useState("pending");
-  const [selectedCard, setSelectedCard] = useState(null); // New state
+  const [selectedCard, setSelectedCard] = useState(null);
   const [endedWatches, setEndedWatches] = useState([]);
+  const [selectedSaleDetails, setSelectedSaleDetails] = useState(null);
 
   const [soldData, setSoldData] = useState([]);
   const [pendingSales, setPendingSales] = useState([]);
@@ -281,8 +282,9 @@ const MySelling = () => {
     setShowSuccessPopup(true);
   };
 
-  const handleSellNow = (card) => {
-    setSelectedCard(card);
+  const handleSellNow = (saleDetails) => {
+    setSelectedSaleDetails(saleDetails);
+    setSelectedCard(true);
   };
 
   const handleNewProduct = () => {
@@ -1877,7 +1879,7 @@ const MySelling = () => {
           <div className={styles.sellingGridEndwatch}>
             {watches.map((watch) => (
               <MyOpenWatch
-                key={watch.id} // Use watch.id as the key
+                key={watch.id}
                 image={watch.cover || "/default-watch.png"}
                 name={watch.listing_title}
                 price={
@@ -1959,21 +1961,6 @@ const MySelling = () => {
               </button>
             </div>
 
-            {/* {sellingStatus === "pending" && (
-              <div className={styles.sellingGrid}>
-                {pendingSelling.map((purchase, index) => (
-                  <SoldCardPending
-                    key={index}
-                    image={purchase.image}
-                    name={purchase.name}
-                    price={purchase.price}
-                    date={purchase.date}
-                    email={purchase.email}
-                    sellerName={purchase.sellerName}
-                  />
-                ))}
-              </div>
-            )} */}
             {sellingStatus === "pending" && (
               <div className={styles.sellingGrid}>
                 {pendingSales?.map((sale) => (
@@ -1990,30 +1977,15 @@ const MySelling = () => {
               </div>
             )}
 
-            {/* In the inProgress section */}
-            {/* {sellingStatus === "inProgress" &&
-              (selectedCard !== null ? (
-                <MySellingInProgressDetails
-                  {...pendingSelling[selectedCard]}
-                  onBack={() => setSelectedCard(null)}
-                />
-              ) : (
-                <div className={styles.sellingGrid}>
-                  {pendingSelling.map((purchase, index) => (
-                    <div key={index} className={styles.gridItem}>
-                      <SoldCardInprogress
-                        {...purchase}
-                        onSellNow={() => setSelectedCard(index)}
-                      />
-                    </div>
-                  ))}
-                </div>
-              ))} */}
             {sellingStatus === "inProgress" &&
-              (selectedCard !== null ? (
+              (selectedCard ? (
                 <MySellingInProgressDetails
-                  {...inProgressSales[selectedCard]} // Use inProgressSales instead of pendingSelling
-                  onBack={() => setSelectedCard(null)}
+                  {...selectedSaleDetails}
+                  orderId={selectedSaleDetails.id}
+                  onBack={() => {
+                    setSelectedCard(null);
+                    setSelectedSaleDetails(null);
+                  }}
                 />
               ) : (
                 <div className={styles.sellingGrid}>
@@ -2026,7 +1998,8 @@ const MySelling = () => {
                         date={sale.created_at}
                         email={sale.buyer.email}
                         sellerName={`${sale.seller.first_name} ${sale.seller.last_name}`}
-                        onSellNow={() => setSelectedCard(index)} // Pass the index to setSelectedCard
+                        id={sale.id}
+                        onSellNow={(details) => handleSellNow({ ...details, id: sale.id })}
                       />
                     </div>
                   ))}

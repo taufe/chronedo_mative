@@ -1,6 +1,7 @@
 import Image from "next/image";
 import styles from "./SoldCardInprogress.module.css";
 import { MySellingInProgressDetails } from "./MySellingInProgressDetails";
+import { useState } from 'react';
 
 const SoldCardInprogress = ({
   image,
@@ -9,9 +10,21 @@ const SoldCardInprogress = ({
   date,
   email,
   sellerName,
-  showDetails,
-  onSellNow,
+  onSellNow
 }) => {
+  const [showDetails, setShowDetails] = useState(false);
+
+  const handleSellNow = () => {
+    onSellNow({
+      image,
+      name,
+      price,
+      date,
+      email,
+      sellerName
+    });
+  };
+
   return (
     <div className={styles.fullContainer}>
       {showDetails ? (
@@ -75,15 +88,12 @@ const SoldCardInprogress = ({
               </div>
             </div>
           </div>
-          {/* <div className={styles.fullContainer}> */}
-          {/* Existing card content */}
           <button
             className={styles.sellButton}
-            onClick={onSellNow} // Remove the inline function here
+            onClick={handleSellNow}
           >
             Sell Now
           </button>
-          {/* </div> */}
         </div>
       )}
     </div>

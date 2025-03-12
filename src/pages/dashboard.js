@@ -3,12 +3,12 @@ import Image from 'next/image';
 import styles from './dashboard.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import WatchCard from '../components/WatchCard';
 import FilterPopup from '../components/FilterPopup';
+import { BsArrowRight } from "react-icons/bs";
 
 const Dashboard = () => {
-
     const watches = [
         { image: '/assets/watches/rolexDatejust.png', name: 'Rolex Datejust Oyster 41mm', date: '24.10.2021, 19:35', buyNowPrice: 5000, bidPrice: 1001 },
         { image: '/assets/watches/omegaSpeedmaster.png', name: 'Omega Speedmaster Professional', date: '25.10.2021, 14:20', buyNowPrice: 6800, bidPrice: 5500 },
@@ -27,24 +27,34 @@ const Dashboard = () => {
     ];
 
     const router = useRouter();
-
     const [searchInput, setSearchInput] = useState('');
     const [filteredWatches, setFilteredWatches] = useState(watches);
     const [sortBy, setSortBy] = useState('lowPrice');
     const [activeFilters, setActiveFilters] = useState(['Used', 'New', 'Datejust', 'Europe']);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const categoryContainerRef = useRef(null);
+    const [scrollPosition, setScrollPosition] = useState(0);
+    const [maxScroll, setMaxScroll] = useState(0);
 
     useEffect(() => {
         if (searchInput.length > 1) {
             setFilteredWatches(
                 watches.filter(watch =>
                     watch.name.toLowerCase().includes(searchInput.toLowerCase())
-                )
+                ) // Added missing closing parenthesis here
             );
         } else {
             setFilteredWatches(watches);
         }
-    }, [searchInput, watches]);
+    }, [searchInput, watches]); // Added watches to dependency array
+
+    useEffect(() => {
+        if (categoryContainerRef.current) {
+            setMaxScroll(
+                categoryContainerRef.current.scrollWidth - categoryContainerRef.current.clientWidth
+            );
+        }
+    }, []);
 
     const handleFilterClick = (filter) => {
         if (activeFilters.includes(filter)) {
@@ -64,6 +74,33 @@ const Dashboard = () => {
                 return watches;
         }
     };
+
+    const scrollLeft = () => {
+        if (categoryContainerRef.current) {
+            const newPosition = Math.max(scrollPosition - categoryContainerRef.current.clientWidth, 0);
+            setScrollPosition(newPosition);
+            categoryContainerRef.current.scrollTo({ left: newPosition, behavior: "smooth" });
+        }
+    };
+
+    const scrollRight = () => {
+        if (categoryContainerRef.current) {
+            const newPosition = Math.min(scrollPosition + categoryContainerRef.current.clientWidth, maxScroll);
+            setScrollPosition(newPosition);
+            categoryContainerRef.current.scrollTo({ left: newPosition, behavior: "smooth" });
+        }
+    };
+
+    const categories = [
+        { title: "Men's Watches", image: "/assets/images/gold-watches.jpg" },
+        { title: "Women's Watches", image: "/assets/images/diamond-watches.jpg" },
+        { title: "Gold Watches", image: "/assets/images/gold-watches.jpg" },
+        { title: "Diamond Watches", image: "/assets/images/diamond-watches.jpg" },
+        { title: "Luxury Watches", image: "/assets/images/gold-watches.jpg" },
+        { title: "Sport Watches", image: "/assets/images/diamond-watches.jpg" },
+        { title: "Classic Watches", image: "/assets/images/gold-watches.jpg" },
+        { title: "Smart Watches", image: "/assets/images/diamond-watches.jpg" },
+    ];
 
     return (
         <DashboardLayout>
@@ -96,9 +133,7 @@ const Dashboard = () => {
                     <>
                         <div className={styles.filterSection}>
                             <div className={styles.filterButtons}>
-                                <button
-                                    onClick={() => setIsFilterOpen(true)}
-                                    className={styles.filterIcon}>
+                                <button onClick={() => setIsFilterOpen(true)} className={styles.filterIcon}>
                                     <Image src="/assets/icons/filter.png" alt="Filter" width={20} height={20} />
                                     Filter
                                 </button>
@@ -136,10 +171,8 @@ const Dashboard = () => {
                             ))}
                         </div>
                     </>
-
                 ) : (
                     <>
-                        {/* Overview Section */}
                         <div className={styles.overviewContainer}>
                             <div className={styles.leftColumn}>
                                 <div className={styles.profileSection}>
@@ -192,27 +225,19 @@ const Dashboard = () => {
                                             <Image
                                                 src="/assets/watches/w4.png"
                                                 alt="Rolex"
-                                                width={200}  // Adjust based on your image dimensions
-                                                height={200} // Adjust based on your image dimensions
-                                                style={{
-                                                    maxWidth: '100%',
-                                                    height: 'auto',
-                                                    objectFit: 'cover'
-                                                }}
+                                                width={200}
+                                                height={200}
+                                                style={{ maxWidth: '100%', height: 'auto', objectFit: 'cover' }}
                                             />
                                         </div>
-
                                         <div className={styles.watchDetails}>
                                             <h3>Rolex Datejust Oyster 41mm</h3>
                                             <p>It is a long established fact that a reader will be distracted by the readable.</p>
                                             <div className={styles.priceAction}>
                                                 <span className={styles.price}>$450/-</span>
-                                                <button
-                                                    onClick={() => router.push('/product')}
-                                                    className={styles.buyButton}>Buy Now</button>
+                                                <button onClick={() => router.push('/product')} className={styles.buyButton}>Buy Now</button>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -254,47 +279,44 @@ const Dashboard = () => {
                             </div>
                         </div>
 
-                        {/* Categories Section */}
                         <section className={styles.categories}>
                             <div className={styles.categoriesContainer}>
                                 <h2>Categories</h2>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginRight: '15px' }}>
+                                <div className={styles.categoriesHeader}>
                                     <p>Lorem Ipsum is simply dummy text of the<br /> printing and typesetting industry</p>
                                     <div className={styles.navigationArrows}>
-                                        <button className={styles.arrowLeft}>
+                                        <button 
+                                            className={styles.arrowLeft}
+                                            onClick={scrollLeft}
+                                            disabled={scrollPosition === 0}
+                                        >
                                             <Image src="/assets/icons/leftArrow.png" alt="Left Arrow" width={17} height={10} />
                                         </button>
-                                        <button className={styles.arrowRight}>
+                                        <button 
+                                            className={styles.arrowRight}
+                                            onClick={scrollRight}
+                                            disabled={scrollPosition >= maxScroll}
+                                        >
                                             <Image src="/assets/icons/rightArrow.png" alt="Right Arrow" width={17} height={10} />
                                         </button>
                                     </div>
                                 </div>
-
-                                <div className={styles.categoryGrid}>
-                                    {['Men\'s Watches', 'Women\'s Watches', 'Gold Watches', 'Diamond Watches'].map((category, index) => (
+                                <div className={styles.categoryGrid} ref={categoryContainerRef}>
+                                    {categories.map((category, index) => (
                                         <div key={index} className={styles.categoryCard}>
                                             <div className={styles.categoryImageWrapper}>
                                                 <Image
-                                                    src={`/assets/images/${category.toLowerCase().replace(' ', '-')}.jpg`}
-                                                    alt={category}
+                                                    src={category.image}
+                                                    alt={category.title}
                                                     width={300}
                                                     height={400}
                                                     objectFit="cover"
                                                 />
-                                                <h3>{category}</h3>
+                                                <h3>{category.title}</h3>
                                                 <button className={styles.seeAllBtn}>
                                                     See All
-                                                    <Image
-                                                        src="/assets/icons/rightArrowGolden.png"
-                                                        alt="Right Arrow"
-                                                        width={15}
-                                                        height={8}
-                                                        style={{
-                                                            display: 'inline-block',
-                                                            verticalAlign: 'middle'
-                                                        }}
-                                                    />
-                                                </button>
+                                    <BsArrowRight style={{ color: "#A98754", paddingLeft: 5 }} />
+                                    </button>
                                             </div>
                                         </div>
                                     ))}
@@ -303,20 +325,14 @@ const Dashboard = () => {
                         </section>
                     </>
                 )}
-            </div>
-            {/* <button 
-                className={styles.filterButton} 
-                onClick={() => setIsFilterOpen(true)}
-            >
-                Filter
-            </button> */}
 
-            <FilterPopup
-                isOpen={isFilterOpen}
-                onClose={() => setIsFilterOpen(false)}
-            />
+                <FilterPopup
+                    isOpen={isFilterOpen}
+                    onClose={() => setIsFilterOpen(false)}
+                />
+            </div>
         </DashboardLayout>
     );
 };
 
-export default Dashboard; 
+export default Dashboard;
