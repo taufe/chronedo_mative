@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import styles from "./PurChaseCardInProgressDetails.module.css";
 import { LuDownload } from "react-icons/lu";
 // Import Step Icons
@@ -15,13 +17,14 @@ import successIcon from "/public/assets/icons/successIcon.png";
 import { AiOutlineClockCircle } from "react-icons/ai"; // Clock icon
 import { Rating } from "react-simple-star-rating";
 import { useId } from "react";
+import axios from 'axios';
 
 export const MySellingInProgressDetails = ({
   image,
   name,
   price,
   date,
-  onChange,
+  orderId
 }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [value, setValue] = useState("");
@@ -31,6 +34,8 @@ export const MySellingInProgressDetails = ({
   const [inputWidth, setInputWidth] = useState(
     window.innerWidth < 767 ? "90%" : "98.5%"
   );
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [orderData, setOrderData] = useState(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -40,6 +45,41 @@ export const MySellingInProgressDetails = ({
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    const fetchOrderStatus = async () => {
+      try {
+        const response = await axios.get(
+          `https://chronedo.webjerky.com/api/orderStatus/${orderId}`,
+          {
+            headers: {
+              Authorization: `Bearer 223|fQCZy8Ol01rCyB1aAH7bAM1vqLWG7h1mGUYVEzid85dc39bc`
+            }
+          }
+        );
+        if (response.data.success) {
+          setOrderData(response.data.data);
+          // If pickup_date_time exists in API response, use it
+          if (response.data.data.pickup_date_time) {
+            console.log('response in selling of location',response.data.data)
+            setSelectedDate(new Date(response.data.data.pickup_date_time));
+          }
+          // If pickup_details exists in API response, use it
+          if (response.data.data.pickup_details) {
+            setPickupAddress(response.data.data.pickup_details);
+          }
+          // Set active step based on order_status
+          if (response.data.data.order_status !== null) {
+            setActiveStep(response.data.data.order_status);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching order status:', error);
+      }
+    };
+
+    fetchOrderStatus();
+  }, [orderId]);
 
   const handleNextStep = () => {
     if (activeStep < 3) {
@@ -72,6 +112,13 @@ export const MySellingInProgressDetails = ({
     { activeIcon: step3Active, inactiveIcon: step3Inactive },
   ];
 
+  const CustomInput = ({ value, onClick }) => (
+    <div className={styles.pickupDateTimeBox} onClick={onClick}>
+      <span>{value}</span>
+      <AiOutlineClockCircle className={styles.clockIcon} />
+    </div>
+  );
+
   // Dynamic Content Based on Step
   const getStepContent = () => {
     switch (activeStep) {
@@ -81,7 +128,7 @@ export const MySellingInProgressDetails = ({
             <label className={styles.label}>Pickup Details</label>
             <input
               type="text"
-              value={pickupAddress}
+              value={orderData?.pickup_details || pickupAddress}
               onChange={(e) => setPickupAddress(e.target.value)}
               className={styles.pickupLocationBox}
               style={{ backgroundColor: "transparent", width: inputWidth }}
@@ -89,9 +136,18 @@ export const MySellingInProgressDetails = ({
             />
 
             <label className={styles.label}>Date & Time</label>
-            <div className={styles.pickupDateTimeBox}>
-              25/10/2024 - 10:45 PM
-              <AiOutlineClockCircle className={styles.clockIcon} />
+            <div className={styles.datePickerContainer}>
+              <DatePicker
+                selected={selectedDate}
+                onChange={(date) => setSelectedDate(date)}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                dateFormat="dd/MM/yyyy h:mm aa"
+                minDate={new Date()}
+                customInput={<CustomInput />}
+                className={styles.datePicker}
+              />
             </div>
           </>
         );
@@ -100,7 +156,9 @@ export const MySellingInProgressDetails = ({
           <>
             <label className={styles.label}>Payment Method</label>
             <div className={styles.cashPayment}>
-              Once you pay cash to the buyer please mark it as paid.
+              {orderData?.payment_method === 'Cash' 
+                ? 'Once you pay cash to the buyer please mark it as paid.'
+                : `Payment method: ${orderData?.payment_method || 'Cash'}`}
             </div>
           </>
         );
@@ -109,8 +167,9 @@ export const MySellingInProgressDetails = ({
           <>
             <label className={styles.label}>Watch Handover</label>
             <div className={styles.inputBox}>
-              If you have received the watch, please mark it as &quot;Watch
-              Received&quot;
+              {orderData?.delivery_method === 'Delivery' 
+                ? 'Watch will be delivered to the specified address'
+                : 'If you have received the watch, please mark it as "Watch Received"'}
             </div>
           </>
         );
@@ -122,9 +181,7 @@ export const MySellingInProgressDetails = ({
                 <h4>Communication with the seller</h4>
                 <Rating
                   onClick={handleRating}
-                  onPointerEnter={onPointerEnter}
-                  onPointerLeave={onPointerLeave}
-                  onPointerMove={onPointerMove}
+                  initialValue={orderData?.seller_communication_rating || 0}
                 />
               </div>
               <div className={styles.ratingContainer}>
@@ -161,13 +218,10 @@ export const MySellingInProgressDetails = ({
               <div className={styles.ratingContainer}>
                 <h4>Share with us your opinion</h4>
                 <textarea
-                  id={postTextAreaId}
-                  name="postContent"
-                  rows={4}
-                  cols={40}
+                  value={orderData?.seller_feedback_of_app || ''}
+                  onChange={(e) => handleFeedbackChange(e.target.value)}
                   className={styles.textarea}
                   placeholder="Your feedback to chronedo"
-                  style={{ color: "white" }}
                 />
               </div>
             </div>
@@ -239,7 +293,9 @@ export const MySellingInProgressDetails = ({
       <div className={styles.buttonsWrapper}>
         <div className={styles.satusButton}>
           <div className={styles.status}>Status:</div>
-          <div className={styles.payment}>Payment open</div>
+          <div className={styles.payment}>
+            {orderData?.payment_method === 'Cash' ? 'Payment open' : orderData?.payment_method}
+          </div>
         </div>
         <div className={styles.confirmationButtonWrapper}>
           <LuDownload style={{ marginLeft: 10, marginRight: 10 }} />

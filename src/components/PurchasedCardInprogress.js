@@ -12,7 +12,9 @@ const PurchasedCardInprogress = ({
   onSellNow,
   showDetails,
   onBack,
+  purchaseOrderId
 }) => {
+  console.log('checking purchase order id inprogress screen',purchaseOrderId)
   return (
     <div
       className={
@@ -29,6 +31,7 @@ const PurchasedCardInprogress = ({
           email={email}
           sellerName={sellerName}
           onBack={onBack}
+          purchaseOrderId={purchaseOrderId}
         />
       ) : (
         <div className={styles.purchaseCard}>
@@ -85,7 +88,7 @@ const PurchasedCardInprogress = ({
           <button
             className={styles.sellButton}
             onClick={() =>
-              onSellNow({ image, name, price, date, email, sellerName })
+              onSellNow({ image, name, price, date, email, sellerName,purchaseOrderId })
             }
           >
             Sell Now

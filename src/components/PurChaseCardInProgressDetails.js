@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Image from "next/image";
 import styles from "./PurChaseCardInProgressDetails.module.css";
 import { LuDownload } from "react-icons/lu";
@@ -15,11 +15,41 @@ import successIcon from "/public/assets/icons/successIcon.png";
 import { AiOutlineClockCircle } from "react-icons/ai"; // Clock icon
 import { Rating } from 'react-simple-star-rating'
 import { useId } from 'react';
+import axios from "axios";
 
-export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChange }) => {
+export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChange,purchaseOrderId }) => {
     const [activeStep, setActiveStep] = useState(0);
     const [value, setValue] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [orderData, setOrderData] = useState(null)
+
+    useEffect(()=>{
+
+        const fetchGetApi = async ()=>{
+          
+            try {
+                const response = await axios.get(`https://chronedo.webjerky.com/api/orderStatus/${purchaseOrderId}`,{
+                    headers: {
+                        Authorization: `Bearer 223|fQCZy8Ol01rCyB1aAH7bAM1vqLWG7h1mGUYVEzid85dc39bc`
+                      }
+                })
+                
+                if(response.data.success){
+                    console.log('data-----',response.data.data)
+                    setOrderData(response.data.data);
+                }
+
+                
+            } catch (error) {
+                console.error('Error fetching order status:', error);
+            }
+        } 
+
+        fetchGetApi()
+
+    },[purchaseOrderId])
+
+
 
     const handleNextStep = () => {
         if (activeStep < 3) {

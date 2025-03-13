@@ -250,8 +250,10 @@
 }
 
 .clockIcon {
-  color: #aaa;
-  font-size: 18px;
+  color: #fff;
+  font-size: 20px;
+  margin-top:10px;
+  align-self:flex-end
 }
 
 .textarea {
@@ -336,6 +338,10 @@
   border-radius: 8px;
   border: 1.5px solid #ffffff;
   width: 98.5%;
+  justify-content:space-between
+}
+.datePickerInput {
+  font-size:15px;
 }
 
 .dateInput,

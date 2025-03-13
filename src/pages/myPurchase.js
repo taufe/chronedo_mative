@@ -234,20 +234,26 @@ const MyPurchase = () => {
                 sellerName={`${purchase.seller.first_name} ${purchase.seller.last_name}`}
               />
             ))}
+       
+
           {purchaseStatus === "inProgress" &&
-            inProgressPurchases.map((purchase) => (
-              <PurchasedCardInprogress
-                key={purchase.id}
-                image={purchase.watch.cover}
-                name={purchase.watch.listing_title}
-                price={purchase.watch.fixed_price_value}
-                date={purchase.created_at}
-                email={purchase.buyer.email}
-                sellerName={`${purchase.seller.first_name} ${purchase.seller.last_name}`}
-                onSellNow={handleSellNow}
-                showDetails={false}
-              />
-            ))}
+            inProgressPurchases.map((purchase) => {
+              return (
+                <PurchasedCardInprogress
+                  key={purchase.id}
+                  image={purchase.watch.cover}
+                  name={purchase.watch.listing_title}
+                  price={purchase.watch.fixed_price_value}
+                  date={purchase.created_at}
+                  email={purchase.buyer.email}
+                  sellerName={`${purchase.seller.first_name} ${purchase.seller.last_name}`}
+                  onSellNow={handleSellNow}
+                  showDetails={false}
+                  purchaseOrderId={purchase.buyer.id}
+                />
+              );
+            })}
+
           {purchaseStatus === "completed" &&
             completedPurchases.map((purchase) => (
               <PurchasedCardCompleted

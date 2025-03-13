@@ -68,6 +68,7 @@ const MySelling = () => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
+
   const pendingSelling = [
     {
       image: "/assets/watches/w9.png",
@@ -2000,6 +2001,7 @@ const MySelling = () => {
                         sellerName={`${sale.seller.first_name} ${sale.seller.last_name}`}
                         id={sale.id}
                         onSellNow={(details) => handleSellNow({ ...details, id: sale.id })}
+                        orderId={sale.seller.id}
                       />
                     </div>
                   ))}

@@ -10,7 +10,8 @@ const SoldCardInprogress = ({
   date,
   email,
   sellerName,
-  onSellNow
+  onSellNow,
+  orderId
 }) => {
   const [showDetails, setShowDetails] = useState(false);
 
@@ -21,7 +22,8 @@ const SoldCardInprogress = ({
       price,
       date,
       email,
-      sellerName
+      sellerName,
+      
     });
   };
 
@@ -34,6 +36,7 @@ const SoldCardInprogress = ({
           price={price}
           date={date}
           email={email}
+          orderId={orderId}
           sellerName={sellerName}
           onBack={onBack}
         />
