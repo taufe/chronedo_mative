@@ -3,10 +3,11 @@ import Image from 'next/image';
 import styles from './dashboard.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import WatchCard from '../components/WatchCard';
 import FilterPopup from '../components/FilterPopup';
 import { BsArrowRight } from "react-icons/bs";
+import CategoryCarousel from '../components/CategoryCarousel/CategoryCarousel';
 
 const Dashboard = () => {
     const watches = [
@@ -75,21 +76,35 @@ const Dashboard = () => {
         }
     };
 
-    const scrollLeft = () => {
+    const scrollLeft = useCallback((e) => {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
         if (categoryContainerRef.current) {
             const newPosition = Math.max(scrollPosition - categoryContainerRef.current.clientWidth, 0);
             setScrollPosition(newPosition);
-            categoryContainerRef.current.scrollTo({ left: newPosition, behavior: "smooth" });
+            categoryContainerRef.current.scrollTo({
+                left: newPosition,
+                behavior: "smooth"
+            });
         }
-    };
+    }, [scrollPosition]);
 
-    const scrollRight = () => {
+    const scrollRight = useCallback((e) => {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
         if (categoryContainerRef.current) {
             const newPosition = Math.min(scrollPosition + categoryContainerRef.current.clientWidth, maxScroll);
             setScrollPosition(newPosition);
-            categoryContainerRef.current.scrollTo({ left: newPosition, behavior: "smooth" });
+            categoryContainerRef.current.scrollTo({
+                left: newPosition,
+                behavior: "smooth"
+            });
         }
-    };
+    }, [scrollPosition, maxScroll]);
 
     const categories = [
         { title: "Men's Watches", image: "/assets/images/gold-watches.jpg" },
@@ -279,50 +294,7 @@ const Dashboard = () => {
                             </div>
                         </div>
 
-                        <section className={styles.categories}>
-                            <div className={styles.categoriesContainer}>
-                                <h2>Categories</h2>
-                                <div className={styles.categoriesHeader}>
-                                    <p>Lorem Ipsum is simply dummy text of the<br /> printing and typesetting industry</p>
-                                    <div className={styles.navigationArrows}>
-                                        <button 
-                                            className={styles.arrowLeft}
-                                            onClick={scrollLeft}
-                                            disabled={scrollPosition === 0}
-                                        >
-                                            <Image src="/assets/icons/leftArrow.png" alt="Left Arrow" width={17} height={10} />
-                                        </button>
-                                        <button 
-                                            className={styles.arrowRight}
-                                            onClick={scrollRight}
-                                            disabled={scrollPosition >= maxScroll}
-                                        >
-                                            <Image src="/assets/icons/rightArrow.png" alt="Right Arrow" width={17} height={10} />
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className={styles.categoryGrid} ref={categoryContainerRef}>
-                                    {categories.map((category, index) => (
-                                        <div key={index} className={styles.categoryCard}>
-                                            <div className={styles.categoryImageWrapper}>
-                                                <Image
-                                                    src={category.image}
-                                                    alt={category.title}
-                                                    width={300}
-                                                    height={400}
-                                                    objectFit="cover"
-                                                />
-                                                <h3>{category.title}</h3>
-                                                <button className={styles.seeAllBtn}>
-                                                    See All
-                                    <BsArrowRight style={{ color: "#A98754", paddingLeft: 5 }} />
-                                    </button>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </section>
+                        <CategoryCarousel />
                     </>
                 )}
 
