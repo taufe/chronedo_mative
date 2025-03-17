@@ -2,18 +2,15 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import styles from './AccountSettings2.module.css';
 import Head from 'next/head';
-import Link from 'next/link';
-import OtpInput from '../components/OtpInput';
-import Button from '../components/Button';
-import NextButton from '../components/NextButton';
-import BackButton from '../components/BackButton';
 import { useRouter } from 'next/router';
 import accountSttingsIcon from '../../public/assets/icons/accountSettings.png';
-import Dropdown from '../components/Dropdown';
 import RegistrationCompletePopup from '../components/RegistrationCompletePopup';
+import BackButton from '../components/BackButton';
+import NextButton from '../components/NextButton';
 
 const AccountSettings2 = () => {
     const router = useRouter();
+    const { email, accountType, language, currency, deliveryCountry } = router.query;
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -22,14 +19,13 @@ const AccountSettings2 = () => {
     const [street, setStreet] = useState('');
     const [zipCode, setZipCode] = useState('');
     const [country, setCountry] = useState('');
-    const [idLicense, setIdLicense] = useState('');
-    const [passport, setPassport] = useState('');
     const [city, setCity] = useState('');
     const [selectedIdType, setSelectedIdType] = useState('id');
     const [showPopup, setShowPopup] = useState(false);
 
     const [front, setFront] = useState(null);
     const [back, setBack] = useState(null);
+    const [passport, setPassport] = useState(null);
 
     const handleFileUpload = (e, side) => {
         const file = e.target.files[0];
@@ -37,8 +33,10 @@ const AccountSettings2 = () => {
             const fileURL = URL.createObjectURL(file);
             if (side === 'front') {
                 setFront(fileURL);
-            } else {
+            } else if (side === 'back') {
                 setBack(fileURL);
+            } else if (side === 'passport') {
+                setPassport(fileURL);
             }
         }
     };
@@ -47,25 +45,113 @@ const AccountSettings2 = () => {
         router.back();
     };
 
-    const handleNext = () => {
-        console.log('next');
-        setShowPopup(true);
-
-        setTimeout(() => {
-            setShowPopup(false);
-            router.push('/');
-        }, 3000);
-    };
-
     const closePopup = () => {
         setShowPopup(false);
         router.push('/');
     };
 
-    const handleUpload = (type) => {
-        console.log(`Uploading ${type}`);
+    const handleNext = async () => {
+        console.log("Function handleNext started");
+    
+        const token = localStorage.getItem('token');
+        console.log('Token retrieved:', token);
+    
+        const formData = new FormData();
+        console.log("FormData initialized");
+    
+        formData.append('email', email);
+        console.log("Email added:", email);
+    
+        formData.append('first_name', firstName);
+        console.log("First Name added:", firstName);
+    
+        formData.append('last_name', lastName);
+        console.log("Last Name added:", lastName);
+    
+        formData.append('dob', dateOfBirth);
+        console.log("Date of Birth added:", dateOfBirth);
+    
+        formData.append('zip_code', zipCode);
+        console.log("Zip Code added:", zipCode);
+    
+        formData.append('city', city);
+        console.log("City added:", city);
+    
+        formData.append('country', country);
+        console.log("Country added:", country);
+    
+        formData.append('account_type', accountType);
+        console.log("Account Type added:", accountType);
+    
+        formData.append('address', street);
+        console.log("Address added:", street);
+    
+        formData.append('language', language);
+        console.log("Language added:", language);
+    
+        formData.append('currency', currency);
+        console.log("Currency added:", currency);
+    
+        formData.append('shipping_country', deliveryCountry);
+        console.log("Shipping Country added:", deliveryCountry);
+    
+        console.log("Selected ID Type:", selectedIdType);
+    
+        if (selectedIdType === 'id') {
+            console.log("ID type is 'id'");
+    
+            if (!front || !back) {
+                console.log("Error: Missing front or back ID image");
+                alert('Please upload both front and back images for ID.');
+                return;
+            }
+    
+            formData.append('driver_license_picture_front', front);
+            console.log("Front ID image added:", front);
+    
+            formData.append('driver_license_picture_back', back);
+            console.log("Back ID image added:", back);
+        } else {
+            console.log("ID type is not 'id', assuming passport");
+    
+            if (!passport) {
+                console.log("Error: Missing passport image");
+                alert('Please upload passport image.');
+                return;
+            }
+    
+            formData.append('passport_picture', passport);
+            console.log("Passport image added:", passport);
+        }
+    
+        console.log("Final FormData contents:", formData);
+    
+        try {
+            console.log("Starting API request...");
+            const response = await fetch('/api/profileApi', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data',
+                },
+                body: formData,
+            });
+    
+            console.log("Response received:", response);
+            
+            if (response.ok) {
+                console.log("Form submitted successfully");
+                setShowPopup(true);
+            } else {
+                console.log("Error: Failed to submit form", response);
+                alert('Failed to submit form. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error details:', error);
+            alert('Failed to submit form. Please try again.');
+        }
     };
-
+    
     return (
         <>
             <Head>
@@ -201,7 +287,7 @@ const AccountSettings2 = () => {
                     </div>
                 </div>
 
-                {selectedIdType === 'id' && (
+                {selectedIdType === 'id' ? (
                     <div className={styles.uploadSection}>
                         <div className={styles.uploadContainer}>
                             <div className={styles.uploadBox}>
@@ -289,11 +375,57 @@ const AccountSettings2 = () => {
                             </div>
                         </div>
                     </div>
+                ) : (
+                    <div className={styles.uploadSection}>
+                        <div className={styles.uploadContainer}>
+                            <div className={styles.uploadBox}>
+                                <div className={styles.uploadSide}>
+                                    <Image
+                                        src={"/assets/icons/passport.png"}
+                                        alt="Passport"
+                                        width={80}
+                                        height={80}
+                                        style={{ objectFit: "contain" }}
+                                    />
+                                    <span>Passport</span>
+                                </div>
+                                <label className={styles.uploadArea} htmlFor="passportUpload">
+                                    {passport ? (
+                                        <Image
+                                            src={passport}
+                                            alt="Passport Preview"
+                                            width={100}
+                                            height={100}
+                                            className={styles.preview}
+                                        />
+                                    ) : (
+                                        <>
+                                            <Image
+                                                src={"/assets/icons/upload.png"}
+                                                alt="Upload"
+                                                width={30}
+                                                height={30}
+                                                style={{ objectFit: "contain" }}
+                                            />
+                                            <span>Select file</span>
+                                        </>
+                                    )}
+                                    <input
+                                        type="file"
+                                        id="passportUpload"
+                                        accept="image/*"
+                                        onChange={(e) => handleFileUpload(e, 'passport')}
+                                        style={{ display: 'none' }}
+                                    />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 )}
 
                 <div className={styles.buttonContainer} style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
-                    <BackButton onClick={handleBack} width="190px">Back</BackButton>
-                    <NextButton onClick={handleNext} width="190px">Next</NextButton>
+                    <BackButton onClick={handleBack} className={styles.buttons} >Back</BackButton>
+                    <NextButton onClick={handleNext} className={styles.buttons} >Next</NextButton>
                 </div>
 
                 {showPopup && (

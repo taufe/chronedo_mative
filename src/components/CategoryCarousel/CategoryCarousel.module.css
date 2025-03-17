@@ -98,3 +98,13 @@
     background-color: #a98754;
     color: white;
 }
+
+@media (max-width:767px) {
+    .categoryGrid {
+        display: block;
+        
+    }
+    .categoryImageWrapper {
+        margin-bottom:20px
+    }
+}
