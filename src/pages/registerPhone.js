@@ -1,19 +1,71 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import Image from 'next/image';
 import styles from './Signup.module.css';
 import Head from 'next/head';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import phoneIcon from '../../public/assets/icons/iphone.png';
 
 const RegisterPhone = () => {
     const router = useRouter();
-    const [email, setEmail] = useState('');
+    const { email, password, pin_code } = router.query;
 
+    const [phoneNo, setPhoneNo] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const [countryCode, setCountryCode] = useState('+92'); // Default country code
 
-    const sendData = () => {
-        router.push('/verifyPhone');
+    const sendData = async () => {
+        // Validation for phone number and country code
+        if (!phoneNo || !countryCode) {
+            setError('Please enter your phone number and country code.');
+            return;
+        }
+
+        setLoading(true);
+        setError('');
+
+        try {
+            const response = await axios.post('/api/verifyPhoneApi', {
+                phone_no: phoneNo,
+                country_code: countryCode,
+            });
+
+            const verifiedPhoneNumber = response.data.data?.phone_no;
+            if (response.data.success === true) {
+                // Redirect with phone number and pin_code
+                router.push({
+                    pathname: '/verifyPhone',
+                    query: {
+                        email: email,
+                        password: password,
+                        pin_code: pin_code,
+                        phone_no: verifiedPhoneNumber,
+
+                    },
+                });
+            } else {
+                setError(response.data.message || 'Verification failed. Please try again.');
+            }
+        } catch (err) {
+            console.error('API error:', err);
+            setError('An error occurred. Please try again later.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handlePhoneInput = (e) => {
+        const input = e.target.value;
+        // Check if the input has the country code or not (e.g. +92 3001234567 or 3001234567)
+        if (input.startsWith('+')) {
+            const [code, number] = input.split(' ');
+            setCountryCode(code);
+            setPhoneNo(number);
+        } else {
+            setPhoneNo(input);
+        }
     };
 
     return (
@@ -26,7 +78,7 @@ const RegisterPhone = () => {
             <div className={styles.innerContainer}>
                 <Image
                     src={phoneIcon}
-                    alt="User"
+                    alt="Phone"
                     className={styles.userImage}
                     width={100}
                     height={50}
@@ -35,15 +87,19 @@ const RegisterPhone = () => {
 
                 <div className={styles.inputWrapper}>
                     <input
-                        type="email"
+                        type="text"
                         className={`${styles.input} ${styles.customPlaceholder}`}
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Phone Number"
+                        value={`${countryCode} ${phoneNo}`} // Display the combined value (country code + phone number)
+                        onChange={handlePhoneInput} // Handle input changes
+                        placeholder="Phone Number with Country Code"
                     />
                 </div>
 
-                <button className={styles.submitButton} onClick={sendData}>Next</button>
+                <button className={styles.submitButton} onClick={sendData} disabled={loading}>
+                    {loading ? 'Loading...' : 'Next'}
+                </button>
+
+                {error && <p className={styles.errorText}>{error}</p>}
             </div>
         </>
     );

@@ -11,11 +11,19 @@ import { useRouter } from 'next/router';
 import RegistrationSuccessPopup from '../components/RegistrationSuccessPopup';
 import phoneIcon from '../../public/assets/icons/iphone.png';
 import resendIcon from '../../public/assets/icons/resend.png';
+import axios from 'axios';
 
 const VerifyPhone = () => {
-    const router = useRouter();
+    const router = useRouter();    
+
+    const { email, password, pin_code, phone_no } = router.query;
+    // console.log('Verify phone page query parameters:-------------', router.query);
+
     const [verificationCode, setVerificationCode] = useState('');
     const [showPopup, setShowPopup] = useState(false);
+    const [error, setError]=useState('')
+    const [loading, setLoading]=useState(false)
+
     const handleOtpComplete = (otp) => {
         setVerificationCode(otp);
         // You can add additional logic here, such as auto-submitting the form
@@ -29,10 +37,61 @@ const VerifyPhone = () => {
         router.back();
     };
 
-    const handleNext = () => {
-        console.log('Verification code:', verificationCode);
-        setShowPopup(true);
-    };
+    // const handleNext = () => {
+    //     console.log('Verification code:', verificationCode);
+    //     setShowPopup(true);
+    // };
+
+    const handleNext = async () => {
+        if (!email) {
+          setError("Please enter your email.");
+          return;
+        }
+        if (!password) {
+          setError("Please enter your Password.");
+          return;
+        }
+        if (!phone_no) {
+          setError("Please enter your Phone Number.");
+          return;
+        }
+      
+        setLoading(true);
+        setError("");
+        
+        try {
+          const response = await axios.post("/api/registerApi", { email, password, phone_no });
+          console.log("API Response:", response.data);
+      
+          if (response.data.success == true) {
+            console.log(response.data.message);
+            // Handle success, like redirecting
+            const token = response.data.data.token;
+            if (token) {
+              console.log('token',token)
+                localStorage.setItem("token", token);
+            }
+            setShowPopup(true);
+          } else {
+            setError(response.data.message || "Verification failed. Please try again.");
+          }
+        } catch (err) {
+          console.error("API error:", err.message);
+      
+          if (err.response) {
+            console.error("Error response data:", err.response.data);
+            console.error("Error status:", err.response.status);
+          } else {
+            console.error("Error details:", err);
+          }
+      
+          setError("An error occurred. Please try again later.");
+        } finally {
+          setLoading(false);
+        }
+      };
+      
+    
     const handleCompleteProfileLater = () => {
         setShowPopup(false);
         // Add logic for what happens when user chooses to complete profile later
@@ -42,7 +101,12 @@ const VerifyPhone = () => {
 
     const handleCompleteProfileNow = () => {
         setShowPopup(false);
-        router.push('/accountSettings'); // Adjust this route as needed
+        // router.push('/accountSettings'); 
+        router.push({
+          pathname: '/accountSettings',
+          query: { email: email },
+        });
+        
     };
 
     return (

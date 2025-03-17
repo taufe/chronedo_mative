@@ -3,16 +3,17 @@ import Image from "next/image";
 import styles from "./AccountSettings.module.css";
 import Head from "next/head";
 import Link from "next/link";
-import OtpInput from "../components/OtpInput";
-import Button from "../components/Button";
-import NextButton from "../components/NextButton";
-import BackButton from "../components/BackButton";
 import { useRouter } from "next/router";
 import accountSttingsIcon from "../../public/assets/icons/accountSettings.png";
 import Dropdown from "../components/Dropdown";
+import BackButton from "../components/BackButton";
+import NextButton from "../components/NextButton";
 
 const AccountSettings = () => {
   const router = useRouter();
+  const { email } = router.query; // Email from query string
+  console.log('email-----------', email);
+
   const [accountType, setAccountType] = useState("");
   const [language, setLanguage] = useState("");
   const [currency, setCurrency] = useState("");
@@ -23,7 +24,17 @@ const AccountSettings = () => {
   };
 
   const handleNext = () => {
-    router.push("/accountSettings2");
+    // Pass the values through the route to the next page
+    router.push({
+      pathname: "/accountSettings2",
+      query: {
+        email: email, 
+        accountType: accountType,
+        language: language,
+        currency: currency,
+        deliveryCountry: deliveryCountry
+      }
+    });
   };
 
   return (
@@ -32,10 +43,11 @@ const AccountSettings = () => {
         <title>Account Settings - Your Watch Selling Platform</title>
         <meta
           name="description"
-          content="Verify your phone number to complete registration."
+          content="Configure your account settings."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <div className={styles.innerContainer}>
         <Image
           src={accountSttingsIcon}

@@ -1,20 +1,14 @@
-
-
 "use client"
-
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import styles from "./Login.module.css";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import axios from "axios"; // Import axios
+import axios from "axios";
 import userIcon from "../../public/assets/icons/user.png";
 import eyeCloseIcon from "../../public/assets/icons/eyeclose.png";
 import eyeOpenIcon from "../../public/assets/icons/eyeopen.png";
-import checkIcon from "../../public/assets/icons/check.png";
-
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -26,13 +20,12 @@ const Login = () => {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  // const baseUlr = process.env.NEXT_PUBLIC_BASE_URL;
-
   const handleLogin = async () => {
-    // if (!email || !password) {
-    //   setError("Please fill in all fields.");
-    //   return;
-    // }
+    // Validation
+    if (!email || !password) {
+      setError("Please enter both email and password.");
+      return;
+    }
 
     if (!privacyPolicy || !terms) {
       setError("Please accept the privacy policy and terms.");
@@ -42,72 +35,37 @@ const Login = () => {
     setLoading(true);
     setError("");
 
-    // useEffect(() => {
-    //   const fetchCredential = async () => {
-    //     try {
-    //       await axios.get("https://chronedo.webjerky.com/sanctum/csrf-cookie", {
-    //         withCredentials: true,
-    //       });
-    //     } catch (error) {
-    //       console.error("Error fetching credentials:", error);
-    //     }
-    //   };
-
-    //   fetchCredential();
-    // }, []);
-
     try {
       
-      // await axios.get("https://chronedo.webjerky.com/sanctum/csrf-cookie", {
-      //   withCredentials: true,
-      // });
       const response = await axios.post(
-        "https://chronedo.webjerky.com/api/login",
-        {
-          email:"admin2@gmail.com",
-          password:"admin123",
-        },
-        {
-          headers:{
-          "Content-Type": "application/json",  
-          }
-        }
-        // {
-        //   withCredentials: true, // Ensures cookies are sent
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        // }
+        "/api/loginApi", {email: email, password: password}
       );
+      console.log("Login Response:", response.data);
 
-      console.log("response of data", response);
       if (response.data.success) {
-        // localStorage.setItem("token", response.data.data.token);
-        router.push("/dashboard");
+         console.log(response.data.message); 
+                router.push("/dashboard");
       } else {
         setError(response.data.message || "Login failed. Please try again.");
       }
     } catch (err) {
-      setError(
-        err.response?.data?.message || "An error occurred. Please try again."
-      );
+      console.error("Login error:", err);
+      
+      if (err.response?.status === 401) {
+        setError("Invalid email or password.");
+      } else {
+        setError(err.response?.data?.message || "An error occurred. Please try again later.");
+      }
     } finally {
       setLoading(false);
     }
-  };
-
-  const forgotPassword = () => {
-    router.push("/forgotPassword");
   };
 
   return (
     <>
       <Head>
         <title>Login - Your Watch Selling Platform</title>
-        <meta
-          name="description"
-          content="Get in touch with us for inquiries about watches."
-        />
+        <meta name="description" content="Get in touch with us for inquiries about watches." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={styles.innerContainer}>
@@ -134,6 +92,7 @@ const Login = () => {
 
         <div className={styles.inputWrapper}>
           <button
+            type="button"
             onClick={() => setSecure(!secure)}
             className={styles.eyeButton}
           >
@@ -155,7 +114,10 @@ const Login = () => {
         </div>
 
         <div className={styles.forgotPasswordContainer}>
-          <span className={styles.forgotPassword} onClick={forgotPassword}>
+          <span 
+            className={styles.forgotPassword} 
+            onClick={() => router.push("/forgotPassword")}
+          >
             Forgot Password?
           </span>
         </div>
@@ -205,32 +167,22 @@ const Login = () => {
 
         <p className={styles.orText}>Or</p>
 
-        <button
-          className={styles.socialButton}
-          onClick={() => console.log("LinkedIn login")}
-        >
+        <button className={styles.socialButton}>
           <div className={styles.socialRectangle}>in</div>
           Continue with LinkedIn
         </button>
 
-        <button
-          className={styles.socialButton}
-          onClick={() => console.log("Google login")}
-        >
+        <button className={styles.socialButton}>
           <div className={styles.socialRectangle}>G</div>
           Continue with Google
         </button>
-        <button
-          className={styles.socialButton}
-          onClick={() => console.log("Google login")}
-        >
+
+        <button className={styles.socialButton}>
           <div className={styles.socialRectangle}>f</div>
-          Continue with FaceBook
+          Continue with Facebook
         </button>
-        <button
-          className={styles.socialButton}
-          onClick={() => console.log("Google login")}
-        >
+
+        <button className={styles.socialButton}>
           <div className={styles.socialRectangle}>t</div>
           Continue with Twitter
         </button>

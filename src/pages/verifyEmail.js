@@ -14,20 +14,29 @@ import resendIcon from "../../public/assets/icons/resend.png";
 const VerifyEmail = () => {
   const router = useRouter();
   const [verificationCode, setVerificationCode] = useState("");
+  const { email,password,pin_code } = router.query; 
+  console.log('verify email page', email,password,pin_code)
 
   const handleOtpComplete = (otp) => {
     setVerificationCode(otp);
-    // You can add additional logic here, such as auto-submitting the form
   };
 
   const handleBack = () => {
-    router.back(); // This will navigate to the previous page in the browser history
+    router.back(); 
   };
 
   const handleNext = () => {
     // Add logic for verifying the code if needed
     console.log("Verification code:", verificationCode);
-    router.push("/registerPhone");
+    // router.push("/registerPhone");
+    router.push({
+      pathname: "/registerPhone",  // or another page like /registerPhone
+      query: {
+        email: email,
+        password: password,
+        pin_code: pin_code,
+      }
+    });
   };
 
   return (
