@@ -250,28 +250,67 @@
 .discount {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 20px;
+    width: 100%;
 }
 
 .slider {
-    -webkit-appearance: none;
-    width: 100px;
+    width: 100%;
     height: 4px;
-    background: #A98754;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #ddd; /* Right side color */
     outline: none;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-    cursor: pointer;
+    border-radius: 2px;
+    flex: 1;
+    position: relative;
 }
 
+/* This creates the colored left side of the slider */
+.slider::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(to right, #A98754 var(--value-percent, 0%), #ddd var(--value-percent, 0%));
+}
+
+.slider::-moz-range-track {
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(to right, #A98754 var(--value-percent, 0%), #ddd var(--value-percent, 0%));
+}
+
+/* Slider thumb styles */
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     background: #A98754;
-    border-radius: 50%;
     cursor: pointer;
+    border-radius: 50%;
+    border: none;
+    margin-top: -8px; /* Centers the thumb */
+    position: relative;
+    z-index: 2;
+}
+
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #A98754;
+    cursor: pointer;
+    border-radius: 50%;
+    border: none;
+    position: relative;
+    z-index: 2;
+}
+
+/* Percentage value style */
+.discount span {
+    min-width: 45px;
+    text-align: right;
+    color: #A98754;
+    font-weight: 500;
 }
 
 .generateButton {

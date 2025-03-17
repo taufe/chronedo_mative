@@ -1,171 +1,8 @@
 .dashboardContainer {
-  padding: 0px 80px;
+  /* padding: 0px 80px; */
+  padding: 0px 50px 0px 80px;
   max-width: 100%;
   overflow-x: hidden;
-}
-
-/* Responsive styles */
-@media (max-width: 1200px) {
-  .dashboardContainer {
-    padding: 0px 40px;
-  }
-
-  .overviewContainer {
-    gap: 20px;
-  }
-
-  .categoryGrid {
-    gap: 15px;
-  }
-
-  .watchImagePurchase {
-    width: 35%;
-  }
-}
-
-@media (max-width: 992px) {
-  .dashboardContainer {
-    padding: 0px 30px;
-  }
-
-  .overviewContainer {
-    flex-direction: column;
-  }
-
-  .leftColumn,
-  .rightColumn {
-    width: 100%;
-  }
-
-  .watchlistCard {
-    height: auto;
-  }
-
-  .watchImage {
-    height: 300px;
-  }
-
-  .categoryGrid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-  }
-
-  .categoryCard {
-    height: 350px;
-  }
-
-  .purchaseCard {
-    flex-direction: row;
-  }
-
-  .watchImagePurchase {
-    width: 30%;
-  }
-
-  .watchDetails {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .priceAction {
-    margin-top: auto;
-  }
-}
-
-@media (max-width: 768px) {
-  .dashboardContainer {
-    padding: 0px 16px;
-  }
-
-  .purchaseCard {
-    flex-direction: column;
-  }
-
-  .watchImagePurchase {
-    width: 100%;
-    height: 200px;
-  }
-
-  .watchDetails {
-    padding: 16px;
-  }
-
-  .categoryGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .categoryCard {
-    height: 300px;
-  }
-
-  .buyButton {
-    width: 100%;
-  }
-}
-
-/* Add specific styles for search container responsiveness */
-@media (max-width: 992px) {
-  .searchContainer {
-    max-width: 600px;
-  }
-}
-
-@media (max-width: 576px) {
-  .searchContainer {
-    max-width: 100%;
-  }
-
-  .header {
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .iconsContainer {
-    justify-content: center;
-  }
-}
-
-/* Add specific styles for profile section responsiveness */
-@media (max-width: 992px) {
-  .profileCard {
-    padding: 16px;
-  }
-
-  .profileInfo h3 {
-    font-size: 20px;
-  }
-}
-
-/* Add specific styles for selling section responsiveness */
-@media (max-width: 992px) {
-  .sellCard {
-    padding: 16px;
-  }
-
-  .sellCard h3 {
-    font-size: 20px;
-  }
-
-  .sellCard p {
-    font-size: 16px;
-  }
-}
-
-/* Add specific styles for categories section responsiveness */
-@media (max-width: 992px) {
-  .categories h2 {
-    font-size: 28px;
-  }
-
-  .categories p {
-    font-size: 13px;
-  }
-
-  .navigationArrows {
-    display: none;
-  }
 }
 
 .header {
@@ -616,6 +453,172 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+  .dashboardContainer {
+    padding: 0px 40px;
+  }
+
+  .overviewContainer {
+    gap: 20px;
+  }
+
+  .categoryGrid {
+    gap: 15px;
+  }
+
+  .watchImagePurchase {
+    width: 35%;
+  }
+}
+
+@media (max-width: 992px) {
+  .dashboardContainer {
+    padding: 0px 20px 0px 80px;
+  }
+
+  .overviewContainer {
+    flex-direction: column;
+  }
+
+  .leftColumn,
+  .rightColumn {
+    width: 100%;
+  }
+
+  .watchlistCard {
+    height: auto;
+  }
+
+  .watchImage {
+    height: 300px;
+  }
+
+  .categoryGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .categoryCard {
+    height: 350px;
+  }
+
+  .purchaseCard {
+    flex-direction: row;
+  }
+
+  .watchImagePurchase {
+    width: 30%;
+  }
+
+  .watchDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .priceAction {
+    margin-top: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboardContainer {
+    padding: 0px 16px;
+  }
+
+  .purchaseCard {
+    flex-direction: column;
+  }
+
+  .watchImagePurchase {
+    width: 100%;
+    height: 200px;
+  }
+
+  .watchDetails {
+    padding: 16px;
+  }
+
+  .categoryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .categoryCard {
+    height: 300px;
+  }
+
+  .buyButton {
+    width: 100%;
+  }
+}
+
+/* Add specific styles for search container responsiveness */
+@media (max-width: 992px) {
+  .searchContainer {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 576px) {
+  .searchContainer {
+    max-width: 100%;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .iconsContainer {
+    justify-content: center;
+  }
+}
+
+/* Add specific styles for profile section responsiveness */
+@media (max-width: 992px) {
+  .profileCard {
+    padding: 16px;
+  }
+
+  .profileInfo h3 {
+    font-size: 20px;
+  }
+}
+
+/* Add specific styles for selling section responsiveness */
+@media (max-width: 992px) {
+  .sellCard {
+    padding: 16px;
+  }
+
+  .sellCard h3 {
+    font-size: 20px;
+  }
+
+  .sellCard p {
+    font-size: 16px;
+  }
+}
+
+/* Add specific styles for categories section responsiveness */
+@media (max-width: 992px) {
+  .categories h2 {
+    font-size: 28px;
+  }
+
+  .categories p {
+    font-size: 13px;
+  }
+
+  .navigationArrows {
+    display: none;
+  }
+}
+
+
 
 @media (max-width: 1024px) {
   .categoryGrid {

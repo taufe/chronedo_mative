@@ -30,6 +30,12 @@ const Affiliate = () => {
     phone: "+49 7676 56 426",
   });
 
+  const handleSliderChange = (e) => {
+    const newValue = e.target.value;
+    setValue(newValue);
+    e.target.style.setProperty('--value-percent', `${newValue}%`);
+  };
+
   return (
     <DashboardLayout>
       <div className={styles.watchHeader}>
@@ -58,7 +64,7 @@ const Affiliate = () => {
             </p>
 
             <div className={styles.affiliateRow}>
-              <span>Price tag</span>
+              <span>Discount</span>
               <span className={styles.code}>
                 USD &nbsp;&nbsp;&nbsp;&nbsp; 45,000.00
               </span>
@@ -71,19 +77,22 @@ const Affiliate = () => {
             </div>
             <div className={styles.affiliateRow}>
               <span>Discount</span>
+              <span className={styles.code}>
+                USD &nbsp;&nbsp;&nbsp;&nbsp; 45,000.00
+              </span>
+            </div>
+            <div className={styles.affiliateRow}>
               <div className={styles.discount}>
-                <span className={{ ...styles.code, backgroud: "red" }}>
-                  USD &nbsp;&nbsp;&nbsp;&nbsp; 5,000.00
-                </span>
                 <input
-        type="range"
-        min="0"
-        max="100"
-        value={value}
-        className={styles.slider}
-        onChange={(e) => setValue(e.target.value)}
-      />
-      <span>{value}%</span>
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={value}
+                  className={styles.slider}
+                  onChange={handleSliderChange}
+                  style={{ '--value-percent': `${value}%` }}
+                />
+                <span>{value}%</span>
               </div>
             </div>
             <div className={styles.affiliateRow}>
