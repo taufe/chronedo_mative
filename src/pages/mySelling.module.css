@@ -376,7 +376,7 @@
 /* Responsive styles */
 @media (max-width: 1000px) {
   .basicDataContainer {
-    margin-left: 50px;
+    margin-left: 40px;
     max-width: 800px;
   }
 }
