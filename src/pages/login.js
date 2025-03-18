@@ -40,10 +40,10 @@ const Login = () => {
       const response = await axios.post(
         "/api/loginApi", {email: email, password: password}
       );
-      console.log("Login Response:", response.data);
+      console.log("Login Response:", response.data.data.token);
 
       if (response.data.success) {
-         console.log(response.data.message); 
+        localStorage.setItem("token", response.data.data.token);
                 router.push("/dashboard");
       } else {
         setError(response.data.message || "Login failed. Please try again.");

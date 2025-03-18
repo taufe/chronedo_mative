@@ -3,6 +3,7 @@ import '../styles/globals.css'; // Import global styles
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useRouter } from 'next/router';
+import { DataProvider } from '../context/contextApi';
 
 function MyApp({ Component, pageProps }) {
     const router = useRouter();
@@ -19,10 +20,10 @@ function MyApp({ Component, pageProps }) {
         '/verifyPhone',
         '/accountSettings',
         '/accountSettings2',
-
     ].includes(router.pathname);
+
     return (
-        <>
+        <DataProvider> 
             <Head>
                 <title>Your Watch Selling Platform</title>
                 <meta name="description" content="Find the best watches at amazing prices." />
@@ -31,7 +32,7 @@ function MyApp({ Component, pageProps }) {
             {isAuthRoute && <Header />}
             <Component {...pageProps} />
             {isAuthRoute && <Footer />}
-        </>
+        </DataProvider>
     );
 }
 
