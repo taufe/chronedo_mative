@@ -2,6 +2,7 @@
     padding: 24px;
     max-width: 1200px;
     margin: 0 auto;
+    margin-left: 4%;
 }
 
 .title {
@@ -14,6 +15,7 @@
     background: rgba(31, 28, 28, 0.28);
     border-radius: 12px;
     padding: 24px;
+    margin-left: 3%;
 }
 
 .priceSection {
@@ -211,6 +213,7 @@
     padding: 24px;
     margin: 0 auto;
     max-width: 1200px;
+    margin-left: 4%;
 }
 
 .watchImage {
@@ -262,6 +265,16 @@
 
     .watchInfo p {
         font-size: 16px;
+    }
+    .watchHeader {
+  
+        margin-left: 0;
+    }
+    .checkoutContainer {
+        margin-left: 0;
+    }
+    .checkoutCard {
+        margin-left: 0;
     }
 }
 

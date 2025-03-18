@@ -67,7 +67,7 @@ const MyPurchase = () => {
         }
       });
 
-      console.log('response---------', response);
+      console.log('open watch----------', response);
 
       // Only set the state if response.data.data is an array
       if (Array.isArray(response.data.data)) {

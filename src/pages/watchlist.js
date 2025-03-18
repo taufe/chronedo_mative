@@ -5,11 +5,12 @@ import WatchCard from '../components/WatchCard';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'; // Importing icons
 
 const Watchlist = () => {
     const router = useRouter();
-
     const [watchList, setWatchList] = useState([]);
+    const [favorites, setFavorites] = useState({}); // Stores favorite status for watches
 
     useEffect(() => {
         const fetchWatchApi = async () => {
@@ -23,7 +24,8 @@ const Watchlist = () => {
                         },
                     }
                 );
-                setWatchList(response.data.data); // Correctly setting the array from API response
+                console.log('watchlist data-----', response.data.data)
+                setWatchList(response.data.data);
             } catch (error) {
                 console.error("Error fetching watches:", error);
             }
@@ -32,24 +34,14 @@ const Watchlist = () => {
         fetchWatchApi();
     }, []);
 
+    // Toggle favorite function
+    const toggleFavorite = (id) => {
+        setFavorites((prev) => ({
+            ...prev,
+            [id]: !prev[id],
+        }));
+    };
 
-
-    const watches = [
-        { image: '/assets/watches/rolexDatejust.png', name: 'Rolex Datejust Oyster 41mm', date: '24.10.2021, 19:35', buyNowPrice: 5000, bidPrice: 1001 },
-        { image: '/assets/watches/omegaSpeedmaster.png', name: 'Omega Speedmaster', date: '24.10.2021, 19:35', buyNowPrice: 5000, bidPrice: 1001 },
-        { image: '/assets/watches/rolexDaydate.png', name: 'Rolex Day-Date', date: '24.10.2021, 19:35', buyNowPrice: 5000, bidPrice: 1001 },
-        { image: '/assets/watches/patekPhilippe.png', name: 'Patek Philippe Nautilus', date: '24.10.2021, 19:35', buyNowPrice: 5000, bidPrice: 1001 },
-        { image: '/assets/watches/w1.png', name: 'Patek Philippe Nautilus', date: '24.10.2021, 19:35', buyNowPrice: 5000, bidPrice: 1001 },
-        { image: '/assets/watches/w2.jpg', name: 'Patek Philippe Nautilus', date: '24.10.2021, 19:35', buyNowPrice: 5000, bidPrice: 1001 },
-        { image: '/assets/watches/w3.jpeg', name: 'Patek Philippe Nautilus', date: '24.10.2021, 19:35', buyNowPrice: 5000, bidPrice: 1001 },
-        { image: '/assets/watches/w4.png', name: 'Patek Philippe Nautilus', date: '24.10.2021, 19:35', buyNowPrice: 5000, bidPrice: 1001 },
-        { image: '/assets/watches/w5.png', name: 'Patek Philippe Nautilus', date: '24.10.2021, 19:35', buyNowPrice: 5000, bidPrice: 1001 },
-        { image: '/assets/watches/w6.png', name: 'Patek Philippe Nautilus', date: '24.10.2021, 19:35', buyNowPrice: 5000, bidPrice: 1001 },
-        { image: '/assets/watches/w7.jpg', name: 'Patek Philippe Nautilus', date: '24.10.2021, 19:35', buyNowPrice: 5000, bidPrice: 1001 },
-        { image: '/assets/watches/w8.jpg', name: 'Patek Philippe Nautilus', date: '24.10.2021, 19:35', buyNowPrice: 5000, bidPrice: 1001 },
-        { image: '/assets/watches/w9.png', name: 'Patek Philippe Nautilus', date: '24.10.2021, 19:35', buyNowPrice: 5000, bidPrice: 1001 },
-        { image: '/assets/watches/patekPhilippe.png', name: 'Patek Philippe Nautilus', date: '24.10.2021, 19:35', buyNowPrice: 5000, bidPrice: 1001 },
-    ];
     return (
         <DashboardLayout>
             <div className={styles.dashboardContainer}>
@@ -74,19 +66,41 @@ const Watchlist = () => {
                         <Image src="/assets/icons/profile.png" alt="Profile" width={24} height={24} />
                     </div>
                 </div>
+
                 <div className={styles.watchesGrid}>
-                    {watchList.slice(0, 8).map((watch, index) => (
+                    {watchList.slice(0, 8).map((watch) => (
+                        <div key={watch.id} className={styles.watchCard}>
+                        {/* Watch Image */}
                         <WatchCard
-                        key={watch.id}
-                        image={watch.cover} // Assuming 'cover' is the image URL
-                        name={watch.listing_title}
-                        date={watch.age_year_of_sale}
-                        buyNowPrice={watch.fixed_price_value}
-                        bidPrice={watch.starting_price}
-                            onPress={() => {
-                                router.push(`/product`);
-                            }}
+                            image={watch.cover}
+                            name={watch.listing_title}
+                            date={watch.age_year_of_sale}
+                            buyNowPrice={watch.fixed_price_value}
+                            bidPrice={watch.starting_price}
+                            onPress={() => router.push('/product')}
                         />
+                    
+                        {/* Icons Container (Now inside each watch card, at top right) */}
+                        <div className={styles.iconContainer}>
+                            {/* Favorite Icon (Top) */}
+                            <button
+                                className={styles.favoriteIcon}
+                                onClick={() => toggleFavorite(watch.id)}
+                            >
+                                {favorites[watch.id] ? (
+                                    <AiFillHeart size={20} color="red" />
+                                ) : (
+                                    <AiOutlineHeart size={20} color="white" />
+                                )}
+                            </button>
+                    
+                            {/* Filter Icon (Below Heart) */}
+                            <button className={styles.filterIcon}>
+                                <Image src="/assets/productPage/compare.png" alt="Filter" width={20} height={20} />
+                            </button>
+                        </div>
+                    </div>
+                    
                     ))}
                 </div>
             </div>
@@ -94,4 +108,4 @@ const Watchlist = () => {
     );
 };
 
-export default Watchlist; 
+export default Watchlist;
