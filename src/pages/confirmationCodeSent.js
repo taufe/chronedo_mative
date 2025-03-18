@@ -13,6 +13,9 @@ import resendIcon from '../../public/assets/icons/resend.png';
 
 const ConfirmationCodeSent = () => {
     const router = useRouter();
+    const {email}= router.query
+    console.log('email----------',email)
+
     const [verificationCode, setVerificationCode] = useState('');
 
     const handleOtpComplete = (otp) => {

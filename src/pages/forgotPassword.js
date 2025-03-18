@@ -8,22 +8,25 @@ import { useRouter } from 'next/router';
 import emailIcon from '../../public/assets/icons/emailIcon.png';
 import resendIcon from '../../public/assets/icons/resend.png';
 import ConfirmationPopup from '../components/ConfirmationPopup';
+import axios from 'axios';
 
 const ForgotPassword = () => {
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [showPopup, setShowPopup] = useState(false);
+    const [loading, setLoading] = useState(false)
+    const[error, setError] = useState('')
 
-    const handleSendCode = () => {
-          setTimeout(() => {
-            setShowPopup(false);
-            router.push('/confirmationCodeSent');
-          }, 3000);
-      };
+    // const handleSendCode = () => {
+    //       setTimeout(() => {
+    //         setShowPopup(false);
+    //         router.push('/confirmationCodeSent');
+    //       }, 3000);
+    //   };
 
 
     const handleBack = () => {
-        router.back(); // This will navigate to the previous page in the browser history
+        router.back(); 
     };
 
     const handleNext = () => {
@@ -31,6 +34,67 @@ const ForgotPassword = () => {
         setShowPopup(true);
         handleSendCode();
     };
+
+
+    
+    // const handleSendCode = async () => {
+    //     // Validation
+    //     if (!email) {
+    //       setError("Please enter your email.");
+    //       return;
+    //     }
+    
+    //     setLoading(true);
+    //     setError("");
+    
+    //     try {
+    //       // Simulate pin code generation
+    //       const pin_code = Math.floor(1000 + Math.random() * 9000); // Generates a 4-digit random pin
+    
+    //       // Send email, password, and pin code to the backend or use them for redirection
+    //       const response = await axios.post("/api/verifythemailApi", { email });
+    
+    //       console.log("API Response:", response.data);
+    
+    //       if (response.data.success === true) {
+    //         console.log(response.data.message);
+            
+    //         setTimeout(() => {
+    //             setShowPopup(false);
+    //             router.push({
+    //                 pathname: "/confirmationCodeSent",
+    //                 query: { 
+    //                     email: email,
+    //                     // password: password,
+    //                     pin_code: pin_code,
+    //                  }
+    //             });
+    //         }, 3000);
+    //       } else {
+    //         setError(response.data.message || "Verification failed. Please try again.");
+    //       }
+    //     } catch (err) {
+    //       console.error("API error:", err);
+    
+    //       if (err.response?.status === 401) {
+    //         setError("Invalid email or password.");
+    //       } else {
+    //         setError(err.response?.data?.message || "An error occurred. Please try again later.");
+    //       }
+    //     } finally {
+    //       setLoading(false);
+    //     }
+    //   };
+
+    const handleSendCode = ()=>{
+        setShowPopup(false);
+        router.push({
+            pathname:'/changePassword',
+            query:{
+                email:email
+            }
+        })
+    }
 
     return (
         <>
@@ -74,10 +138,13 @@ const ForgotPassword = () => {
                     />
                     <h4>Request code again</h4>
                 </div>
+                {error && <p className={styles.errorText}>{error}</p>}
 
                 <div className={styles.buttonContainer} style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
                     <BackButton onClick={handleBack} width="175px">Back</BackButton>
-                    <NextButton onClick={handleNext} width="175px">Next</NextButton>
+                    <NextButton onClick={handleNext} disabled={loading}>
+                        {loading ? "Processing..." : "Next"}
+                    </NextButton>
                 </div>
 
                 {showPopup && (
