@@ -365,4 +365,8 @@
   .pickupLocationBox {
     width: 90%;
   }
+  .bottomTabText {
+    font-size: 12px;
+   
+  }
 }
