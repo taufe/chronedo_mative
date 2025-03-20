@@ -8,6 +8,7 @@ const Checkout = () => {
     const [discountCode, setDiscountCode] = useState('');
     const [selectedCountry, setSelectedCountry] = useState('Switzerland');
     const router = useRouter();
+    const { id, watch_price, total_price, watch_name } = router.query;
 
     return (
         <DashboardLayout>
@@ -201,7 +202,22 @@ const Checkout = () => {
                             <h2>USD 11562.15</h2>
                         </div>
                         <button
-                            onClick={() => router.push('/billing')}
+                            // onClick={() => router.push('/billing')} 
+                            onClick={() => {
+                            console.log('onclick',id, watch_price)
+                                router.push({
+                                    pathname: "/billing",
+                                    query: {
+                                        id:id,
+                                        watch_price:watch_price,
+                                        total_price:total_price,
+                                        watch_name:total_price,
+                                        final_price: "11200",
+                                        delivery_method: "Local Pickup at Sellers Location",
+                                    },
+                                });
+                            }}
+                            
                             className={styles.checkoutButton}
                         >
                             PROCEED TO PAYMENT

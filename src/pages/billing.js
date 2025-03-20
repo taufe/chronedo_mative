@@ -4,17 +4,43 @@ import styles from "./billing.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 const Billing = () => {
     const router = useRouter();
+const { id, watch_price, total_price, watch_name, final_price, delivery_method } = router.query;
+console.log('query in billing screen',router.query);
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [customsDutyAccepted, setCustomsDutyAccepted] = useState(false);
     const [legalBindingAccepted, setLegalBindingAccepted] = useState(false);
+    const [loading, setLoading] = useState(false)
+    const [error, setError]= useState('')
 
-    const handleConfirmPurchase = () => {
-        setShowSuccessPopup(true);
-    };
+    const handleConfirmPurchase = async () => {
+    
+        try {
+
+          const response = await axios.post("/api/fixedPriceApi", { id, watch_price,total_price, watch_name,final_price,delivery_method });
+        
+          if (response.data.success === true) {
+            console.log(response.data.message);
+            setShowSuccessPopup(true);
+          } else {
+            setError(response.data.message || "Verification failed. Please try again.");
+          }
+        } catch (err) {
+          console.error("API error:", err);
+    
+          if (err.response?.status === 401) {
+            setError("Invalid email or password.");
+          } else {
+            setError(err.response?.data?.message || "An error occurred. Please try again later.");
+          }
+        } finally {
+          setLoading(false);
+        }
+      };
 
     const [billingAddress, setBillingAddress] = useState({
         name: "John Green",

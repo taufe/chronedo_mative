@@ -35,30 +35,31 @@ const Product = () => {
     };
 
     useEffect(() => {
-        scrollToBottom();
-    }, [messages]);
-
+      window.scrollTo(0, 0);
+    }, []);
+  
     const handleSendMessage = (e) => {
-        e.preventDefault();
-        if (!inputMessage.trim()) return;
-
-        const newMessage = {
-            id: messages.length + 1,
-            text: inputMessage,
-            sender: "self",
-            timestamp: new Date().toLocaleDateString(),
-        };
-
-        setMessages([...messages, newMessage]);
-        setInputMessage('');
+      e.preventDefault();
+      if (!inputMessage.trim()) return;
+  
+      const newMessage = {
+        id: messages.length + 1,
+        text: inputMessage,
+        sender: "self",
+        timestamp: new Date().toLocaleDateString(),
+      };
+  
+      setMessages([...messages, newMessage]);
+      setInputMessage("");
     };
-
+  
     const handleKeyPress = (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            handleSendMessage(e);
-        }
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        handleSendMessage(e);
+      }
     };
+  
 
 
   useEffect(() => {
@@ -72,7 +73,7 @@ const Product = () => {
             },
           }
         );
-
+        console.log('product screen response------------',response.data.data[0])
         if (response.data.success && response.data.data.length > 0) {
           setProductData(response.data.data[0]); // Set the first product from the list
         }
@@ -438,7 +439,16 @@ const Product = () => {
               <div className={styles.buySection}>
                 <button
                   onClick={() => {
-                    router.push("/checkout");
+                    // router.push("/checkout");
+                    router.push({
+                      pathname:'/checkout',
+                      query:{
+                        id:productData.id,
+                        watch_price:productData.starting_price,
+                        total_price:productData.fixed_price,
+                        watch_name:productData.listing_title
+                      }
+                    })
                   }}
                   className={styles.buyButton}
                 >
