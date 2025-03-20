@@ -2,6 +2,7 @@
     padding: 24px;
     max-width: 1200px;
     margin: 0 auto;
+    margin-left:100px
 }
 
 .billingCard {
@@ -31,20 +32,6 @@
     background: #b39569;
 }
 
-@media (max-width: 768px) {
-    .billingContainer {
-        padding: 16px;
-    }
-    
-    .totalRow {
-        flex-direction: column;
-        gap: 8px;
-    }
-    
-    .totalAmount {
-        text-align: right;
-    }
-} 
 
 
 .popupOverlay {
@@ -147,6 +134,7 @@
     padding: 24px;
     margin: 0 auto;
     max-width: 1200px;
+    margin-left:100px
 }
 
 .watchImage {
@@ -166,7 +154,6 @@
     flex: 1;
     background: rgba(31, 28, 28, 0.28);
     border-radius: 12px;
-    /* padding: 24px; */
     height: 150px;
 }
 
@@ -185,11 +172,25 @@
     padding: 0 24px;
 }
 
+@media (max-width: 1000px) {
+    .watchHeader {
+        margin-left:50px
+    } 
+    .billingContainer {
+        margin-left:50px
+    }
+}
 @media (max-width: 768px) {
     .watchHeader {
         flex-direction: column;
         text-align: center;
         margin: 16px;
+        margin-left:0
+    }
+    .billingContainer {
+        margin-left:0px;
+        padding:10px;
+
     }
 
     .watchInfo h1 {
@@ -198,6 +199,20 @@
 
     .watchInfo p {
         font-size: 16px;
+    }
+  
+    .totalRow {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .totalAmount {
+        text-align: right;
+    }
+    .billingCard {
+        background: rgba(31, 28, 28, 0.28);
+        border-radius: 12px;
+        padding: 0px;
     }
 }
 

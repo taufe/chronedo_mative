@@ -1,7 +1,8 @@
 import DashboardLayout from '../components/Layout/DashboardLayout';
 import Image from 'next/image';
 import styles from './settings.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const Settings = () => {
     // States for form values
@@ -54,6 +55,52 @@ const Settings = () => {
             [key]: !prev[key]
         }));
     };
+
+    useEffect(() => {
+        const fetchProfileApi = async () => {
+          const token = await localStorage.getItem('token');
+          if (!token) {
+            console.error('No token found');
+            return;
+          }
+      
+          try {
+            const response = await axios.get('https://chronedo.webjerky.com/api/profile', {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            });
+      
+            if (response.data.success) {
+              const userData = response.data.data;
+              setEmail(userData?.email ?? '');
+              setFirstName(userData?.first_name ?? '');
+              setLastName(userData?.last_name ?? '');
+              setNickname(userData?.first_name + ' ' + userData?.last_name ?? '');
+              setPhone(userData?.phone_no ?? '');
+              setLanguage(userData?.default_language ?? 'Deutsch');
+              setCurrency(userData?.default_price ?? 'CHF');
+              setBirthday(userData?.date_of_birth ?? '');
+      
+              setAddressFirstName(userData?.first_name ?? '');
+              setAddressLastName(userData?.last_name ?? '');
+              setCompany(userData?.company ?? '');
+              setAddressSuffix(userData?.address_suffix ?? '');
+              setStreet(userData?.street ?? '');
+              setZip(userData?.zip_code ?? '');
+              setCity(userData?.city ?? '');
+              setState(userData?.state ?? '');
+              setCountry(userData?.country ?? 'Switzerland');
+            }
+          } catch (error) {
+            console.error('Error fetching profile:', error);
+          }
+        };
+      
+        fetchProfileApi();
+      }, []);
+      
+    
 
     return (
         <DashboardLayout>
@@ -258,6 +305,7 @@ const Settings = () => {
                                     className={`${styles.formInput} ${styles.withMarginRight}`}
                                     value={zip}
                                     onChange={(e) => setZip(e.target.value)}
+                                    
 
                                 />
                             </div>
@@ -330,14 +378,6 @@ const Settings = () => {
                             </div>
                         </div>
                     </div>
-
-                    {/* Add similar notification groups for other categories */}
-                    {/* Offer from chronedo suitable for you */}
-                    {/* System Messages */}
-                    {/* When you are outbid */}
-                    {/* When an item from your watchlist is about to expire */}
-                    {/* When you have successfully sold an item */}
-                    {/* Message when you have received a bid */}
                 </div>
             </div>
         </DashboardLayout>

@@ -24,6 +24,7 @@ const Watchlist = () => {
                         },
                     }
                 );
+                console.log('searches-----------',response.data)
                 setWatchList(response.data.data);
             } catch (error) {
                 console.error("Error fetching watches:", error);

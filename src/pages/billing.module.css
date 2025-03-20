@@ -2,12 +2,31 @@
     padding: 24px;
     max-width: 1200px;
     margin: 0 auto;
+    margin-left:85px
 }
 
 .billingCard {
     background: rgba(31, 28, 28, 0.28);
     border-radius: 12px;
     padding: 24px;
+}
+.productTags {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-bottom: 24px;
+    padding-left: 100px;
+}
+
+.tag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
 }
 
 .title {
@@ -29,6 +48,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
+    
 }
 
 .addressHeader h2 {
@@ -315,6 +335,7 @@
     padding: 24px;
     margin: 0 auto;
     max-width: 1200px;
+    margin-left:85px
 }
 
 .watchImage {
@@ -353,13 +374,30 @@
     padding: 0 24px;
 }
 
+@media (max-width:1000px){
+    .billingContainer {
+        margin-left:50px
+    }
+    .watchHeader {
+      
+        margin-left:50px
+    }
+    .productTags {
+    
+        padding-left: 70px;
+    }
+}
+
 @media (max-width: 768px) {
     .watchHeader {
         flex-direction: column;
         text-align: center;
         margin: 16px;
     }
-
+    .watchHeader {
+      
+        margin-left:0px
+    }
     .watchInfo h1 {
         font-size: 28px;
     }
@@ -367,23 +405,12 @@
     .watchInfo p {
         font-size: 16px;
     }
+    .billingContainer {
+        margin-left:0px
+    }
+    /* .productTags {
+        padding-left:auto
+    } */
 }
 
-.productTags {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    padding-bottom: 24px;
-    padding-left: 100px;
-}
 
-.tag {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 8px 16px;
-    border-radius: 5px;
-    color: #fff;
-    font-size: 14px;
-}

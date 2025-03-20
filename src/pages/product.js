@@ -2,7 +2,7 @@ import DashboardLayout from "../components/Layout/DashboardLayout";
 import Image from "next/image";
 import styles from "./product.module.css";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useRef } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 
@@ -10,6 +10,56 @@ const Product = () => {
   const [isMoreExpanded, setIsMoreExpanded] = useState(false);
   const [productData, setProductData] = useState(null);
   const router = useRouter();
+
+  const [inputMessage, setInputMessage] = useState('');
+    const [messages, setMessages] = useState([
+        {
+            id: 1,
+            text: "Hello, Is it possible to give as a deposit a new Tudor Black bay58 39mm with black dial on steel bracelet plus 3000.-? Kind regards Michelle",
+            sender: "other",
+            timestamp: "01.11.2021",
+            avatar: "/assets/images/person1.png",
+        },
+        {
+            id: 2,
+            text: "Hello Michelle Thank you rather not , the Tudor I would have to sell. Best regards",
+            sender: "self",
+            timestamp: "02.11.2021",
+        }
+    ]);
+
+    const messagesEndRef = useRef(null);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
+
+    const handleSendMessage = (e) => {
+        e.preventDefault();
+        if (!inputMessage.trim()) return;
+
+        const newMessage = {
+            id: messages.length + 1,
+            text: inputMessage,
+            sender: "self",
+            timestamp: new Date().toLocaleDateString(),
+        };
+
+        setMessages([...messages, newMessage]);
+        setInputMessage('');
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSendMessage(e);
+        }
+    };
+
 
   useEffect(() => {
     const fetchProductData = async () => {
@@ -688,492 +738,154 @@ const Product = () => {
           </div>
         </div>
       </div>
+      <div className={styles.dashboardContainer}>
+                
+                
+                <div className={styles.messagesContainer}>
+                    {/* Left Sidebar */}
+                    <div className={styles.chatsList}>
+                        <div className={styles.chatItem}>
+                            <Image src="/assets/images/person1.png" alt="User" width={40} height={40} className={styles.userAvatar} />
+                            <div className={styles.chatInfo}>
+                                <div className={styles.chatHeaderListItem}>
+                                    <h4>Michelle</h4>
+                                    <span className={styles.date}>12.02.2022</span>
+                                </div>
+                                <p className={styles.lastMessage}>
+                                    {messages[messages.length - 1]?.text.substring(0, 20)}...
+                                </p>
+                            </div>
+                        </div>
+                        {/* Add more chat items similarly */}
+                    </div>
+
+                    {/* Right Chat Window */}
+                    <div className={styles.chatWindow}>
+                        <div className={styles.chatHeader}>
+                            <div className={styles.chatUser}>
+                                <Image src="/assets/images/person1.png" alt="Diana Wolf" width={32} height={32} className={styles.userAvatar} />
+                                <h3>Michelle</h3>
+                            </div>
+                            <div className={styles.chatActions}>
+                                <Image src="/assets/icons/info.png" alt="Info" width={24} height={24} />
+                                <Image src="/assets/icons/more.png" alt="More" width={24} height={24} />
+                            </div>
+                        </div>
+
+                        <div className={styles.messagesList}>
+                            {messages.map((message) => (
+                                <div 
+                                    key={message.id} 
+                                    className={`${styles.messageItem} ${message.sender === 'self' ? styles.ownMessage : ''}`}
+                                >
+                                    {message.sender !== 'self' && (
+                                        <Image 
+                                            src={message.avatar} 
+                                            alt="User" 
+                                            width={32} 
+                                            height={32} 
+                                            className={styles.messageAvatar} 
+                                        />
+                                    )}
+                                    <div className={styles.messageContent}>
+                                        <p>{message.text}</p>
+                                        <span className={styles.messageTime}>{message.timestamp}</span>
+                                    </div>
+                                </div>
+                            ))}
+                            <div ref={messagesEndRef} />
+                        </div>
+
+                        <div className={styles.messageInput}>
+                            <input 
+                                type="text" 
+                                placeholder="Type Here...." 
+                                className={styles.inputField}
+                                value={inputMessage}
+                                onChange={(e) => setInputMessage(e.target.value)}
+                                onKeyPress={handleKeyPress}
+                            />
+                            <button className={styles.sendButton}>
+                                <Image src="/assets/icons/send.png" alt="Send" width={45} height={45} />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div className={styles.photosSection}>
+                  {/* <h3 className={styles.photosSectionTitle}>
+                    Photos of the watch
+                  </h3> */}
+                  <div className={styles.photosGrid}>
+                    {[
+                      {
+                        id: "cover",
+                        label: "Cover",
+                        icon: "/assets/WatchDetails/cover.png",
+                      },
+                      {
+                        id: "back",
+                        label: "Back",
+                        icon: "/assets/WatchDetails/back.png",
+                      },
+                      {
+                        id: "wristshot",
+                        label: "Wristshot",
+                        icon: "/assets/WatchDetails/wristshot.png",
+                      },
+                      {
+                        id: "defects",
+                        label: "Defects",
+                        icon: "/assets/WatchDetails/defects.png",
+                      },
+                      // {
+                      //   id: "side1",
+                      //   label: "Side 1",
+                      //   icon: "/assets/WatchDetails/side1.png",
+                      // },
+                      // {
+                      //   id: "side2",
+                      //   label: "Side 2",
+                      //   icon: "/assets/WatchDetails/side2.png",
+                      // },
+                      // {
+                      //   id: "more1",
+                      //   label: "More",
+                      //   icon: "/assets/WatchDetails/more.png",
+                      // },
+                      // {
+                      //   id: "more2",
+                      //   label: "More",
+                      //   icon: "/assets/WatchDetails/more.png",
+                      // },
+                    ].map((item) => (
+                      <div key={item.id} className={styles.photoUploadBox}>
+                        <input
+                          type="file"
+                          id={item.id}
+                          accept="image/*"
+                          className={styles.hiddenInput}
+                          onChange={(e) => handlePhotoUpload(e, item.id)}
+                        />
+                        <label htmlFor={item.id} className={styles.uploadLabel}>
+                          <Image
+                            src={item.icon}
+                            alt={item.label}
+                            width={80}
+                            height={120}
+                            style={{ objectFit: "contain" }}
+                          />
+                          <span>{item.label}</span>
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
     </DashboardLayout>
   );
 };
 
 export default Product;
-
-// import DashboardLayout from '../components/Layout/DashboardLayout';
-// import Image from 'next/image';
-// import styles from './product.module.css';
-// import Link from 'next/link';
-// import { useState } from 'react';
-// import { useRouter } from 'next/router';
-// const Product = () => {
-//     const [isMoreExpanded, setIsMoreExpanded] = useState(false);
-//     const router = useRouter();
-
-//     return (
-//         <DashboardLayout>
-//             <div className={styles.dashboardContainer}>
-//                 <div className={styles.header}>
-//                     <div className={styles.searchContainer}>
-//                         <div className={styles.searchWrapper}>
-//                             <input
-//                                 type="text"
-//                                 placeholder="Search..."
-//                                 className={styles.searchInput}
-//                             />
-//                             <button className={styles.searchButton}>
-//                                 <svg className={styles.searchIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-//                                 </svg>
-//                             </button>
-//                         </div>
-//                     </div>
-//                     <div className={styles.iconsContainer}>
-//                         <Image src="/assets/icons/notification.png" alt="Notifications" width={24} height={24} />
-//                         <Image src="/assets/icons/cart.png" alt="Cart" width={24} height={24} />
-//                         <Image src="/assets/icons/profile.png" alt="Profile" width={24} height={24} />
-//                     </div>
-//                 </div>
-
-//                 <div className={styles.productContainer}>
-//                     <div className={styles.productHeader}>
-//                         <div className={styles.titleSection}>
-//                             <h1 className={styles.productTitle}>Rolex Daytona White Panda 2017</h1>
-//                             <p className={styles.productSubtitle}>bought at Bucherer 2022</p>
-//                         </div>
-//                         <div className={styles.actionIcons}>
-//                             <button 
-//                             onClick={() => {router.push('/affiliate')}}
-//                             className={styles.iconButton}>
-//                                 <Image src="/assets/ProductPage/dollar.png" alt="Price" width={24} height={24} style={{ objectFit: 'contain' }} />
-//                             </button>
-//                             <button className={styles.iconButton}>
-//                                 <Image src="/assets/ProductPage/share.png" alt="Share" width={24} height={24} style={{ objectFit: 'contain' }} />
-//                             </button>
-//                             <button className={styles.iconButton}>
-//                                 <Image src="/assets/ProductPage/compare.png" alt="Compare" width={24} height={24} style={{ objectFit: 'contain' }} />
-//                             </button>
-//                             <button className={styles.iconButton}>
-//                                 <Image src="/assets/ProductPage/like.png" alt="Like" width={24} height={24} style={{ objectFit: 'contain' }} />
-//                             </button>
-//                         </div>
-//                     </div>
-
-//                     <div className={styles.imagesSection}>
-//                         <div className={styles.mainImage}>
-//                             <Image
-//                                 src="/assets/ProductPage/watch1.png"
-//                                 alt="Rolex Daytona Main"
-//                                 layout="fill"
-//                                 objectFit="cover"
-//                             />
-//                         </div>
-//                         <div className={styles.thumbnailsColumn}>
-//                             {[2, 3, 4].map((index) => (
-//                                 <div key={index} className={styles.thumbnail}>
-//                                     <Image
-//                                         src={`/assets/ProductPage/watch${index}.png`}
-//                                         alt={`Thumbnail ${index}`}
-//                                         layout="fill"
-//                                         objectFit="cover"
-//                                     />
-//                                 </div>
-//                             ))}
-//                         </div>
-//                     </div>
-
-//                     <div className={styles.productTags}>
-//                         <div className={styles.tag}>
-//                             <Image src="/assets/ProductPage/original.png" alt="Original" width={24} height={24} style={{ objectFit: 'contain' }} />
-//                             <span>NEW/ORIGINAL PACKED</span>
-//                         </div>
-//                         <div className={styles.tag}>
-//                             <Image src="/assets/ProductPage/private.png" alt="Private Seller" width={24} height={24} style={{ objectFit: 'contain' }} />
-//                             <span>PRIVATE SELLER</span>
-//                         </div>
-//                         <div className={styles.tag}>
-//                             <Image src="/assets/ProductPage/days.png" alt="Delivery Days" width={24} height={24} style={{ objectFit: 'contain' }} />
-//                             <span>≈ 10 DAYS TO YOUR HOME</span>
-//                         </div>
-//                         <div className={styles.tag}>
-//                             <Image src="/assets/ProductPage/warranty.png" alt="Warranty" width={24} height={24} style={{ objectFit: 'contain' }} />
-//                             <span>WITH WARRANTY</span>
-//                         </div>
-//                     </div>
-
-
-//                     <div className={styles.pricingSection}>
-//                         <div className={styles.priceBox}>
-//                             <div className={styles.sellerPrice}>
-//                                 <div>
-//                                     <h3>EUR</h3>
-//                                     <p>in currency of the seller</p>
-//                                 </div>
-//                                 <span className={styles.amount}>10,989.00</span>
-//                             </div>
-//                             <div className={styles.convertedPrice}>
-//                                 <span>USD 11,002.15</span>
-//                             </div>
-
-//                             <div className={styles.additionalCosts}>
-//                                 <div className={styles.costHeader}>
-//                                     <span>+ Additional costs</span>
-//                                     <span>USD 340.00</span>
-//                                 </div>
-//                                 <div className={styles.costDetail}>
-//                                     <div>
-//                                         <p>Estimated Import Costs:</p>
-//                                         <p>Customs, Handling & VAT</p>
-//                                     </div>
-//                                     <span>USD 340.00</span>
-//                                 </div>
-//                             </div>
-//                             <button
-//                                 className={`${styles.moreButton} ${isMoreExpanded ? styles.expanded : ''}`}
-//                                 onClick={() => setIsMoreExpanded(!isMoreExpanded)}
-//                             >
-//                                 {isMoreExpanded ? 'LESS' : 'MORE'}
-//                             </button>
-
-//                             {isMoreExpanded && (
-//                                 <div className={styles.expandedSection}>
-//                                     <div className={styles.membershipSection}>
-//                                         <div className={styles.sectionHeader}>
-//                                             <h3>Membership</h3>
-//                                             <span className={styles.close}>CLOSE</span>
-//                                         </div>
-//                                         <div className={styles.membershipOption}>
-//                                             <div className={styles.optionLeft}>
-//                                                 <div className={styles.radioSelected} />
-//                                                 <div>
-//                                                     <h4>Chronedo Protection Club</h4>
-//                                                     <p>1 Month Membership</p>
-//                                                 </div>
-//                                             </div>
-//                                             <div className={styles.optionRight}>
-//                                                 <span className={styles.questionMark}>?</span>
-//                                                 <span>USD 40.00</span>
-//                                             </div>
-//                                         </div>
-//                                     </div>
-
-//                                     <div className={styles.paymentSection}>
-//                                         <div className={styles.sectionHeader}>
-//                                             <h3>Payment</h3>
-//                                             <span className={styles.close}>CLOSE</span>
-//                                         </div>
-//                                         <div className={styles.paymentOptions}>
-//                                             <div className={styles.paymentOption}>
-//                                                 <div className={styles.optionLeft}>
-//                                                     <div className={styles.radioSelected} />
-//                                                     <span>Secure Payment Service</span>
-//                                                 </div>
-//                                                 <div className={styles.optionRight}>
-//                                                     <span className={styles.questionMark}>?</span>
-//                                                     <span>USD 40.00</span>
-//                                                 </div>
-//                                             </div>
-//                                             {['Direct bank payment to seller', 'Cash Payment'].map((option) => (
-//                                                 <div key={option} className={styles.paymentOption}>
-//                                                     <div className={styles.optionLeft}>
-//                                                         <div className={styles.radio} />
-//                                                         <span>{option}</span>
-//                                                     </div>
-//                                                     <div className={styles.optionRight}>
-//                                                         <span className={styles.questionMark}>?</span>
-//                                                         <span>USD 0.00</span>
-//                                                     </div>
-//                                                 </div>
-//                                             ))}
-//                                         </div>
-//                                     </div>
-
-//                                     <div className={styles.shippingSection}>
-//                                         <div className={styles.sectionHeader}>
-//                                             <h3>Shipping</h3>
-//                                             <span className={styles.close}>CLOSE</span>
-//                                         </div>
-//                                         <div className={styles.shippingOptions}>
-//                                             <div className={styles.shippingOption}>
-//                                                 <div className={styles.optionLeft}>
-//                                                     <div className={styles.radioSelected} />
-//                                                     <div>
-//                                                         <div className={styles.shippingTo}>
-//                                                             <span>Shipping to</span>
-//                                                             <select defaultValue="Switzerland">
-//                                                                 <option value="Switzerland">Switzerland</option>
-//                                                             </select>
-//                                                         </div>
-//                                                         <div className={styles.estimatedFees}>
-//                                                             <span>+ Estimated Customs Duties & Handling Fees</span>
-//                                                             <span>USD 100.00</span>
-//                                                         </div>
-//                                                         <div className={styles.estimatedTaxes}>
-//                                                             <span>+ Estimated Import VAT/Taxes</span>
-//                                                             <span>USD 100.00</span>
-//                                                         </div>
-//                                                     </div>
-//                                                 </div>
-//                                                 <div className={styles.optionRight}>
-//                                                     <span className={styles.questionMark}>?</span>
-//                                                     <span>USD 200.00</span>
-//                                                 </div>
-//                                             </div>
-//                                             <div className={styles.paymentOption}>
-//                                                 <div className={styles.optionLeft}>
-//                                                     <div className={styles.radio} />
-//                                                     <span>Local Pickup at Seller Location</span>
-//                                                 </div>
-//                                                 <div className={styles.optionRight}>
-//                                                     <span className={styles.questionMark}>?</span>
-//                                                     <span>USD 0.00</span>
-//                                                 </div>
-//                                             </div>
-//                                         </div>
-//                                     </div>
-//                                 </div>
-//                             )}
-//                         </div>
-
-//                         <div className={styles.descriptionSection}>
-//                             <div className={styles.descriptionHeader}>
-//                                 <h2>Description</h2>
-//                                 <div className={styles.translationInfo}>
-//                                     <span>automatically translated</span>
-//                                     <button className={styles.showOriginal}>Show original</button>
-//                                 </div>
-//                             </div>
-//                             <p className={styles.descriptionText}>
-//                                 Rolex GMT-Master II 126710 BLNRAbsolutely &quot;new&quot; and unworn (fall 2021)Bought in Switzerland with original receiptBox and paper.Factory warranty until fall 2026Rolex trade-in welcome.
-//                             </p>
-//                             <p className={styles.descriptionText}>
-//                                 Rolex GMT-Master II 126710 BLNRAbsolutely &quot;new&quot; and unworn (fall 2021)Bought in Switzerland with original receiptBox and paper.Factory warranty until fall 2026Rolex trade-in welcome.
-//                             </p>
-//                         </div>
-
-//                         <div className={styles.purchaseSection}>
-//                             <div className={styles.productInfo}>
-//                                 <h2 className={styles.productName}>Rolex Daytona White Panda 2017</h2>
-//                                 <p className={styles.location}>Switzerlad</p>
-//                                 <div className={styles.sellerCurrency}>
-//                                     <p>in currency of the seller:</p>
-//                                     <span>USD 658.56</span>
-//                                 </div>
-//                                 <div className={styles.timeInfo}>
-//                                     <Image src="/assets/icons/clock.png" alt="Time" width={20} height={20} />
-//                                     <span>24.10.2021, 19:35</span>
-//                                     <span>noch 9 Tage und 3h</span>
-//                                 </div>
-//                                 <div className={styles.services}>
-//                                     <span>Added Services</span>
-//                                     <span>CHF 60.00</span>
-//                                 </div>
-//                             </div>
-//                             <div className={styles.buySection}>
-//                                 <button 
-//                                 onClick={() => {router.push('/checkout')}}
-//                                 className={styles.buyButton}>
-//                                     BUY NOW
-//                                     <span>CHF 11&apos;002.15</span>
-//                                 </button>
-//                                 <span className={styles.usdPrice}>USD 10,989.00</span>
-//                             </div>
-//                         </div>
-//                     </div>
-
-//                     <div className={styles.videoSection}>
-//                         <h2 className={styles.videoTitle}>Review Video</h2>
-//                         <div className={styles.videoWrapper}>
-//                             <iframe
-//                                 className={styles.videoFrame}
-//                                 src="https://www.youtube.com/embed/YGQBm9Mnad8"
-//                                 title="Watch Review Video"
-//                                 frameBorder="0"
-//                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-//                                 allowFullScreen
-//                             ></iframe>
-//                         </div>
-//                     </div>
-
-//                     <div className={styles.detailsSection}>
-//                         <h2 className={styles.sectionTitle}>Details</h2>
-//                         <div className={styles.detailsGrid}>
-//                             <div className={styles.detailRow}>
-//                                 <span className={styles.detailLabel}>Brand</span>
-//                                 <span className={styles.detailValue}>Rolex</span>
-//                             </div>
-//                             <div className={styles.detailRow}>
-//                                 <span className={styles.detailLabel}>Model</span>
-//                                 <span className={styles.detailValue}>Daytona</span>
-//                             </div>
-//                             <div className={styles.detailRow}>
-//                                 <span className={styles.detailLabel}>Reference Number</span>
-//                                 <span className={styles.detailValue}>310.32.41.50.02.001</span>
-//                             </div>
-//                             <div className={styles.detailRow}>
-//                                 <span className={styles.detailLabel}>Year of first sale</span>
-//                                 <span className={styles.detailValue}>2020</span>
-//                             </div>
-//                             <div className={styles.detailRow}>
-//                                 <span className={styles.detailLabel}>Condition</span>
-//                                 <span className={styles.detailValue}>new/original packed</span>
-//                             </div>
-//                         </div>
-//                         <button className={styles.showDetailsButton}>Show details</button>
-//                     </div>
-
-//                     <div className={styles.warrantySection}>
-//                         <h2 className={styles.sectionTitle}>Warranty</h2>
-//                         <div className={styles.warrantyGrid}>
-//                             <div className={styles.detailRow}>
-//                                 <span className={styles.detailLabel}>Manufacturer</span>
-//                                 <span className={styles.detailValue}>21.12.2025</span>
-//                             </div>
-//                             <div className={styles.detailRow}>
-//                                 <span className={styles.detailLabel}>Seller</span>
-//                                 <span className={styles.detailValue}>none</span>
-//                             </div>
-//                         </div>
-//                     </div>
-
-
-//                     <div className={styles.scopeSection}>
-//                         <h2 className={styles.sectionTitle}>Scope of Delivery</h2>
-//                         <div className={styles.scopeGrid}>
-//                             <div className={styles.scopeRow}>
-//                                 <span className={styles.scopeLabel}>Box</span>
-//                                 <Image src="/assets/icons/checkGreen.png" alt="Check" width={20} height={20} />
-//                                 <span className={styles.scopeValue}>Original Box</span>
-//                             </div>
-//                             <div className={styles.scopeRow}>
-//                                 <span className={styles.scopeLabel}>Papers</span>
-//                                 <Image src="/assets/icons/checkGreen.png" alt="Check" width={20} height={20} />
-//                                 <span className={styles.scopeValue}>Original Warranty Card</span>
-//                             </div>
-//                             <div className={styles.scopeRow}>
-//                                 <span className={styles.scopeLabel}></span>
-//                                 <Image src="/assets/icons/checkGreen.png" alt="Check" width={20} height={20} />
-//                                 <span className={styles.scopeValue}>Original Manual</span>
-//                             </div>
-//                             <div className={styles.scopeRow}>
-//                                 <span className={styles.scopeLabel}></span>
-//                                 <Image src="/assets/icons/checkGreen.png" alt="Check" width={20} height={20} />
-//                                 <span className={styles.scopeValue}>Receipt from initial purchase</span>
-//                             </div>
-//                         </div>
-//                         <div className={styles.furtherInfo}>
-//                             <span className={styles.furtherLabel}>Further</span>
-//                             <p className={styles.furtherText}>
-//                                 Watch, box and warranty card from Rolex. In addition, a cleaning kit is supplied.
-//                             </p>
-//                         </div>
-//                     </div>
-
-//                     <div className={styles.paymentSection}>
-//                         <h2 className={styles.sectionTitle}>Payment</h2>
-//                         <div className={styles.paymentGrid}>
-//                             <div className={styles.paymentRow}>
-//                                 <span className={styles.paymentLabel}>Delivery Time</span>
-//                                 <Image src="/assets/icons/checkGreen.png" alt="Check" width={20} height={20} />
-//                                 <span className={styles.paymentValue}>about 10 days</span>
-//                             </div>
-//                             <div className={styles.paymentRow}>
-//                                 <span className={styles.paymentLabel}>Availability</span>
-//                                 <Image src="/assets/icons/checkGreen.png" alt="Check" width={20} height={20} />
-//                                 <span className={styles.paymentValue}>Ready for shipment in 3-5 workdays</span>
-//                             </div>
-//                             <div className={styles.paymentRow}>
-//                                 <span className={styles.paymentLabel}>Payment</span>
-//                                 <Image src="/assets/icons/checkGreen.png" alt="Check" width={20} height={20} />
-//                                 <span className={styles.paymentValue}>Cash payment upon collection</span>
-//                             </div>
-//                             <div className={styles.paymentRow}>
-//                                 <span className={styles.paymentLabel}></span>
-//                                 <Image src="/assets/icons/checkGreen.png" alt="Check" width={20} height={20} />
-//                                 <span className={styles.paymentValue}>Bank payment to seller in USD</span>
-//                             </div>
-//                             <div className={styles.paymentRow}>
-//                                 <span className={styles.paymentLabel}></span>
-//                                 <Image src="/assets/icons/checkGreen.png" alt="Check" width={20} height={20} />
-//                                 <span className={styles.paymentValue}>Bank payment in CHF</span>
-//                             </div>
-//                             <div className={styles.paymentRow}>
-//                                 <span className={styles.paymentLabel}>Handover</span>
-//                                 <Image src="/assets/icons/checkGreen.png" alt="Check" width={20} height={20} />
-//                                 <span className={styles.paymentValue}>Handover in Basel, Switzerland</span>
-//                             </div>
-//                             <div className={styles.paymentRow}>
-//                                 <span className={styles.paymentLabel}></span>
-//                                 <Image src="/assets/icons/checkGreen.png" alt="Check" width={20} height={20} />
-//                                 <span className={styles.paymentValue}>Shipping Worldwide</span>
-//                             </div>
-//                         </div>
-//                     </div>
-
-//                     <div className={styles.sellerSection}>
-//                         <h2 className={styles.sectionTitle}>Seller</h2>
-//                         <div className={styles.sellerGrid}>
-//                             <div className={styles.sellerRow}>
-//                                 <div className={styles.sellerIconWrapper}>
-//                                     <Image
-//                                         src="/assets/ProductPage/private.png"
-//                                         alt="Private User"
-//                                         width={24}
-//                                         height={24}
-//                                         style={{ objectFit: 'contain' }}
-//                                     />
-//                                 </div>
-//                                 <span className={styles.sellerLabel}>Private User</span>
-//                                 <span className={styles.sellerValue}>Watch_Lover1993</span>
-//                             </div>
-
-//                             <div className={styles.sellerRow}>
-//                                 <div className={styles.sellerIconWrapper}>
-//                                     <Image
-//                                         src="/assets/ProductPage/location.png"
-//                                         alt="Location"
-//                                         width={24}
-//                                         height={24}
-//                                         style={{ objectFit: 'contain' }}
-//                                     />
-//                                 </div>
-//                                 <span className={styles.sellerLabel}>Switzerland</span>
-//                                 <span className={styles.sellerValue}>4665 Oftenrigen</span>
-//                             </div>
-
-//                             <div className={styles.sellerRow}>
-//                                 <div className={styles.sellerIconWrapper}>
-//                                     <Image
-//                                         src="/assets/ProductPage/original.png"
-//                                         alt="Rating"
-//                                         width={24}
-//                                         height={24}
-//                                         style={{ objectFit: 'contain' }}
-//                                     />
-//                                 </div>
-//                                 <span className={styles.sellerLabel}>Rating</span>
-//                                 <div className={styles.ratingWrapper}>
-//                                     <div className={styles.stars}>
-//                                         {'★★★★☆'}
-//                                     </div>
-//                                     <span className={styles.ratingCount}>(12)</span>
-//                                 </div>
-//                             </div>
-
-//                             <div className={styles.sellerRow}>
-//                                 <div className={styles.sellerIconWrapper}>
-//                                     <Image
-//                                         src="/assets/ProductPage/response.png"
-//                                         alt="Response Time"
-//                                         width={24}
-//                                         height={24}
-//                                         style={{ objectFit: 'contain' }}
-//                                     />
-//                                 </div>
-//                                 <span className={styles.sellerLabel}>Ø response time</span>
-//                                 <span className={styles.sellerValue}>2 hours</span>
-//                             </div>
-//                         </div>
-//                         <button className={styles.showMoreButton}>Show more</button>
-//                     </div>
-//                 </div>
-//             </div>
-//         </DashboardLayout>
-//     );
-// };
-
-// export default Product; 
