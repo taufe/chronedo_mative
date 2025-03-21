@@ -2,17 +2,37 @@ import DashboardLayout from '../components/Layout/DashboardLayout';
 import Image from 'next/image';
 import styles from './myPromotings.module.css';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import SoldCardPending from '../components/SoldCardPending';
 import SoldCardInprogress from '../components/SoldCardInprogress';
 import SoldCardCompleted from '../components/SoldCardCompleted';
 import WatchCardMyPromotings from '../components/WatchCardMyPromotings';
+import axios from 'axios';
 
 const MyPromotings = () => {
     const [bottomTabIndex, setBottomTabIndex] = useState(1);
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
     const [sellingStatus, setSellingStatus] = useState('pending');
+    const [promos, setPromos] = useState({ active: [], lost: [], successful: [] });
+
+    useEffect(() => {
+        const fetchPromos = async () => {
+            try {
+                const response = await axios.get('https://chronedo.webjerky.com/api/promos', {
+                    headers: {
+                        'Authorization': 'Bearer 222|wq0yIWuRTDsOMPsWwfQLH4WEhVHDCO1RLLzLj0lXb7c13b88'
+                    }
+                });
+                setPromos(response.data); // No need for response.json()
+            } catch (error) {
+                console.error('Error fetching promos:', error);
+            }
+        };
+    
+        fetchPromos();
+    }, []);
+    
 
     const pendingSelling = [
         {
@@ -163,37 +183,40 @@ const MyPromotings = () => {
                         </div>
                     </>
                 }
-                {bottomTabIndex === 2 &&
-                    <div className={styles.watchesGrid}>
-                        {watches.slice(0, 8).map((watch, index) => (
-                            <WatchCardMyPromotings
-                                key={`active-watch-${index}`}
-                                image={watch.image}
-                                name={watch.name}
-                                price={watch.price}
-                                location={watch.location}
-                                promoterCount={watch.promoterCount}
-                                sellerCode={watch.sellerCode}
-                                sold={watch.sold}
-                                active={watch.active}
-                                onPress={() => {/* handle click */ }}
-                            />
-                        ))}
-                    </div>
-                }
+               {bottomTabIndex === 2 && (
+    <div className={styles.watchesGrid}>
+        {promos.active.map((promo, index) => {            
+            return (
+                <WatchCardMyPromotings
+                    key={`active-watch-${index}`}
+                    image={promo?.watch?.cover}
+                    name={promo?.watch?.listing_title}
+                    price={promo?.watch?.fixed_price_value}
+                    location="Switzerland"
+                    promoterCount={12}
+                    sellerCode={promo?.promo_code}
+                    sold={false}
+                    active={true}
+                    onPress={() => { /* handle click */ }}
+                />
+            );
+        })}
+    </div>
+)}
+
                 {bottomTabIndex === 3 &&
                     <div className={styles.watchesGrid}>
-                        {watches.slice(0, 8).map((watch, index) => (
+                        {promos.lost.map((promo, index) => (
                             <WatchCardMyPromotings
                                 key={`lost-watch-${index}`}
-                                image={watch.image}
-                                name={watch.name}
-                                price={watch.price}
-                                location={watch.location}
-                                promoterCount={watch.promoterCount}
-                                sellerCode={watch.sellerCode}
-                                sold={watch.sold}
-                                active={watch.active}
+                                image={promo.watch.cover}
+                                name={promo.watch.listing_title}
+                                price={promo.watch.fixed_price_value}
+                                location="Switzerland" // You can update this based on your data
+                                promoterCount={12} // You can update this based on your data
+                                sellerCode="SELLER-1234" // You can update this based on your data
+                                sold={false}
+                                active={true}
                                 onPress={() => {/* handle click */ }}
                             />
                         ))}
@@ -312,4 +335,4 @@ const MyPromotings = () => {
     );
 };
 
-export default MyPromotings; 
+export default MyPromotings;

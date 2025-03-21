@@ -97,12 +97,13 @@ const Product = () => {
             <div className={styles.actionIcons}>
             <button
                   onClick={() => {
+                    console.log('watch id in product screen', { watch_id: productData.id });
                     router.push({
                       pathname: "/affiliate",
                       query: {
                         watch_id: productData.id,
-                        discount: 100,
-                        sales_commission: 100,
+                        // discount: 100,
+                        // sales_commission: 100,
                       },
                     });
                   }}

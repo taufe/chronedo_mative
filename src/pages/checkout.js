@@ -3,12 +3,45 @@ import DashboardLayout from '../components/Layout/DashboardLayout';
 import Image from 'next/image';
 import styles from './checkout.module.css';
 import { useRouter } from 'next/router';
+import axios from 'axios';
 
 const Checkout = () => {
     const [discountCode, setDiscountCode] = useState('');
+    console.log('discount code------',discountCode)
     const [selectedCountry, setSelectedCountry] = useState('Switzerland');
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState('')
     const router = useRouter();
     const { id, watch_price, total_price, watch_name } = router.query;
+
+
+    const applyDiscountCode = async () => {
+        if (!discountCode) {
+            setError('Please enter a discount code');
+            return;
+        }
+
+        setLoading(true);
+        setError(null);
+
+        try {
+            const response = await axios.post('/api/checkCodeApi', {
+                promo: discountCode.trim(),
+            });
+            if (response.data.message === "Promo is valid") {
+                const discount = parseFloat(response.data.promo.discount);
+                setDiscountAmount(discount);
+                setPromoDetails(response.data.promo);
+                setError(null);
+            } else {
+                setError('Invalid discount code');
+            }
+        } catch (error) {
+            setError(error.response?.data?.error || "An error occurred. Please try again later.");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <DashboardLayout>
@@ -76,7 +109,7 @@ const Checkout = () => {
                                 onChange={(e) => setDiscountCode(e.target.value)}
                                 className={styles.discountInput}
                             />
-                            <button className={styles.applyButton}>Apply</button>
+                            <button onClick={applyDiscountCode} className={styles.applyButton}>Apply</button>
                         </div>
 
                         {/* Additional Costs */}
