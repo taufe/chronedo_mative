@@ -1,0 +1,126 @@
+.dashboardContainer {
+    /* padding: 0px 80px; */
+    padding: 0px 50px 0px 80px;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .searchContainer {
+    flex: 1;
+    max-width: 800px;
+  }
+  
+  .searchWrapper {
+    position: relative;
+  }
+  
+  .searchInput {
+    width: 90%;
+    padding: 10px 16px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 29px;
+    border: none;
+  }
+  
+  .searchInput:focus {
+    outline: none;
+  }
+  
+  .searchButton {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+  }
+  
+  /* .searchIcon {
+      width: 20px;
+      height: 20px;
+      color: #ffffff;
+  } */
+  
+  .iconsContainer {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  
+  .watchesGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    padding: 24px;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+  
+  .watchCard {
+    position: relative; /* Ensure absolute positioning inside the card */
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .iconContainer {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column; /* Stack icons vertically */
+    gap: 8px; /* Add space between icons */
+  }
+  
+  .favoriteIcon, .filterIcon {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 6px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .favoriteIcon:hover, .filterIcon:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+  
+  
+  /* Make it responsive */
+  @media (max-width: 1200px) {
+    .watchesGrid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media (max-width: 900px) {
+    .watchesGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 768px) {
+    .dashboardContainer {
+      padding: 0px 0px; /* Small padding for mobile */
+    }
+  }
+  @media (max-width: 600px) {
+    .watchesGrid {
+      grid-template-columns: repeat(1, 1fr);
+    }
+    .iconsContainer {
+      margin-left: 30px;
+      margin-right: 16px;
+    }
+  }
+  

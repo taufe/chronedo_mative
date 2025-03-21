@@ -296,10 +296,11 @@ a {
 }
 
 .categories-container {
-  width: 70%;
-  max-width: 1300px;
+  /* width: 100%; */
+  /* max-width: 1300px; */
   margin: 0 auto; /* Changed from 1px auto 1px to 0 auto */
   position: relative;
+  padding:0px 80px
 }
 
 .categories-header {
@@ -316,10 +317,19 @@ a {
   margin-top: 20px;
 }
 
+@media (max-width: 1200px) {
+  .categories-container {
+    padding:0px 40px
+  }
+}
 @media (max-width: 768px) {
   .popular-brands .brand-watches-container {
     flex-wrap: wrap;
     justify-content: center;
+  }
+  .categories-container {
+
+    padding:0px 15px
   }
 }
 
@@ -617,7 +627,7 @@ x .category-card img {
 }
 
 .new-arrivals {
-  padding: 40px 0;
+  padding: 0px 0;
 }
 
 .new-arrivals h2 {

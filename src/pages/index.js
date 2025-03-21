@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from "react"; // Import useRef
 import { useRouter } from "next/router";
 import FilterPopup from "../components/FilterPopup";
 import styles from "./index.module.css";
+import { NewArrivalWatch } from "../components/newArrivalWatch";
 
 // Define PopularBrands component outside of Home
 const PopularBrands = () => {
@@ -441,10 +442,7 @@ const Home = () => {
         </section>
       )}
 
-      {/* Replace the old Categories section with the new component */}
       <Categories />
-
-      {/* Render PopularBrands Component */}
       <PopularBrands />
 
       <section className="new-arrivals">
@@ -457,12 +455,14 @@ const Home = () => {
             </p>
           </div>
           <div className="watch-grid">
-            {newArrivals.map((watch, index) => (
+            {/* {newArrivals.map((watch, index) => (
               <WatchCard key={index} {...watch} />
-            ))}
+            ))} */}
+           
           </div>
         </div>
       </section>
+      <NewArrivalWatch />
     </>
   );
 };

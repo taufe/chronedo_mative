@@ -1,13 +1,12 @@
-import DashboardLayout from '../components/Layout/DashboardLayout';
 import Image from 'next/image';
-import styles from './watchlist.module.css';
+import styles from './newArrivalWatch.module.css';
 import WatchCard from '../components/WatchCard';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 
-const Watchlist = () => {
+export const NewArrivalWatch = () => {
     const router = useRouter();
     const [watchList, setWatchList] = useState([]);
     const [favorites, setFavorites] = useState({}); 
@@ -24,7 +23,7 @@ const Watchlist = () => {
                         },
                     }
                 );
-                console.log('searches-----------',response.data)
+                // console.log('searches-----------',response.data)
                 setWatchList(response.data.data);
             } catch (error) {
                 console.error("Error fetching watches:", error);
@@ -54,6 +53,7 @@ const Watchlist = () => {
                     },
                 }
             );
+            console.log('post response------',response.data)
 
             console.log("Response:", response.data);
 
@@ -72,25 +72,8 @@ const Watchlist = () => {
     };
 
     return (
-        <DashboardLayout>
             <div className={styles.dashboardContainer}>
-                <div className={styles.header}>
-                    <div className={styles.searchContainer}>
-                        <div className={styles.searchWrapper}>
-                            <input type="text" placeholder="Search..." className={styles.searchInput} />
-                            <button className={styles.searchButton}>
-                                <svg className={styles.searchIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                    <div className={styles.iconsContainer}>
-                        <Image src="/assets/icons/notification.png" alt="Notifications" width={24} height={24} />
-                        <Image src="/assets/icons/cart.png" alt="Cart" width={24} height={24} />
-                        <Image src="/assets/icons/profile.png" alt="Profile" width={24} height={24} />
-                    </div>
-                </div>
+        
 
                 <div className={styles.watchesGrid}>
                     {watchList.map((watch) => (
@@ -119,9 +102,7 @@ const Watchlist = () => {
                     ))}
                 </div>
             </div>
-        </DashboardLayout>
     );
 };
 
-export default Watchlist;
 
