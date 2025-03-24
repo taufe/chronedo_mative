@@ -57,6 +57,7 @@ export const MySellingInProgressDetails = ({
             }
           }
         );
+        console.log('response in selling of location',response.data.data)
         if (response.data.success) {
           setOrderData(response.data.data);
           // If pickup_date_time exists in API response, use it

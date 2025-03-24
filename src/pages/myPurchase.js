@@ -225,13 +225,13 @@ const MyPurchase = () => {
           {purchaseStatus === "pending" &&
             pendingPurchases.map((purchase) => (
               <PurchasedCardPending
-                key={purchase.id}
-                image={purchase.watch.cover}
-                name={purchase.watch.listing_title}
-                price={purchase.watch.fixed_price_value}
-                date={purchase.created_at}
+                key={purchase?.id}
+                image={purchase?.watch?.cover}
+                name={purchase?.watch?.listing_title}
+                price={purchase?.watch?.fixed_price_value}
+                date={`${purchase.created_at.split("T")[0]} ${purchase.created_at.split("T")[1].split(".")[0]}`}
+                sellerName={`${purchase?.buyer?.first_name} ${purchase?.buyer?.last_name}`}
                 email={purchase.buyer.email}
-                sellerName={`${purchase.seller.first_name} ${purchase.seller.last_name}`}
               />
             ))}
        
@@ -240,13 +240,13 @@ const MyPurchase = () => {
             inProgressPurchases.map((purchase) => {
               return (
                 <PurchasedCardInprogress
-                  key={purchase.id}
-                  image={purchase.watch.cover}
-                  name={purchase.watch.listing_title}
-                  price={purchase.watch.fixed_price_value}
-                  date={purchase.created_at}
-                  email={purchase.buyer.email}
-                  sellerName={`${purchase.seller.first_name} ${purchase.seller.last_name}`}
+                  key={purchase?.id}
+                  image={purchase?.watch?.cover}
+                  name={purchase?.watch?.listing_title}
+                  price={purchase?.watch?.fixed_price_value}
+                  date={`${purchase.created_at?.split("T")[0]} ${purchase?.created_at?.split("T")[1]?.split(".")[0]}`}
+                  sellerName={`${purchase?.buyer?.first_name} ${purchase?.buyer?.last_name}`}
+                  email={purchase?.buyer?.email}
                   onSellNow={handleSellNow}
                   showDetails={false}
                   purchaseOrderId={purchase.buyer.id}
@@ -261,9 +261,9 @@ const MyPurchase = () => {
                 image={purchase.watch.cover}
                 name={purchase.watch.listing_title}
                 price={purchase.watch.fixed_price_value}
-                date={purchase.created_at}
+                date={`${purchase.created_at?.split("T")[0]} ${purchase?.created_at?.split("T")[1]?.split(".")[0]}`}
+                sellerName={`${purchase?.buyer?.first_name} ${purchase?.buyer?.last_name}`}
                 email={purchase.buyer.email}
-                sellerName={`${purchase.seller.first_name} ${purchase.seller.last_name}`}
               />
             ))}
         </div>
@@ -387,16 +387,6 @@ const MyPurchase = () => {
 
         {bottomTabIndex === 1 && (
           <div className={styles.watchesGrid}>
-            {/* {openWatch.slice(0, 8).map((watch, index) => (
-              <WatchCard
-                key={index}
-                image={watch.image}
-                name={watch.name}
-                date={watch.date}
-                buyNowPrice={watch.buyNowPrice}
-                bidPrice={watch.bidPrice}
-              />
-            ))} */}
            {openWatch?.map((watch, index) => (
           <WatchCard
             key={index}

@@ -1117,12 +1117,10 @@
 .photosSection,
 .accessoriesSection {
   margin-top: 32px;
-  width: 100%;
   background: rgba(179, 142, 93, 0.1);
-  margin-left: 80px;
-  padding: 20px;
-  width: 85% !important;
-  border-radius:20px
+  border-radius: 20px;
+  margin: 0px 42px 0px 80px;
+  margin-top: 20px;
 }
 
 .photosSectionTitle {

@@ -51,52 +51,20 @@ const AccountSettings2 = () => {
     };
 
     const handleNext = async () => {
-        console.log("Function handleNext started");
-    
         const token = localStorage.getItem('token');
-        console.log('Token retrieved:', token);
-    
-        const formData = new FormData();
-        console.log("FormData initialized");
-    
-        formData.append('email', email);
-        console.log("Email added:", email);
-    
-        formData.append('first_name', firstName);
-        console.log("First Name added:", firstName);
-    
-        formData.append('last_name', lastName);
-        console.log("Last Name added:", lastName);
-    
-        formData.append('dob', dateOfBirth);
-        console.log("Date of Birth added:", dateOfBirth);
-    
-        formData.append('zip_code', zipCode);
-        console.log("Zip Code added:", zipCode);
-    
-        formData.append('city', city);
-        console.log("City added:", city);
-    
-        formData.append('country', country);
-        console.log("Country added:", country);
-    
-        formData.append('account_type', accountType);
-        console.log("Account Type added:", accountType);
-    
-        formData.append('address', street);
-        console.log("Address added:", street);
-    
-        formData.append('language', language);
-        console.log("Language added:", language);
-    
-        formData.append('currency', currency);
-        console.log("Currency added:", currency);
-    
-        formData.append('shipping_country', deliveryCountry);
-        console.log("Shipping Country added:", deliveryCountry);
-    
-        console.log("Selected ID Type:", selectedIdType);
-    
+        const formData = new FormData();    
+        formData.append('email', email);    
+        formData.append('first_name', firstName);    
+        formData.append('last_name', lastName);    
+        formData.append('dob', dateOfBirth);    
+        formData.append('zip_code', zipCode);    
+        formData.append('city', city);    
+        formData.append('country', country);    
+        formData.append('account_type', accountType);    
+        formData.append('address', street);    
+        formData.append('language', language);    
+        formData.append('currency', currency);    
+        formData.append('shipping_country', deliveryCountry);        
         if (selectedIdType === 'id') {
             console.log("ID type is 'id'");
     

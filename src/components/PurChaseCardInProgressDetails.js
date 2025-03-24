@@ -33,7 +33,7 @@ export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChan
                         Authorization: `Bearer 223|fQCZy8Ol01rCyB1aAH7bAM1vqLWG7h1mGUYVEzid85dc39bc`
                       }
                 })
-                
+                console.log('purchase screen response-----',response.data.data)
                 if(response.data.success){
                     console.log('data-----',response.data.data)
                     setOrderData(response.data.data);

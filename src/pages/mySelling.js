@@ -69,126 +69,6 @@ const MySelling = () => {
   const router = useRouter();
 
 
-  const pendingSelling = [
-    {
-      image: "/assets/watches/w9.png",
-      name: "Rolex Datejust Oyster 41mm in very good condition",
-      price: 1335.0,
-      date: "10.11.2022, 12:14",
-      email: "xyz@gmail.com",
-      sellerName: "John Doe",
-    },
-    {
-      image: "/assets/watches/w9.png",
-      name: "Rolex Datejust Oyster 41mm in very good condition",
-      price: 1335.0,
-      date: "10.11.2022, 12:14",
-      email: "xyz@gmail.com",
-      sellerName: "John Doe",
-    },
-  ];
-
-  const OpenWatches = [
-    {
-      image: "/assets/watches/w9.png",
-      name: "Rolex Datejust Oyster 41mm in very good condition",
-      price: 1335.0,
-      date: "10.11.2022, 12:14",
-      buyBid: "chg 1400",
-      sellerName: "John Doe",
-    },
-    {
-      image: "/assets/watches/w9.png",
-      name: "Rolex Datejust Oyster 41mm in very good condition",
-      price: 1335.0,
-      date: "10.11.2022, 12:14",
-      buyBid: "chg 1400",
-      sellerName: "John Doe",
-    },
-    {
-      image: "/assets/watches/w9.png",
-      name: "Rolex Datejust Oyster 41mm in very good condition",
-      price: 1335.0,
-      date: "10.11.2022, 12:14",
-      buyBid: "chg 1400",
-      sellerName: "John Doe",
-    },
-    {
-      image: "/assets/watches/w9.png",
-      name: "Rolex Datejust Oyster 41mm in very good condition",
-      price: 1335.0,
-      date: "10.11.2022, 12:14",
-      buyBid: "chg 1400",
-      sellerName: "John Doe",
-    },
-    {
-      image: "/assets/watches/w9.png",
-      name: "Rolex Datejust Oyster 41mm in very good condition",
-      price: 1335.0,
-      date: "10.11.2022, 12:14",
-      buyBid: "chg 1400",
-      sellerName: "John Doe",
-    },
-    {
-      image: "/assets/watches/w9.png",
-      name: "Rolex Datejust Oyster 41mm in very good condition",
-      price: 1335.0,
-      date: "10.11.2022, 12:14",
-      buyBid: "chg 1400",
-      sellerName: "John Doe",
-    },
-  ];
-  const EndedWatch = [
-    {
-      image: "/assets/watches/w9.png",
-      name: "Rolex Datejust Oyster 41mm in very good condition",
-      price: 1335.0,
-      date: "10.11.2022, 12:14",
-      buyBid: "chg 1400",
-      sellerName: "John Doe",
-    },
-    {
-      image: "/assets/watches/w9.png",
-      name: "Rolex Datejust Oyster 41mm in very good condition",
-      price: 1335.0,
-      date: "10.11.2022, 12:14",
-      buyBid: "chg 1400",
-      sellerName: "John Doe",
-    },
-    {
-      image: "/assets/watches/w9.png",
-      name: "Rolex Datejust Oyster 41mm in very good condition",
-      price: 1335.0,
-      date: "10.11.2022, 12:14",
-      buyBid: "chg 1400",
-      sellerName: "John Doe",
-    },
-    {
-      image: "/assets/watches/w9.png",
-      name: "Rolex Datejust Oyster 41mm in very good condition",
-      price: 1335.0,
-      date: "10.11.2022, 12:14",
-      buyBid: "chg 1400",
-      sellerName: "John Doe",
-    },
-    {
-      image: "/assets/watches/w9.png",
-      name: "Rolex Datejust Oyster 41mm in very good condition",
-      price: 1335.0,
-      date: "10.11.2022, 12:14",
-      buyBid: "chg 1400",
-      sellerName: "John Doe",
-    },
-    {
-      image: "/assets/watches/w9.png",
-      name: "Rolex Datejust Oyster 41mm in very good condition",
-      price: 1335.0,
-      date: "10.11.2022, 12:14",
-      buyBid: "chg 1400",
-      sellerName: "John Doe",
-    },
-  ];
-
   const getSoldWatches = async () => {
     setLoading(true);
     const STATIC_TOKEN = "223|fQCZy8Ol01rCyB1aAH7bAM1vqLWG7h1mGUYVEzid85dc39bc";
@@ -1966,13 +1846,13 @@ const MySelling = () => {
               <div className={styles.sellingGrid}>
                 {pendingSales?.map((sale) => (
                   <SoldCardPending
-                    key={sale.id}
-                    image={sale.watch.cover}
-                    name={sale.watch.listing_title}
-                    price={sale.watch.fixed_price_value}
-                    date={sale.created_at}
-                    email={sale.buyer.email}
-                    sellerName={`${sale.seller.first_name} ${sale.seller.last_name}`}
+                    key={sale?.id}
+                    image={sale?.watch?.cover}
+                    name={sale?.watch?.listing_title}
+                    price={sale?.watch?.fixed_price_value}
+                    date={`${sale.created_at?.split("T")[0]} ${sale?.created_at?.split("T")[1]?.split(".")[0]}`}
+                  sellerName={`${sale?.seller?.first_name} ${sale?.seller?.last_name}`}
+                    email={sale?.buyer?.email}
                   />
                 ))}
               </div>
@@ -1991,17 +1871,17 @@ const MySelling = () => {
               ) : (
                 <div className={styles.sellingGrid}>
                   {inProgressSales.map((sale, index) => (
-                    <div key={sale.id} className={styles.gridItem}>
+                    <div key={sale?.id} className={styles.gridItem}>
                       <SoldCardInprogress
-                        image={sale.watch.cover}
-                        name={sale.watch.listing_title}
-                        price={sale.watch.fixed_price_value}
-                        date={sale.created_at}
-                        email={sale.buyer.email}
-                        sellerName={`${sale.seller.first_name} ${sale.seller.last_name}`}
-                        id={sale.id}
+                        image={sale?.watch?.cover}
+                        name={sale?.watch?.listing_title}
+                        price={sale?.watch?.fixed_price_value}
+                        date={`${sale?.created_at?.split("T")[0]} ${sale?.created_at?.split("T")[1]?.split(".")[0]}`}
+                        email={sale?.buyer?.email}
+                        sellerName={`${sale?.seller?.first_name} ${sale?.seller?.last_name}`}
+                        id={sale?.id}
                         onSellNow={(details) => handleSellNow({ ...details, id: sale.id })}
-                        orderId={sale.seller.id}
+                        orderId={sale?.seller?.id}
                       />
                     </div>
                   ))}
@@ -2011,13 +1891,13 @@ const MySelling = () => {
               <div className={styles.sellingGrid}>
                 {completedSales.map((sale, index) => (
                   <SoldCardCompleted
-                    key={sale.id}
-                    image={sale.watch.cover}
-                    name={sale.watch.listing_title}
-                    price={sale.watch.fixed_price_value}
-                    date={sale.created_at}
-                    email={sale.buyer.email}
-                    sellerName={`${sale.seller.first_name} ${sale.seller.last_name}`}
+                    key={sale?.id}
+                    image={sale?.watch?.cover}
+                    name={sale?.watch?.listing_title}
+                    price={sale?.watch?.fixed_price_value}
+                    date={`${sale?.created_at?.split("T")[0]} ${sale?.created_at?.split("T")[1]?.split(".")[0]}`}
+                    email={sale?.buyer?.email}
+                    sellerName={`${sale?.seller?.first_name} ${sale?.seller?.last_name}`}
                   />
                 ))}
               </div>
