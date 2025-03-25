@@ -11,6 +11,7 @@ import { MySellingInProgressDetails } from "../components/MySellingInProgressDet
 import MyOpenWatch from "../components/MyOpenWatch";
 import MyEndedWatch from "../components/MyEndedWatch";
 import axios from "axios";
+import { useData } from "../context/contextApi";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -67,14 +68,18 @@ const MySelling = () => {
   const [watches, setWatches] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const {token} = useData()
 
+  setTimeout(() => {
+    setLoading(false); 
+  }, 2000); 
 
   const getSoldWatches = async () => {
     setLoading(true);
-    const STATIC_TOKEN = "223|fQCZy8Ol01rCyB1aAH7bAM1vqLWG7h1mGUYVEzid85dc39bc";
+    // const STATIC_TOKEN = "223|fQCZy8Ol01rCyB1aAH7bAM1vqLWG7h1mGUYVEzid85dc39bc";
     try {
       const headers = {
-        Authorization: `Bearer ${STATIC_TOKEN}`,
+        Authorization: `Bearer ${token}`,
       };
       const url = `https://chronedo.webjerky.com/api/getSoldWatches`;
       const response = await axios.get(url, { headers });
@@ -108,7 +113,7 @@ const MySelling = () => {
     try {
       const response = await fetch(`${baseUrl}/getcloseWatches`, {
         headers: {
-          Authorization: `Bearer 223|fQCZy8Ol01rCyB1aAH7bAM1vqLWG7h1mGUYVEzid85dc39bc`,
+          Authorization: `Bearer ${token}`,
         },
       });
       if (!response.ok) {
@@ -1773,23 +1778,33 @@ const MySelling = () => {
             ))}
           </div>
         )}
-        {bottomTabIndex === 3 && (
-          <div className={styles.noWatches}>
-            <div className={styles.sellingGridEndwatch}>
-              {endedWatches.map((watch, index) => (
-                <MyEndedWatch
-                  key={watch.id}
-                  image={watch.cover}
-                  name={watch.listing_title}
-                  price={watch.fixed_price_value}
-                  date={new Date(watch.created_at).toLocaleDateString()}
-                  email={watch.user.email}
-                  sellerName={`${watch.user.first_name} ${watch.user.last_name}`}
-                />
-              ))}
-            </div>
+      {bottomTabIndex === 3 && (
+  <div className={styles.noWatches}>
+    {loading ? (
+      <p style={{ fontFamily: 'Poppins', textAlign: 'center' }}>Loading...</p>
+    ) : endedWatches?.length === 0 ? (
+      <p style={{ fontFamily: 'Poppins', textAlign: 'center', fontSize:18 }}>
+        No ended watches available.
+      </p>
+    ) : (
+      <div className={styles.sellingGridEndwatch}>
+        {endedWatches.map((watch) => (
+          <div key={watch.id} className={styles.inEndedWatchGrid}>
+            <MyEndedWatch
+              image={watch.cover}
+              name={watch.listing_title}
+              price={watch.fixed_price_value}
+              date={new Date(watch.created_at).toLocaleDateString()}
+              email={watch.user.email}
+              sellerName={`${watch.user.first_name} ${watch.user.last_name}`}
+            />
           </div>
-        )}
+        ))}
+      </div>
+    )}
+  </div>
+)}
+
         {bottomTabIndex === 4 && (
           <>
             <div className={styles.sellingBar}>
@@ -1842,27 +1857,38 @@ const MySelling = () => {
               </button>
             </div>
 
-            {sellingStatus === "pending" && (
+          {sellingStatus === "pending" && (
+            loading ? ( 
+              <p style={{ fontFamily: 'Poppins' }}>Loading...</p>  
+            ) : pendingSales?.length === 0 ? (
+              <p style={{ fontFamily: 'Poppins',textAlign:'center'  }}> No data found</p>  
+            ) : (
               <div className={styles.sellingGrid}>
-                {pendingSales?.map((sale) => (
+                {pendingSales.map((sale) => (
                   <SoldCardPending
                     key={sale?.id}
                     image={sale?.watch?.cover}
                     name={sale?.watch?.listing_title}
                     price={sale?.watch?.fixed_price_value}
-                    date={`${sale.created_at?.split("T")[0]} ${sale?.created_at?.split("T")[1]?.split(".")[0]}`}
-                  sellerName={`${sale?.seller?.first_name} ${sale?.seller?.last_name}`}
+                    date={`${sale?.created_at?.split("T")[0]} ${sale?.created_at?.split("T")[1]?.split(".")[0]}`}
+                    sellerName={`${sale?.seller?.first_name} ${sale?.seller?.last_name}`}
                     email={sale?.buyer?.email}
                   />
                 ))}
               </div>
-            )}
+            )
+          )}
 
-            {sellingStatus === "inProgress" &&
-              (selectedCard ? (
+          {sellingStatus === "inProgress" && (
+            loading ? ( 
+              <p style={{ fontFamily: 'Poppins' }}>Loading...</p>  
+            ) : inProgressSales?.length === 0 ? (
+              <p style={{ fontFamily: 'Poppins',textAlign:'center'  }}> No data found</p>  
+            ) : (
+              selectedCard ? (
                 <MySellingInProgressDetails
                   {...selectedSaleDetails}
-                  orderId={selectedSaleDetails.id}
+                  orderId={selectedSaleDetails?.id}
                   onBack={() => {
                     setSelectedCard(null);
                     setSelectedSaleDetails(null);
@@ -1870,7 +1896,7 @@ const MySelling = () => {
                 />
               ) : (
                 <div className={styles.sellingGrid}>
-                  {inProgressSales.map((sale, index) => (
+                  {inProgressSales.map((sale) => (
                     <div key={sale?.id} className={styles.gridItem}>
                       <SoldCardInprogress
                         image={sale?.watch?.cover}
@@ -1886,10 +1912,17 @@ const MySelling = () => {
                     </div>
                   ))}
                 </div>
-              ))}
-            {sellingStatus === "completed" && (
+              )
+            )
+          )}
+                      {sellingStatus === "completed" && (
+            loading ? ( 
+              <p style={{ fontFamily: 'Poppins' }}>Loading...</p>  
+            ) : completedSales?.length === 0 ? (
+              <p style={{ fontFamily: 'Poppins', textAlign:'center' }}> No data found</p>  
+            ) : (
               <div className={styles.sellingGrid}>
-                {completedSales.map((sale, index) => (
+                {completedSales.map((sale) => (
                   <SoldCardCompleted
                     key={sale?.id}
                     image={sale?.watch?.cover}
@@ -1901,7 +1934,9 @@ const MySelling = () => {
                   />
                 ))}
               </div>
-            )}
+            )
+          )}
+
           </>
         )}
       </div>

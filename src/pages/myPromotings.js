@@ -9,22 +9,26 @@ import SoldCardInprogress from '../components/SoldCardInprogress';
 import SoldCardCompleted from '../components/SoldCardCompleted';
 import WatchCardMyPromotings from '../components/WatchCardMyPromotings';
 import axios from 'axios';
-
+import { useData } from "../context/contextApi";
 const MyPromotings = () => {
     const [bottomTabIndex, setBottomTabIndex] = useState(1);
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
     const [sellingStatus, setSellingStatus] = useState('pending');
+    const [loading, setLoading] = useState(false)
     const [promos, setPromos] = useState({ active: [], lost: [], successful: [] });
+    const {token} = useData()
+    console.log('my promoting page token',token)
 
     useEffect(() => {
         const fetchPromos = async () => {
             try {
                 const response = await axios.get('https://chronedo.webjerky.com/api/promos', {
                     headers: {
-                        'Authorization': 'Bearer 222|wq0yIWuRTDsOMPsWwfQLH4WEhVHDCO1RLLzLj0lXb7c13b88'
+                        // 'Authorization': 'Bearer 222|wq0yIWuRTDsOMPsWwfQLH4WEhVHDCO1RLLzLj0lXb7c13b88'
+                        'Authorization': `Bearer ${token}`
                     }
                 });
-                setPromos(response.data); // No need for response.json()
+                setPromos(response.data); 
             } catch (error) {
                 console.error('Error fetching promos:', error);
             }
@@ -74,26 +78,7 @@ const MyPromotings = () => {
             active: true,
             sold: false
         },
-        {
-            image: '/assets/watches/rolexDaydate.png',
-            name: 'Rolex Day-Date',
-            price: 12500.00,
-            location: 'France',
-            promoterCount: 15,
-            sellerCode: 'SELLER-9012',
-            active: true,
-            sold: false
-        },
-        {
-            image: '/assets/watches/patekPhilippe.png',
-            name: 'Patek Philippe Nautilus',
-            price: 35000.00,
-            location: 'Italy',
-            promoterCount: 20,
-            sellerCode: 'SELLER-3456',
-            active: true,
-            sold: false
-        },
+       
     ];
 
     return (
@@ -183,45 +168,56 @@ const MyPromotings = () => {
                         </div>
                     </>
                 }
-               {bottomTabIndex === 2 && (
-    <div className={styles.watchesGrid}>
-        {promos.active.map((promo, index) => {            
-            return (
-                <WatchCardMyPromotings
-                    key={`active-watch-${index}`}
-                    image={promo?.watch?.cover}
-                    name={promo?.watch?.listing_title}
-                    price={promo?.watch?.fixed_price_value}
-                    location="Switzerland"
-                    promoterCount={12}
-                    sellerCode={promo?.promo_code}
-                    sold={false}
-                    active={true}
-                    onPress={() => { /* handle click */ }}
-                />
-            );
-        })}
-    </div>
-)}
-
-                {bottomTabIndex === 3 &&
+                        {bottomTabIndex === 2 && (
+                loading ? ( 
+                    <p style={{ fontFamily: 'Poppins', textAlign: 'center' }}>Loading...</p>  
+                ) : promos?.active?.length === 0 ? (
+                    <p style={{ fontFamily: 'Poppins', textAlign: 'center' }}>No data found</p>  
+                ) : (
                     <div className={styles.watchesGrid}>
-                        {promos.lost.map((promo, index) => (
+                        {promos.active.map((promo, index) => (
                             <WatchCardMyPromotings
-                                key={`lost-watch-${index}`}
-                                image={promo.watch.cover}
-                                name={promo.watch.listing_title}
-                                price={promo.watch.fixed_price_value}
-                                location="Switzerland" // You can update this based on your data
-                                promoterCount={12} // You can update this based on your data
-                                sellerCode="SELLER-1234" // You can update this based on your data
+                                key={`active-watch-${index}`}
+                                image={promo?.watch?.cover}
+                                name={promo?.watch?.listing_title}
+                                price={promo?.watch?.fixed_price_value}
+                                location="Switzerland"
+                                promoterCount={12}
+                                sellerCode={promo?.promo_code}
                                 sold={false}
                                 active={true}
-                                onPress={() => {/* handle click */ }}
+                                onPress={() => { /* handle click */ }}
                             />
                         ))}
                     </div>
-                }
+                )
+                )}
+
+
+                {bottomTabIndex === 3 && (
+                    loading ? (
+                        <p style={{ fontFamily: 'Poppins', textAlign: 'center' }}>Loading...</p>
+                    ) : promos?.lost?.length === 0 ? (
+                        <p style={{ fontFamily: 'Poppins', textAlign: 'center' }}>No data found</p>
+                    ) : (
+                        <div className={styles.watchesGrid}>
+                            {promos.lost.map((promo, index) => (
+                                <WatchCardMyPromotings
+                                    key={`lost-watch-${index}`}
+                                    image={promo?.watch?.cover}
+                                    name={promo?.watch?.listing_title}
+                                    price={promo?.watch?.fixed_price_value}
+                                    location="Switzerland"
+                                    promoterCount={12}
+                                    sellerCode="SELLER-1234"
+                                    sold={false}
+                                    active={true}
+                                    onPress={() => { /* handle click */ }}
+                                />
+                            ))}
+                        </div>
+                    )
+                )}
                 {bottomTabIndex === 4 &&
                     <>
                         <div className={styles.sellingBar}>

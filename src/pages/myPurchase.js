@@ -7,8 +7,13 @@ import PurchasedCardInprogress from "../components/PurchasedCardInprogress";
 import PurchasedCardCompleted from "../components/PurchasedCardCompleted";
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
+import { useData } from "../context/contextApi";
+
 
 const MyPurchase = () => {
+  const {token} = useData()
+  console.log('mypurchase screen token-----',token)
+  console.log('token of open watch', token)
   const [bottomTabIndex, setBottomTabIndex] = useState(1);
   const [purchaseStatus, setPurchaseStatus] = useState("pending");
   const [selectedCard, setSelectedCard] = useState(null); // New state
@@ -19,13 +24,40 @@ const MyPurchase = () => {
   const [loading, setLoading] = useState(false);
   const [openWatch, setOpenWatch] = useState([]);
 
+
+  setTimeout(() => {
+    setLoading(false); 
+  }, 2000); 
+
+
+  useEffect(() => {
+    if (!token) {
+      console.error('Token is missing');
+      return;
+    }
+      
+    const fetchOpenWatchApi = async () => {
+      const response = await axios.get('https://chronedo.webjerky.com/api/getOpenWatches', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      if (Array.isArray(response.data.data)) {
+        setOpenWatch(response.data.data);
+      } else {
+        console.error('Data is not an array');
+      }
+    };
+
+    fetchOpenWatchApi();
+  }, []);
+
   const getPurchasedWatches = async () => {
     setLoading(true);
     console.log("Fetching purchased watches...");
-    const STATIC_TOKEN = "223|fQCZy8Ol01rCyB1aAH7bAM1vqLWG7h1mGUYVEzid85dc39bc";
     try {
       const headers = {
-        Authorization: `Bearer ${STATIC_TOKEN}`,
+        Authorization: `Bearer ${token}`,
       };
       const url = `https://chronedo.webjerky.com/api/getPurchasedWatches`;
       const response = await axios.get(url, { headers });
@@ -59,28 +91,7 @@ const MyPurchase = () => {
   }, []);
 
 
-  useEffect(() => {
-    const fetchOpenWatchApi = async () => {
-      const response = await axios.get('https://chronedo.webjerky.com/api/getOpenWatches', {
-        headers: {
-          Authorization: "Bearer 223|fQCZy8Ol01rCyB1aAH7bAM1vqLWG7h1mGUYVEzid85dc39bc"
-        }
-      });
-
-      console.log('open watch----------', response);
-
-      // Only set the state if response.data.data is an array
-      if (Array.isArray(response.data.data)) {
-        setOpenWatch(response.data.data);
-      } else {
-        console.error('Data is not an array');
-      }
-    };
-
-    fetchOpenWatchApi();
-  }, []);
-
-  const openWatches = [
+  const lostWatches = [
     {
       image: "/assets/watches/rolexDatejust.png",
       name: "Rolex Datejust Oyster 41mm",
@@ -97,102 +108,7 @@ const MyPurchase = () => {
       bidPrice: 1001,
       id: 2,
     },
-    {
-      image: "/assets/watches/rolexDaydate.png",
-      name: "Rolex Day-Date",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-      id: 3,
-    },
-    {
-      image: "/assets/watches/patekPhilippe.png",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-      id: 4,
-    },
-    {
-      image: "/assets/watches/w1.png",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-      id: 5,
-    },
-    {
-      image: "/assets/watches/w2.jpg",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-      id: 6,
-    },
-    {
-      image: "/assets/watches/w3.jpeg",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-      id: 7,
-    },
-    {
-      image: "/assets/watches/w4.png",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-      id: 8,
-    },
-    {
-      image: "/assets/watches/w5.png",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-      id: 9,
-    },
-    {
-      image: "/assets/watches/w6.png",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-      id: 10,
-    },
-    {
-      image: "/assets/watches/w7.jpg",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-      id: 11,
-    },
-    {
-      image: "/assets/watches/w8.jpg",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-      id: 12,
-    },
-    {
-      image: "/assets/watches/w9.png",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-      id: 13,
-    },
-    {
-      image: "/assets/watches/patekPhilippe.png",
-      name: "Patek Philippe Nautilus",
-      date: "24.10.2021, 19:35",
-      buyNowPrice: 5000,
-      bidPrice: 1001,
-      id: 14,
-    },
+   
   ];
 
   const handleSellNow = (card) => {
@@ -204,13 +120,9 @@ const MyPurchase = () => {
   };
 
   const renderPurchasedContent = () => {
-    let content;
-
     if (selectedCard) {
-      content = (
-        <div
-          className={`${styles.purchasedGrid} ${styles.purchasedGridSingleColumn}`}
-        >
+      return (
+        <div className={`${styles.purchasedGrid} ${styles.purchasedGridSingleColumn}`}>
           <PurchasedCardInprogress
             key={selectedCard.id}
             {...selectedCard}
@@ -219,10 +131,18 @@ const MyPurchase = () => {
           />
         </div>
       );
-    } else {
-      content = (
-        <div className={styles.purchasedGrid}>
-          {purchaseStatus === "pending" &&
+    }
+  
+    return (
+      <div className={styles.purchasedGrid}>
+        {loading ? (
+          <p style={{ fontFamily: 'Poppins', textAlign: 'end' }}>Loading...</p>
+        ) : purchaseStatus === "pending" ? (
+          pendingPurchases?.length === 0 ? (
+            <p style={{ fontFamily: 'Poppins', textAlign: 'end', marginTop:-20 }}>
+             No data found
+            </p>
+          ) : (
             pendingPurchases.map((purchase) => (
               <PurchasedCardPending
                 key={purchase?.id}
@@ -233,28 +153,43 @@ const MyPurchase = () => {
                 sellerName={`${purchase?.buyer?.first_name} ${purchase?.buyer?.last_name}`}
                 email={purchase.buyer.email}
               />
-            ))}
-       
-
-          {purchaseStatus === "inProgress" &&
-            inProgressPurchases.map((purchase) => {
-              return (
-                <PurchasedCardInprogress
-                  key={purchase?.id}
-                  image={purchase?.watch?.cover}
-                  name={purchase?.watch?.listing_title}
-                  price={purchase?.watch?.fixed_price_value}
-                  date={`${purchase.created_at?.split("T")[0]} ${purchase?.created_at?.split("T")[1]?.split(".")[0]}`}
-                  sellerName={`${purchase?.buyer?.first_name} ${purchase?.buyer?.last_name}`}
-                  email={purchase?.buyer?.email}
-                  onSellNow={handleSellNow}
-                  showDetails={false}
-                  purchaseOrderId={purchase.buyer.id}
-                />
-              );
-            })}
-
-          {purchaseStatus === "completed" &&
+            ))
+          )
+        ) : null}
+  
+        {loading ? (
+          <p style={{ fontFamily: 'Poppins', textAlign: 'end' }}>Loading...</p>
+        ) : purchaseStatus === "inProgress" ? (
+          inProgressPurchases?.length === 0 ? (
+            <p style={{ fontFamily: 'Poppins', textAlign: 'end',marginTop:-20 }}>
+               No data found
+            </p>
+          ) : (
+            inProgressPurchases.map((purchase) => (
+              <PurchasedCardInprogress
+                key={purchase?.id}
+                image={purchase?.watch?.cover}
+                name={purchase?.watch?.listing_title}
+                price={purchase?.watch?.fixed_price_value}
+                date={`${purchase?.created_at?.split("T")[0]} ${purchase?.created_at?.split("T")[1]?.split(".")[0]}`}
+                sellerName={`${purchase?.buyer?.first_name} ${purchase?.buyer?.last_name}`}
+                email={purchase?.buyer?.email}
+                onSellNow={handleSellNow}
+                showDetails={false}
+                purchaseOrderId={purchase?.buyer?.id}
+              />
+            ))
+          )
+        ) : null}
+  
+        {loading ? (
+          <p style={{ fontFamily: 'Poppins', textAlign: 'end' }}>Loading...</p>
+        ) : purchaseStatus === "completed" ? (
+          completedPurchases?.length === 0 ? (
+            <p style={{ fontFamily: 'Poppins', textAlign: 'end',marginTop:-20 }}>
+               No data found
+            </p>
+          ) : (
             completedPurchases.map((purchase) => (
               <PurchasedCardCompleted
                 key={purchase.id}
@@ -265,13 +200,13 @@ const MyPurchase = () => {
                 sellerName={`${purchase?.buyer?.first_name} ${purchase?.buyer?.last_name}`}
                 email={purchase.buyer.email}
               />
-            ))}
-        </div>
-      );
-    }
-
-    return content;
+            ))
+          )
+        ) : null}
+      </div>
+    );
   };
+  
 
   return (
     <DashboardLayout>
@@ -385,26 +320,32 @@ const MyPurchase = () => {
           </button>
         </div>
 
-        {bottomTabIndex === 1 && (
+                {bottomTabIndex === 1 && (
           <div className={styles.watchesGrid}>
-           {openWatch?.map((watch, index) => (
-          <WatchCard
-            key={index}
-            image={watch.cover}  
-            name={watch.reference_no}  
-            date= {watch?.created_at
-              ? `${watch.created_at.split("T")[0]} ${watch.created_at.split("T")[1].split(".")[0]}`
-              : "N/A"}
-            buyNowPrice={watch.fixed_price}  
-            bidPrice={watch.starting_price} 
-          />
-        ))}
-
+            {loading ? ( 
+              <p style={{fontFamily:'Poppins'}}>Loading...</p>  
+            ) : openWatch?.length === 0 ? (
+              <p style={{fontFamily:'Poppins'}}>No data found</p>  
+            ) : (
+              openWatch?.map((watch, index) => (
+                <WatchCard
+                  key={index}
+                  image={watch.cover}
+                  name={watch.reference_no}
+                  date={watch?.created_at
+                    ? `${watch.created_at.split("T")[0]} ${watch.created_at.split("T")[1].split(".")[0]}`
+                    : "N/A"}
+                  buyNowPrice={watch.fixed_price}
+                  bidPrice={watch.starting_price}
+                />
+              ))
+            )}
           </div>
         )}
+
         {bottomTabIndex === 2 && (
           <div className={styles.watchesGrid}>
-            {openWatches.slice(0, 6).map((watch, index) => (
+            {lostWatches.slice(0, 6).map((watch, index) => (
               <WatchCard
                 key={index}
                 image={watch.image}

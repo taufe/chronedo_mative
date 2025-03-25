@@ -4,8 +4,11 @@ import Image from 'next/image';
 import styles from './checkout.module.css';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { useData } from '../context/contextApi';
 
 const Checkout = () => {
+    const {token} = useData()
+    console.log('check code token', token)
     const [discountCode, setDiscountCode] = useState('');
     console.log('discount code------',discountCode)
     const [selectedCountry, setSelectedCountry] = useState('Switzerland');
@@ -27,6 +30,8 @@ const Checkout = () => {
         try {
             const response = await axios.post('/api/checkCodeApi', {
                 promo: discountCode.trim(),
+                token:token
+                
             });
             if (response.data.message === "Promo is valid") {
                 const discount = parseFloat(response.data.promo.discount);

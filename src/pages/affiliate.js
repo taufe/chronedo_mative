@@ -5,6 +5,7 @@ import styles from "./affiliate.module.css";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { useData } from '../context/contextApi';
 
 const Affiliate = () => {
   const router = useRouter();
@@ -16,7 +17,8 @@ const Affiliate = () => {
   const [promoCode, setPromoCode] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  const {token} = useData();
+  console.log('affliate screen token',token)
   const originalPrice = 50000; // Example original price
   const salesCommission = (originalPrice * 0.10).toFixed(2);
 
@@ -55,6 +57,8 @@ const Affiliate = () => {
         watch_id,
         discount: discountedAmount,
         sales_commission: yourCommission,
+        token,
+
       });
 
       console.log('respone in affiliate screen--------',response.data)

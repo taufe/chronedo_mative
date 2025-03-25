@@ -7,14 +7,14 @@ export default async function handler(req, res) {
 
   try {
     // Extract discountCode from the request body
-    const { promo } = req.body;
+    const { promo,token } = req.body;
 
     // Ensure discountCode is present
     if (!promo) {
       return res.status(400).json({ error: "Missing required field: promo" });
     }
 
-    const token = "222|wq0yIWuRTDsOMPsWwfQLH4WEhVHDCO1RLLzLj0lXb7c13b88";
+    // const token = "222|wq0yIWuRTDsOMPsWwfQLH4WEhVHDCO1RLLzLj0lXb7c13b88";
 
     // Make the API call with discountCode in the request body
     const response = await axios.post(

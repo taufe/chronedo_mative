@@ -6,11 +6,21 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { useData } from '../context/contextApi';
 
 const Watchlist = () => {
     const router = useRouter();
     const [watchList, setWatchList] = useState([]);
     const [favorites, setFavorites] = useState({}); 
+    const {token} = useData()
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+
+        setTimeout(() => {
+          setIsLoading(false); 
+        }, 2000); 
+      });
 
     useEffect(() => {
         const fetchWatchApi = async () => {
@@ -20,11 +30,10 @@ const Watchlist = () => {
                     {
                         headers: {
                             Authorization:
-                                "Bearer 222|wq0yIWuRTDsOMPsWwfQLH4WEhVHDCO1RLLzLj0lXb7c13b88",
+                                `Bearer ${token}`,
                         },
                     }
                 );
-                console.log('searches-----------',response.data)
                 setWatchList(response.data.data);
             } catch (error) {
                 console.error("Error fetching watches:", error);
@@ -32,9 +41,7 @@ const Watchlist = () => {
         };
 
         fetchWatchApi();
-    }, []);
-
-    // Load favorites from localStorage when component mounts
+    }, [token]);
     useEffect(() => {
         const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || {};
         setFavorites(storedFavorites);
@@ -47,7 +54,7 @@ const Watchlist = () => {
         try {
             const response = await axios.post(
                 "/api/favouriteApi",
-                { id, action: isFavorite ? "remove" : "add" }, // Send action to API
+                { id, action: isFavorite ? "remove" : "add", token  }, // Send action to API
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -93,30 +100,38 @@ const Watchlist = () => {
                 </div>
 
                 <div className={styles.watchesGrid}>
-                    {watchList.map((watch) => (
+                                    {isLoading ? (
+                    <p style={{fontFamily:'Poppins'}}>Loading...</p>  
+                    ) : watchList.length === 0 ? (
+                    <p style={{fontFamily:'Poppins'}}>No data found</p>  
+                    ) : (
+                    watchList.map((watch) => (
                         <div key={watch.id} className={styles.watchCard}>
-                            <WatchCard
-                                image={watch.cover}
-                                name={watch.listing_title}
-                                date={watch.age_year_of_sale}
-                                buyNowPrice={watch.fixed_price_value}
-                                bidPrice={watch.starting_price}
-                                onPress={() => router.push('/product')}
-                            />
-                            <div className={styles.iconContainer}>
-                                <button className={styles.favoriteIcon} onClick={() => toggleFavorite(watch.id)}>
-                                    {favorites[watch.id] ? (
-                                        <AiFillHeart size={20} color="red" />
-                                    ) : (
-                                        <AiOutlineHeart size={20} color="white" />
-                                    )}
-                                </button>
-                                <button className={styles.filterIcon}>
-                                    <Image src="/assets/productPage/compare.png" alt="Filter" width={20} height={20} />
-                                </button>
-                            </div>
+                        <WatchCard
+                            image={watch.cover}
+                            name={watch.listing_title}
+                            date={watch.age_year_of_sale}
+                            buyNowPrice={watch.fixed_price_value}
+                            bidPrice={watch.starting_price}
+                            onPress={() => router.push('/product')}
+                        />
+                        <div className={styles.iconContainer}>
+                            <button className={styles.favoriteIcon} onClick={() => toggleFavorite(watch.id)}>
+                            {favorites[watch.id] ? (
+                                <AiFillHeart size={20} color="red" />
+                            ) : (
+                                <AiOutlineHeart size={20} color="white" />
+                            )}
+                            </button>
+                            <button className={styles.filterIcon}>
+                            <Image src="/assets/productPage/compare.png" alt="Filter" width={20} height={20} />
+                            </button>
                         </div>
-                    ))}
+                        </div>
+                    ))
+                    )}
+
+                   
                 </div>
             </div>
         </DashboardLayout>

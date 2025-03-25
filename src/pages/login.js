@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import Image from "next/image";
 import styles from "./Login.module.css";
@@ -6,9 +6,12 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Cookies from "js-cookie"; // Import js-cookie for cookie management
+
 import userIcon from "../../public/assets/icons/user.png";
 import eyeCloseIcon from "../../public/assets/icons/eyeclose.png";
 import eyeOpenIcon from "../../public/assets/icons/eyeopen.png";
+import { useData } from "../context/contextApi";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,6 +22,8 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+
+  const { setToken } = useData();
 
   const handleLogin = async () => {
     // Validation
@@ -36,25 +41,30 @@ const Login = () => {
     setError("");
 
     try {
-      
-      const response = await axios.post(
-        "/api/loginApi", {email: email, password: password}
-      );
+      const response = await axios.post("/api/loginApi", {
+        email: email,
+        password: password,
+      });
       console.log("Login Response:", response.data.data.token);
 
       if (response.data.success) {
-        localStorage.setItem("token", response.data.data.token);
-                router.push("/dashboard");
+        const token = response.data.data.token;
+        Cookies.set("token", token, { expires: 7 });
+        localStorage.setItem("token", token);
+        setToken(token);
+        router.push("/dashboard");
       } else {
         setError(response.data.message || "Login failed. Please try again.");
       }
     } catch (err) {
       console.error("Login error:", err);
-      
       if (err.response?.status === 401) {
         setError("Invalid email or password.");
       } else {
-        setError(err.response?.data?.message || "An error occurred. Please try again later.");
+        setError(
+          err.response?.data?.message ||
+            "An error occurred. Please try again later."
+        );
       }
     } finally {
       setLoading(false);
@@ -65,7 +75,10 @@ const Login = () => {
     <>
       <Head>
         <title>Login - Your Watch Selling Platform</title>
-        <meta name="description" content="Get in touch with us for inquiries about watches." />
+        <meta
+          name="description"
+          content="Get in touch with us for inquiries about watches."
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={styles.innerContainer}>
@@ -114,8 +127,8 @@ const Login = () => {
         </div>
 
         <div className={styles.forgotPasswordContainer}>
-          <span 
-            className={styles.forgotPassword} 
+          <span
+            className={styles.forgotPassword}
             onClick={() => router.push("/forgotPassword")}
           >
             Forgot Password?

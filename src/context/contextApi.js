@@ -1,10 +1,20 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState,useEffect } from 'react';
 
 const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
     const [favorites, setFavorites] = useState({});
-    const [token, setToken] = useState("");
+    const [token, setToken] = useState(null);
+    console.log('token in context',token)
+
+    useEffect(() => {
+        const savedToken = localStorage.getItem("token");
+        console.log('saved token------',savedToken)
+        if (savedToken) {
+          setToken(savedToken);
+        }
+      }, []);
+
 
     const toggleFavorite = async (id) => {
         if (!token) {

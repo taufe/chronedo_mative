@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { useData } from '../context/contextApi';
 
 const Billing = () => {
     const router = useRouter();
@@ -16,12 +17,14 @@ console.log('query in billing screen',router.query);
     const [legalBindingAccepted, setLegalBindingAccepted] = useState(false);
     const [loading, setLoading] = useState(false)
     const [error, setError]= useState('')
+    const {token} = useData()
+    console.log('billing page token for fixed price',token)
 
     const handleConfirmPurchase = async () => {
     
         try {
 
-          const response = await axios.post("/api/fixedPriceApi", { id, watch_price,total_price, watch_name,final_price,delivery_method });
+          const response = await axios.post("/api/fixedPriceApi", { id, watch_price,total_price, watch_name,final_price,delivery_method, token });
         
           if (response.data.success === true) {
             console.log(response.data.message);

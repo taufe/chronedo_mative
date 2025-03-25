@@ -8,8 +8,53 @@ import WatchCard from '../components/WatchCard';
 import FilterPopup from '../components/FilterPopup';
 import { BsArrowRight } from "react-icons/bs";
 import CategoryCarousel from '../components/CategoryCarousel/CategoryCarousel';
+import { useData } from '../context/contextApi';
 
 const Dashboard = () => {
+    const router = useRouter();
+//     const { token, isLoading } = useData();
+
+//   const [isClient, setIsClient] = useState(false);
+
+//     useEffect(() => {
+//         setIsClient(true); // Mark that we're on the client side
+//     }, []);
+
+//     // Enhanced authentication check
+//     useEffect(() => {
+//         if (!isClient || isLoading) return;
+
+//         const checkAuth = () => {
+//             const localStorageToken = localStorage.getItem('token');
+//             const isAuthenticated = token || localStorageToken;
+            
+//             if (!isAuthenticated) {
+//                 console.log('No token found - redirecting to login');
+//                 // Use window.location for hard redirect
+//                 window.location.href = `/login?from=${encodeURIComponent(router.asPath)}`;
+//                 return; // Important to prevent further execution
+//             }
+//         };
+
+//         checkAuth();
+//     }, [token, isLoading, router, isClient]);
+//     if (!isClient || isLoading) {
+//       return (
+//           <DashboardLayout>
+//               <div className={styles.loadingContainer}>
+//                   <div className={styles.loadingSpinner}></div>
+//                   <p>Loading...</p>
+//               </div>
+//           </DashboardLayout>
+//       );
+//   }
+
+//   const localStorageToken = localStorage.getItem('token');
+//   if (!token && !localStorageToken) {
+//       // While waiting for redirect, show nothing
+//       return null
+//   }
+
     const watches = [
         { image: '/assets/watches/rolexDatejust.png', name: 'Rolex Datejust Oyster 41mm', date: '24.10.2021, 19:35', buyNowPrice: 5000, bidPrice: 1001 },
         { image: '/assets/watches/omegaSpeedmaster.png', name: 'Omega Speedmaster Professional', date: '25.10.2021, 14:20', buyNowPrice: 6800, bidPrice: 5500 },
@@ -27,7 +72,7 @@ const Dashboard = () => {
         { image: '/assets/watches/patekPhilippe.png', name: 'Patek Philippe Aquanaut', date: '24.10.2021, 20:10', buyNowPrice: 95000, bidPrice: 78000 },
     ];
 
-    const router = useRouter();
+    
     const [searchInput, setSearchInput] = useState('');
     const [filteredWatches, setFilteredWatches] = useState(watches);
     const [sortBy, setSortBy] = useState('lowPrice');

@@ -1,4 +1,6 @@
 import axios from "axios";
+// import { useData } from "../../context/contextApi";
+// const { token } = useData();
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -7,14 +9,14 @@ export default async function handler(req, res) {
 
   try {
     // Extract parameters from the request body
-    const { watch_id, discount, sales_commission } = req.body;
+    const { watch_id, discount, sales_commission,token } = req.body;
 
     // Ensure required fields are present
     if (!watch_id || discount === undefined || sales_commission === undefined) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    const token = "222|wq0yIWuRTDsOMPsWwfQLH4WEhVHDCO1RLLzLj0lXb7c13b88";
+    // const token = "222|wq0yIWuRTDsOMPsWwfQLH4WEhVHDCO1RLLzLj0lXb7c13b88";
 
     // Make the API call
     const response = await axios.post(

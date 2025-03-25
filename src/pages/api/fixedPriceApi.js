@@ -17,6 +17,7 @@ export default async function handler(req, res) {
       total_price,
       promo_id,
       final_price,
+      token
     } = req.body;
 
     // Define static fallback values for missing parameters
@@ -32,7 +33,7 @@ export default async function handler(req, res) {
       final_price: final_price || 9950,
     };
 
-    const token = "222|wq0yIWuRTDsOMPsWwfQLH4WEhVHDCO1RLLzLj0lXb7c13b88";
+    // const token = "222|wq0yIWuRTDsOMPsWwfQLH4WEhVHDCO1RLLzLj0lXb7c13b88";
 
     // Make the API call to buyWatchFixedPrice
     const response = await axios.post(
