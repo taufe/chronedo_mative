@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 
-export const NewArrivalWatch = () => {
+ const NewArrivalWatch = () => {
     const router = useRouter();
     const [watchList, setWatchList] = useState([]);
     const [favorites, setFavorites] = useState({}); 
@@ -104,5 +104,7 @@ export const NewArrivalWatch = () => {
             </div>
     );
 };
+
+export default NewArrivalWatch
 
 
