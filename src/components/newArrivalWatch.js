@@ -53,7 +53,7 @@ export const NewArrivalWatch = () => {
                     },
                 }
             );
-            console.log('post response------',response.data)
+            // console.log('post response------',response.data)
 
             console.log("Response:", response.data);
 
