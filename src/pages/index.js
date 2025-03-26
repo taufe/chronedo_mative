@@ -488,7 +488,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <NewArrivalWatch />
+      {/* <NewArrivalWatch /> */}
     </>
   );
 };
