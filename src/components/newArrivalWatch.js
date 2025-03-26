@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import styles from './newArrivalWatch.module.css';
-import WatchCard from '../components/WatchCard';
+import styles from './NewArrivalWatch.module.css';
+import WatchCard from './WatchCard';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
