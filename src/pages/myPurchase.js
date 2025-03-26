@@ -14,6 +14,7 @@ const MyPurchase = () => {
   const {token} = useData()
   console.log('mypurchase screen token-----',token)
   console.log('token of open watch', token)
+  // const token = '222|wq0yIWuRTDsOMPsWwfQLH4WEhVHDCO1RLLzLj0lXb7c13b88'
   const [bottomTabIndex, setBottomTabIndex] = useState(1);
   const [purchaseStatus, setPurchaseStatus] = useState("pending");
   const [selectedCard, setSelectedCard] = useState(null); // New state
@@ -136,10 +137,10 @@ const MyPurchase = () => {
     return (
       <div className={styles.purchasedGrid}>
         {loading ? (
-          <p style={{ fontFamily: 'Poppins', textAlign: 'end' }}>Loading...</p>
+          <p style={{ fontFamily: 'Poppins', textAlign: 'center' }}>Loading...</p>
         ) : purchaseStatus === "pending" ? (
           pendingPurchases?.length === 0 ? (
-            <p style={{ fontFamily: 'Poppins', textAlign: 'end', marginTop:-20 }}>
+            <p style={{ fontFamily: 'Poppins', textAlign: 'center', marginTop:-20 }}>
              No data found
             </p>
           ) : (
@@ -158,10 +159,10 @@ const MyPurchase = () => {
         ) : null}
   
         {loading ? (
-          <p style={{ fontFamily: 'Poppins', textAlign: 'end' }}>Loading...</p>
+          <p style={{ fontFamily: 'Poppins', textAlign: 'center' }}>Loading...</p>
         ) : purchaseStatus === "inProgress" ? (
           inProgressPurchases?.length === 0 ? (
-            <p style={{ fontFamily: 'Poppins', textAlign: 'end',marginTop:-20 }}>
+            <p style={{ fontFamily: 'Poppins', textAlign: 'center',marginTop:-20 }}>
                No data found
             </p>
           ) : (
@@ -183,10 +184,10 @@ const MyPurchase = () => {
         ) : null}
   
         {loading ? (
-          <p style={{ fontFamily: 'Poppins', textAlign: 'end' }}>Loading...</p>
+          <p style={{ fontFamily: 'Poppins', textAlign: 'center' }}>Loading...</p>
         ) : purchaseStatus === "completed" ? (
           completedPurchases?.length === 0 ? (
-            <p style={{ fontFamily: 'Poppins', textAlign: 'end',marginTop:-20 }}>
+            <p style={{ fontFamily: 'Poppins', textAlign: 'center',marginTop:-20 }}>
                No data found
             </p>
           ) : (

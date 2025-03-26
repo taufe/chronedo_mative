@@ -12,6 +12,10 @@
     padding: 10px 16px;
     margin-bottom: 20px;
 }
+/* .popularBran{
+    font-family: "Poppins";
+    font-weight: 400;   
+} */
 
 .searchBar input {
     flex: 1;

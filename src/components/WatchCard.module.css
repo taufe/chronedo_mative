@@ -16,6 +16,22 @@
 .watchImage {
   position: relative;
 }
+.watchName{
+  font-family: 'Poppins';
+  font-weight: 500;
+}
+.date{
+  font-family: 'Poppins';
+  font-weight: 400;
+}
+.buyNow{
+  font-family: 'Poppins';
+  font-weight: 400;
+}
+.buyPrice{
+  /* font-family: 'Poppins';
+  font-weight: 400; */
+}
 
 .watchActions {
   position: absolute;
@@ -46,6 +62,8 @@
 .watchCard h3 {
   font-size: 16px;
   color: #fff;
+  font-family: 'Poppins';
+  font-weight: 500;
 }
 
 .watchDate {
@@ -73,7 +91,8 @@
 
 .buyNow span:last-child, .bidPrice span:last-child {
   font-size: 14px;
-  font-weight: bold;
+  font-family: 'Poppins';
+  font-weight: 500;
   color: #fff;
 }
 

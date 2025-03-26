@@ -152,7 +152,7 @@ const CategoryCard = ({ image, title }) => {
       </h3>
 
       <button className="see-all-btn">
-        See All{" "}
+        See All
         <Image
           src="/assets/icons/rightArrowGolden.png"
           alt="Right Arrow"
@@ -488,7 +488,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      {/* <NewArrivalWatch /> */}
+      <NewArrivalWatch />
     </>
   );
 };

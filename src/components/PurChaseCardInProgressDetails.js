@@ -16,12 +16,14 @@ import { AiOutlineClockCircle } from "react-icons/ai"; // Clock icon
 import { Rating } from 'react-simple-star-rating'
 import { useId } from 'react';
 import axios from "axios";
+import { useData } from "../context/contextApi";
 
 export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChange,purchaseOrderId }) => {
     const [activeStep, setActiveStep] = useState(0);
     const [value, setValue] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [orderData, setOrderData] = useState(null)
+    const {token} = useData()
 
     useEffect(()=>{
 
@@ -30,7 +32,7 @@ export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChan
             try {
                 const response = await axios.get(`https://chronedo.webjerky.com/api/orderStatus/${purchaseOrderId}`,{
                     headers: {
-                        Authorization: `Bearer 223|fQCZy8Ol01rCyB1aAH7bAM1vqLWG7h1mGUYVEzid85dc39bc`
+                        Authorization: `Bearer ${token}`
                       }
                 })
                 console.log('purchase screen response-----',response.data.data)

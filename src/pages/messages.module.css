@@ -102,11 +102,15 @@
 .chatHeaderListItem h4 {
   color: #fff;
   margin: 0;
+  font-family: 'Poppins';
+  font-weight: 500;
 }
 
 .date {
   color: #8a8f98;
   font-size: 12px;
+  font-family: 'Poppins';
+  font-weight: 300;
 }
 
 .lastMessage {
@@ -138,6 +142,8 @@
 .chatUser h3 {
   color: #fff;
   margin: 0;
+  font-family: 'Poppins';
+  font-weight: 500;
 }
 
 .chatActions {
@@ -175,6 +181,8 @@
 .ownMessage .messageContent {
   background: #444444;
   color: white;
+  font-family: 'Poppins';
+  font-weight: 300;
 }
 
 .messageTime {
@@ -182,11 +190,15 @@
   color: #666;
   margin-top: 4px;
   display: block;
+  font-family: 'Poppins';
+  font-weight: 300;
 }
 
 .ownMessage .messageTime {
   text-align: right;
   color: #ccc;
+  font-family: 'Poppins';
+  font-weight: 300;
 }
 
 .messageInput {

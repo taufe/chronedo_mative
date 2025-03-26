@@ -251,7 +251,7 @@ const Dashboard = () => {
                                             <h3>Nico Baumgartner</h3>
                                             <div className={styles.location}>
                                                 <Image src="/assets/icons/locationGolden.png" alt="Location" width={14} height={20} />
-                                                <span>California, USA</span>
+                                                <span style={{ fontFamily: '"Poppins"', fontWeight: 400 }}>California, USA</span>
                                             </div>
                                         </div>
                                     </div>

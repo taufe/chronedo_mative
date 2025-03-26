@@ -130,6 +130,8 @@
   font-family: "Poppins";
   position: relative;
   top: 3px;
+  font-family: "Poppins";
+  font-weight:400;
 }
 
 .bottomTabLine {
@@ -158,6 +160,7 @@
   font-weight: 600;
   text-align: center;
   margin-bottom: 12px;
+  font-family: 'Poppins';
 }
 
 .timeText {
@@ -165,6 +168,9 @@
   font-size: 18px;
   text-align: center;
   margin-bottom: 40px;
+  margin-top:0px;
+  font-family: "Poppins";
+  font-weight:400;
 }
 
 .formContainer {
@@ -172,6 +178,8 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  font-family: "Poppins";
+  font-weight:400;
 }
 
 .referenceInput {
@@ -230,6 +238,8 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-top: 16px;
+  font-family: "Poppins";
+  font-weight:500;
 }
 
 .nextButton:hover {
@@ -264,12 +274,16 @@
   color: #fff;
   font-size: 24px;
   margin-bottom: 8px;
+  font-family: "Poppins";
+  font-weight:500;
 }
 
 .mandatoryText {
   color: #b38e5d;
   font-size: 14px;
   margin-bottom: 32px;
+  font-family: "Poppins";
+  font-weight:400;
 }
 
 .formGrid {
@@ -287,6 +301,8 @@
 .formGroup label {
   color: #fff;
   font-size: 16px;
+  font-family: "Poppins";
+  font-weight:400;
 }
 
 .formSelect,
@@ -361,6 +377,8 @@
   border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
+  font-family: "Poppins";
+  font-weight:500;
 }
 
 .nextButtonBasicData {
@@ -371,6 +389,8 @@
   border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
+  font-family: "Poppins";
+  font-weight:500;
 }
 
 /* Responsive styles */
@@ -442,6 +462,8 @@
 .detailsNavButton span {
   font-size: 14px;
   text-align: center;
+  font-family: "Poppins";
+  font-weight:500;
 }
 
 .certificationsSection {
@@ -601,11 +623,15 @@
   transition: all 0.3s ease;
   font-size: 14px;
   white-space: nowrap;
+  font-family: "Poppins";
+  font-weight:400;
 }
 
 .activeCert {
   background: rgba(179, 142, 93, 0.15);
   border-color: #b38e5d;
+  font-family: "Poppins";
+  font-weight:400;
 }
 
 .certButton:hover {
@@ -791,10 +817,17 @@
   background: rgba(179, 142, 93, 0.1);
 }
 
+.warrentyUnit{
+  font-family: "Poppins";
+  font-weight:400;
+}
+
 .uploadLabel span {
   color: #fff;
   font-size: 14px;
   text-align: center;
+  font-family: "Poppins";
+  font-weight:400;
 }
 
 /* Responsive styles */
@@ -843,11 +876,16 @@
 .orText {
   color: #fff;
   font-size: 16px;
+  font-family:'Poppins';
+  font-weight:400
 }
 
 .yearText {
   color: #fff;
   font-size: 16px;
+  font-family:'Poppins';
+  font-weight: 400;
+
 }
 
 .checkboxLabel {
@@ -879,6 +917,8 @@
   font-size: 16px;
   resize: vertical;
   margin-top: 8px;
+  font-family:'Poppins';
+  font-weight:400
 }
 
 .descriptionFooter {
@@ -935,6 +975,8 @@
   color: #fff;
   font-size: 18px;
   margin-bottom: 24px;
+  font-family:'Poppins';
+  font-weight:400
 }
 
 .boxSection,
@@ -967,11 +1009,15 @@
   transition: all 0.3s ease;
   font-size: 16px;
   white-space: nowrap;
+  font-family:"Poppins";
+  font-weight:400
 }
 
 .activeScope {
   background: rgba(179, 142, 93, 0.15);
   border-color: #b38e5d;
+  font-family:"Poppins";
+  font-weight:400
 }
 
 .scopeButton:hover {
@@ -999,6 +1045,8 @@
   color: #fff;
   font-size: 16px;
   resize: vertical;
+  font-family:"Poppins";
+  font-weight:400
 }
 
 .characterCounter {
@@ -1029,6 +1077,8 @@
   color: #fff;
   font-size: 18px;
   margin-bottom: 24px;
+  font-family:"Poppins";
+  font-weight:400
 }
 
 .currencyPriceGrid {

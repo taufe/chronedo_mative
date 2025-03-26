@@ -520,7 +520,7 @@ const MySelling = () => {
                 </p>
 
                 <div className={styles.detailsContentNav}>
-                  <button
+                  {/* <button
                     className={`${styles.detailsNavButton} ${
                       detailsContentIndex === 0 ? styles.activeDetailsNav : ""
                     }`}
@@ -534,7 +534,7 @@ const MySelling = () => {
                       style={{ objectFit: "contain" }}
                     />
                     <span>Case</span>
-                  </button>
+                  </button> */}
                   <button
                     className={`${styles.detailsNavButton} ${
                       detailsContentIndex === 1 ? styles.activeDetailsNav : ""
@@ -1161,7 +1161,7 @@ const MySelling = () => {
 
                 <div className={styles.warrantySection}>
                   <div className={styles.warrantyGroup}>
-                    <label>Manufacturer warranty until*</label>
+                    <label className={styles.warrentyUnit}>Manufacturer warranty until*</label>
                     <div className={styles.warrantyInputGroup}>
                       <input
                         type="text"
@@ -1188,12 +1188,12 @@ const MySelling = () => {
                           setNoManufacturerWarranty(e.target.checked)
                         }
                       />
-                      <span>No warranty of manufacturer</span>
+                      <span className={styles.warrentyUnit}>No warranty of manufacturer</span>
                     </label>
                   </div>
 
                   <div className={styles.warrantyGroup}>
-                    <label>Warranty of me until*</label>
+                    <label className={styles.warrentyUnit}>Warranty of me until*</label>
                     <div className={styles.warrantyInputGroup}>
                       <input
                         type="text"
@@ -1217,7 +1217,7 @@ const MySelling = () => {
                         checked={noSellerWarranty}
                         onChange={(e) => setNoSellerWarranty(e.target.checked)}
                       />
-                      <span>no warranty from the seller</span>
+                      <span className={styles.warrentyUnit}>no warranty from the seller</span>
                     </label>
                   </div>
                 </div>

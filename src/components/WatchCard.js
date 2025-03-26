@@ -19,14 +19,14 @@ const WatchCard = ({ image, name, date, buyNowPrice, bidPrice, onPress }) => {
         <Image src={image} alt={name} layout="fill" objectFit="cover" />
       </div>
       <div className={styles.watchCardContent}>
-        <h3>{name}</h3>
+        <h3 className={styles.watchName}>{name}</h3>
         <p className={styles.date}>{date}</p>
         <div className={styles.priceContainer}>
           <div className={styles.buyNowPrice}>
-            <span>Buy Now</span>
+            <span className={styles.buyNow}>Buy Now</span>
           </div>
           <div className={styles.bidPrice}>
-            <span>${buyNowPrice.toLocaleString()}</span>
+            <span className={styles.buyPrice}>${buyNowPrice.toLocaleString()}</span>
           </div>
         </div>
       </div>

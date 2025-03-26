@@ -393,7 +393,9 @@ x .category-card img {
 .category-card h3,
 .see-all-btn {
   position: absolute;
-  z-index: 2; /* Ensure text and button are above the overlay */
+  z-index: 2; 
+  font-family: 'Poppins';
+  font-weight: 600;
 }
 
 .category-card h3 {
@@ -418,12 +420,13 @@ x .category-card img {
   font-size: 14px;
   color: #fff;
   font-weight: 400;
+  font-family: "Poppins";
 }
 
 .see-all-btn {
   position: absolute;
   bottom: 20px;
-  left: 20px;
+  left: 35px;
   background-color: rgba(0, 0, 0, 0);
   color: #a98754;
   border: 1px solid #a98754;
@@ -655,6 +658,7 @@ x .category-card img {
   font-weight: 600;
   margin-bottom: -10px;
   margin-bottom: -10px;
+  font-family: "Poppins";
 }
 
 .watch-grid {

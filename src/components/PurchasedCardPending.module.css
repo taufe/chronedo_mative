@@ -32,6 +32,8 @@
     font-weight: 500;
     margin: 0 0 16px 0;
     line-height: 1.2;
+    font-family: 'Poppins';
+    font-weight:500
 }
 
 .statusContainer {
@@ -44,18 +46,23 @@
 .statusText {
     color: #FFB800;
     font-size: 14px;
+    font-family: 'Poppins';
+    font-weight:400
 }
 
 .date {
     color: #8A8F98;
     font-size: 14px;
     margin-left: auto;
+    font-family: 'Poppins';
+    font-weight:300;
 }
 
 .price {
     color: #fff;
     font-size: 20px;
     font-weight: 500;
+    font-family: 'Poppins';
 }
 
 .divider {
@@ -76,6 +83,8 @@
     gap: 8px;
     margin-bottom: 16px;
     cursor: pointer;
+    font-family: 'Poppins';
+    font-weight:300;
 }
 
 .sellerDetails {
@@ -91,10 +100,14 @@
 
 .label {
     color: #8A8F98;
-    font-size: 16px;
+    font-size: 14px;
+    font-weight:300;
+    font-family: 'Poppins';
 }
 
 .value {
     color: #FF8A00;
-    font-size: 16px;
+    font-size: 14px;
+    font-weight:300;
+    font-family: 'Poppins';
 }

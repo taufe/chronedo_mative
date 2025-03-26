@@ -34,15 +34,17 @@
 
 .brandName {
   color: #A98754;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
+  font-family: "Poppins";
 }
 
 .modelName {
   color: #fff;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   margin-left: 5px;
+  font-family: "Poppins";
 }
 
 @media (max-width: 768px) {

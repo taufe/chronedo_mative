@@ -26,7 +26,7 @@ const CategoryCarousel = () => {
     return (
         <section className={styles.categories}>
             <div className={styles.categoriesContainer}>
-                <h2>Categories</h2>
+                <h2 style={{fontFamily:'Poppins', fontWeight:600, marginBottom:0}}>Categories</h2>
                 <div className={styles.categoriesHeader}>
                     <p>Lorem Ipsum is simply dummy text of the<br /> printing and typesetting industry</p>
                     <div className={styles.navigationArrows}>
