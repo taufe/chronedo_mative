@@ -1126,8 +1126,28 @@
 .photosSectionTitle {
   color: #fff;
   font-size: 24px;
-  margin-bottom: 24px;
+  margin-bottom: 5px;
   font-weight: 500;
+  font-family:'Poppins';
+  padding-left:15px;
+
+}
+
+.paragraph{
+font-family:'Poppins';
+font-weight: 300;
+color:#A98754
+}
+.label{
+font-family:'Poppins';
+font-weight: 400;
+
+}
+.description{
+  font-family:'Poppins';
+font-weight: 300;
+font-size:17px;
+padding-left:15px
 }
 
 .photosGrid {
@@ -1138,28 +1158,44 @@
 }
 
 .photoUploadBox {
-  aspect-ratio: 1;
-  position: relative;
+  /* aspect-ratio: 1;
+  position: relative; */
+  disply:flex
 }
 
 .hiddenInput {
   display: none;
 }
 
-.uploadLabel {
+.photosGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 items per row */
+  gap: 40px 80px; /* Adjust spacing between rows and columns */
+  justify-items: center; /* Center align content */
+  align-items: center;
+  width: 100%;
+}
+
+.photoUploadBox {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  width: 100%;
-  height: 100%;
-  /* border: 1px dashed #b38e5d; */
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  /* background: rgba(255, 255, 255, 0.05); */
+  text-align: center;
+  gap: 10px;
 }
+
+.uploadLabel span {
+  font-weight: 500;
+}
+
+.uploadLabel p {
+  color: #b38e5d; /* Golden color for 'Learn more' */
+  cursor: pointer;
+}
+
+
+
 
 .uploadLabel:hover {
   background: rgba(31, 28, 28, 0.28)

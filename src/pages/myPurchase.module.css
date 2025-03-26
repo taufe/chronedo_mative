@@ -30,6 +30,7 @@
   color: white;
   border-radius: 29px;
   border: none;
+  margin-left:25px;
 }
 
 .searchInput:focus {

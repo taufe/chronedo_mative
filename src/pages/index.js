@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import WatchCard from "../components/WatchCard";
 import BrandWatch from "../components/BrandWatch";
-import { useState, useEffect, useRef } from "react"; // Import useRef
+import React, { useState, useEffect, useRef } from "react"; // Import useRef
 import { useRouter } from "next/router";
 import FilterPopup from "../components/FilterPopup";
 import styles from "./index.module.css";
@@ -45,6 +45,7 @@ const PopularBrands = () => {
   };
 
   return (
+   <>
     <section className="categories popular-brands">
       <div className="categories-container">
         <h2>Popular Brands</h2>
@@ -125,10 +126,10 @@ const PopularBrands = () => {
         </div>
       </div>
     </section>
+   </>
   );
 };
 
-// First, create a new component for CategoryCard
 const CategoryCard = ({ image, title }) => {
   return (
     <div className="category-card">
@@ -137,9 +138,19 @@ const CategoryCard = ({ image, title }) => {
         alt={title}
         width={300}
         height={400}
-        objectFit="cover"
+        style={{ alignSelf: 'center', objectFit: 'cover' }}
       />
-      <h3>{title}</h3>
+
+      {/* Split title by space and add line breaks dynamically */}
+      <h3 className="titleofBreakLine">
+        {title.split(' ').map((word, index) => (
+          <React.Fragment key={index}>
+            {word}
+            <br />  {/* Add a line break after each word */}
+          </React.Fragment>
+        ))}
+      </h3>
+
       <button className="see-all-btn">
         See All{" "}
         <Image
@@ -153,6 +164,8 @@ const CategoryCard = ({ image, title }) => {
     </div>
   );
 };
+
+
 
 // Create a new Categories component
 const Categories = () => {
@@ -239,22 +252,34 @@ const Categories = () => {
           </div>
         </div>
         <div 
-          className="category-grid" 
-          ref={containerRef}
-          style={{
-            display: 'flex',
-            overflow: 'hidden',
-            position: 'relative',
-            width: '100%',
-            gap: '20px'
-          }}
-        >
-          {categories.map((category, index) => (
-            <div key={index} style={{ flex: '0 0 25%', minWidth: '25%' }}>
-              <CategoryCard {...category} />
-            </div>
-          ))}
-        </div>
+  className="category-grid" 
+  ref={containerRef}
+  style={{
+    display: 'flex',
+    overflow: 'hidden',
+    position: 'relative',
+    width: '100%',
+    gap: '20px',
+    justifyContent: 'center', // Center items horizontally
+    alignItems: 'center', // Center items vertically
+  }}
+>
+{categories.map((category, index) => (
+  <div 
+    key={index} 
+    style={{ 
+      flex: '0 0 25%', 
+      minWidth: '25%', 
+      display: 'flex', 
+      justifyContent: 'center' 
+    }}
+  >
+    <CategoryCard {...category} />
+  </div>
+))}
+
+</div>
+
       </div>
     </section>
   );
@@ -357,6 +382,7 @@ const Home = () => {
                 placeholder="Search..."
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
+                
               />
               <div className={styles.searchIcon}>
                 <Image

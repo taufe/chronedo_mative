@@ -711,74 +711,55 @@ const Product = () => {
       <Chat />
 {/* phose section */}
 
-            <div className={styles.photosSection}>
-                  {/* <h3 className={styles.photosSectionTitle}>
-                    Photos of the watch
-                  </h3> */}
-                  <div className={styles.photosGrid}>
-                    {[
-                      {
-                        id: "cover",
-                        label: "Cover",
-                        icon: "/assets/WatchDetails/cover.png",
-                      },
-                      {
-                        id: "back",
-                        label: "Back",
-                        icon: "/assets/WatchDetails/back.png",
-                      },
-                      {
-                        id: "wristshot",
-                        label: "Wristshot",
-                        icon: "/assets/WatchDetails/wristshot.png",
-                      },
-                      {
-                        id: "defects",
-                        label: "Defects",
-                        icon: "/assets/WatchDetails/defects.png",
-                      },
-                      // {
-                      //   id: "side1",
-                      //   label: "Side 1",
-                      //   icon: "/assets/WatchDetails/side1.png",
-                      // },
-                      // {
-                      //   id: "side2",
-                      //   label: "Side 2",
-                      //   icon: "/assets/WatchDetails/side2.png",
-                      // },
-                      // {
-                      //   id: "more1",
-                      //   label: "More",
-                      //   icon: "/assets/WatchDetails/more.png",
-                      // },
-                      // {
-                      //   id: "more2",
-                      //   label: "More",
-                      //   icon: "/assets/WatchDetails/more.png",
-                      // },
-                    ].map((item) => (
-                      <div key={item.id} className={styles.photoUploadBox}>
-                        <input
-                          type="file"
-                          id={item.id}
-                          accept="image/*"
-                          className={styles.hiddenInput}
-                          onChange={(e) => handlePhotoUpload(e, item.id)}
-                        />
-                        <label htmlFor={item.id} className={styles.uploadLabel}>
-                          <Image
-                            src={item.icon}
-                            alt={item.label}
-                            width={80}
-                            height={120}
-                            style={{ objectFit: "contain" }}
-                          />
-                          <span>{item.label}</span>
-                        </label>
-                      </div>
-                    ))}
-                  </div>
+<div className={styles.photosSection}>
+  <h3 className={styles.photosSectionTitle}>Added Services</h3>
+  <p className={styles.description}>To make your shopping at CHRONEDO easy and safe, we offer you our Added Services.</p>
+  
+  <div className={styles.photosGrid}>
+    {[
+      {
+        id: "cover",
+        label: "Polishing and Cleaning",
+        icon: "/assets/WatchDetails/cover.png",
+        title: "Learn more",
+      },
+      {
+        id: "back",
+        label: "Trust Check incl. Fake Check",
+        icon: "/assets/WatchDetails/back.png",
+        title: "Learn more",
+      },
+      {
+        id: "wristshot",
+        label: "Transport Insurance",
+        icon: "/assets/WatchDetails/wristshot.png",
+        title: "Learn more",
+      },
+      {
+        id: "defects",
+        label: "Shipping",
+        icon: "/assets/WatchDetails/defects.png",
+        title: "Learn more",
+      },
+    ].map((item) => (
+      <div key={item.id} className={styles.photoUploadBox}>
+        <div htmlFor={item.id} className={styles.uploadLabel}>
+          <Image
+            src={item.icon}
+            alt={item.label}
+            width={80}
+            height={120}
+            style={{ objectFit: "contain" }}
+          />
+          </div>
+          <div>
+          <span className={styles.label}>{item.label}</span>
+          <p className={styles.paragraph}>{item.title}</p>
+          </div>
+        </div>
+      // </div>
+    ))}
+</div>
                 </div>
     </DashboardLayout>
   );

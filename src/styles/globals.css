@@ -95,9 +95,11 @@ a {
 }
 
 .hero p {
-  font-size: 18px;
-  line-height: 1.5;
+  font-size: 17px;
+  /* line-height: 1.5; */
   margin-bottom: 40px;
+  font-family: 'Poppins';
+  font-weight: 400;
 }
 
 /* Search Bar Styling */
@@ -339,11 +341,14 @@ a {
   font-weight: 600;
   margin-bottom: -10px;
   margin-bottom: -10px;
+  font-family: "Poppins";
+  font-weight: 600;
 }
 
 .categories p {
   font-size: 14px;
   color: #fff;
+  font-family: "Poppins";
   font-weight: 400;
 }
 
@@ -360,10 +365,12 @@ a {
   overflow: hidden;
 }
 x .category-card img {
-  width: 100%;
+  /* width: 100%; */
   height: 400px;
   object-fit: cover;
   transition: transform 0.3s ease, opacity 0.3s ease;
+  position: absolute;
+  
 }
 
 .category-card::before {
@@ -373,14 +380,14 @@ x .category-card img {
   left: 0;
   width: 100%;
   height: 400px;
-  background-color: rgba(0, 0, 0, 0.72); /* Black overlay with 50% opacity */
-  opacity: 1; /* Fully visible by default */
+  /* background-color: rgba(0, 0, 0, 0.72);  */
+  /* opacity: 1;  */
   transition: opacity 0.3s ease;
   z-index: 1;
 }
 
 .category-card:hover::before {
-  opacity: 0; /* Hide overlay on hover */
+  opacity: 0; 
 }
 
 .category-card h3,
@@ -392,9 +399,10 @@ x .category-card img {
 .category-card h3 {
   position: absolute;
   top: 10px;
-  left: 20px;
+  left: 35px;
   color: #fff;
   font-size: 24px;
+  font-family: "Poppins";
   font-weight: 600;
   z-index: 1;
 }
@@ -485,6 +493,17 @@ x .category-card img {
 @media (max-width: 768px) {
   .category-grid {
     flex-direction: column;
+  }
+
+  .category-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 400px;
+    transition: opacity 0.3s ease;
+    z-index: 1;
   }
 
   .category-card {

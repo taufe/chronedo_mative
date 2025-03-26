@@ -21,12 +21,17 @@
     font-size: 16px;
 }
 
+
 .searchBar input:focus {
     outline: none;
 }
 
 .searchIcon {
     margin-left: 8px;
+}
+.titleofBreakLine{
+    white-space: pre-line; /* Handles \n as a line break */
+
 }
 
 .filterSection {
@@ -71,6 +76,8 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-family: "Poppins";
+    font-weight: 400;
 }
 
 .filterButton.active {
