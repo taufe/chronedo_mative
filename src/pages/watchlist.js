@@ -12,15 +12,17 @@ const Watchlist = () => {
     const router = useRouter();
     const [watchList, setWatchList] = useState([]);
     const [favorites, setFavorites] = useState({}); 
-    const {token} = useData()
+    const { token } = useData();
     const [isLoading, setIsLoading] = useState(true);
+    const [isNavigating, setIsNavigating] = useState(false);
 
     useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false); 
+        }, 2000);
 
-        setTimeout(() => {
-          setIsLoading(false); 
-        }, 2000); 
-      });
+        return () => clearTimeout(timer);
+    }, []);
 
     useEffect(() => {
         const fetchWatchApi = async () => {
@@ -29,8 +31,7 @@ const Watchlist = () => {
                     "https://chronedo.webjerky.com/api/watches?page=1&limit=8",
                     {
                         headers: {
-                            Authorization:
-                                `Bearer ${token}`,
+                            Authorization: `Bearer ${token}`,
                         },
                     }
                 );
@@ -40,21 +41,23 @@ const Watchlist = () => {
             }
         };
 
-        fetchWatchApi();
+        if (token) {
+            fetchWatchApi();
+        }
     }, [token]);
+
     useEffect(() => {
         const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || {};
         setFavorites(storedFavorites);
     }, []);
 
-    // Toggle favorite function
     const toggleFavorite = async (id) => {
         const isFavorite = favorites[id];
 
         try {
             const response = await axios.post(
                 "/api/favouriteApi",
-                { id, action: isFavorite ? "remove" : "add", token  }, // Send action to API
+                { id, action: isFavorite ? "remove" : "add", token },
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -62,19 +65,59 @@ const Watchlist = () => {
                 }
             );
 
-            console.log("Response:", response.data);
-
             if (response.data.success) {
                 const updatedFavorites = { ...favorites, [id]: !favorites[id] };
                 setFavorites(updatedFavorites);
-
-                // Store updated favorites in localStorage
                 localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
             } else {
                 console.error("Failed to update favorites:", response.data.message);
             }
         } catch (error) {
             console.error("Error updating favorites:", error.response?.data || error.message);
+        }
+    };
+
+    const incrementWatchClick = async (watch) => {
+        try {
+            const response = await axios.post(
+                `/api/clickWatchApi`,
+                {id:watch.id,
+                token:token
+                }, 
+                {
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            return response.data;
+        } catch (e) {
+            console.log("error", e);
+            throw e;
+        }
+    };
+
+    const handleCardClick = async (watch) => {
+        if (isNavigating) return;
+        
+        setIsNavigating(true);
+        try {
+            const response = await incrementWatchClick(watch);
+            console.log('Watch click recorded:', response);
+            
+            await router.push({
+                pathname: '/product',
+                query: { id: watch.id }
+            });
+        } catch (error) {
+            if (error.name !== 'AbortError') {
+                console.error("Error:", error);
+                // Optionally show error to user
+            }
+        } finally {
+            setIsNavigating(false);
         }
     };
 
@@ -100,38 +143,46 @@ const Watchlist = () => {
                 </div>
 
                 <div className={styles.watchesGrid}>
-                                    {isLoading ? (
-                    <p style={{fontFamily:'Poppins'}}>Loading...</p>  
+                    {isLoading ? (
+                        <p style={{ fontFamily: 'Poppins' }}>Loading...</p>  
                     ) : watchList.length === 0 ? (
-                    <p style={{fontFamily:'Poppins'}}>No data found</p>  
+                        <p style={{ fontFamily: 'Poppins' }}>No watches found</p>  
                     ) : (
-                    watchList.map((watch) => (
-                        <div key={watch.id} className={styles.watchCard}>
-                        <WatchCard
-                            image={watch.cover}
-                            name={watch.listing_title}
-                            date={watch.age_year_of_sale}
-                            buyNowPrice={watch.fixed_price_value}
-                            bidPrice={watch.starting_price}
-                            onPress={() => router.push('/product')}
-                        />
-                        <div className={styles.iconContainer}>
-                            <button className={styles.favoriteIcon} onClick={() => toggleFavorite(watch.id)}>
-                            {favorites[watch.id] ? (
-                                <AiFillHeart size={20} color="red" />
-                            ) : (
-                                <AiOutlineHeart size={20} color="white" />
-                            )}
-                            </button>
-                            <button className={styles.filterIcon}>
-                            <Image src="/assets/productPage/compare.png" alt="Filter" width={20} height={20} />
-                            </button>
-                        </div>
-                        </div>
-                    ))
+                        watchList.map((watch) => (
+                            <div key={watch.id} className={styles.watchCard}>
+                                <div onClick={() => handleCardClick(watch)}>
+                                    <WatchCard
+                                        image={watch.cover}
+                                        name={watch.listing_title}
+                                        date={watch.age_year_of_sale}
+                                        buyNowPrice={watch.fixed_price_value}
+                                        bidPrice={watch.starting_price}
+                                    />
+                                </div>
+                                <div className={styles.iconContainer}>
+                                    <button 
+                                        className={styles.favoriteIcon} 
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            toggleFavorite(watch.id);
+                                        }}
+                                    >
+                                        {favorites[watch.id] ? (
+                                            <AiFillHeart size={20} color="red" />
+                                        ) : (
+                                            <AiOutlineHeart size={20} color="white" />
+                                        )}
+                                    </button>
+                                    <button 
+                                        className={styles.filterIcon}
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        <Image src="/assets/productPage/compare.png" alt="Filter" width={20} height={20} />
+                                    </button>
+                                </div>
+                            </div>
+                        ))
                     )}
-
-                   
                 </div>
             </div>
         </DashboardLayout>
@@ -139,4 +190,3 @@ const Watchlist = () => {
 };
 
 export default Watchlist;
-

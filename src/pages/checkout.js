@@ -119,13 +119,13 @@ const Checkout = () => {
 
                         {/* Additional Costs */}
                         <div className={styles.additionalCosts}>
-                            <h3>+ Additional costs</h3>
+                            <h3 className={styles.additionalCost}>+ Additional costs</h3>
                             <div className={styles.costItem}>
                                 <div>
-                                    <p>Estimated Import Costs:</p>
-                                    <p>Customs, Handling & VAT</p>
+                                    <p className={styles.customCost}>Estimated Import Costs:</p>
+                                    <p className={styles.customCost}>Customs, Handling & VAT</p>
                                 </div>
-                                <span>USD 280.00</span>
+                                <span className={styles.customCost}>USD 280.00</span>
                             </div>
                         </div>
                     </div>

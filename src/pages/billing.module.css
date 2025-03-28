@@ -48,6 +48,8 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
+    font-family:'Poppins';
+    font-weight:500;
     
 }
 
@@ -67,7 +69,10 @@
 
 .addressContent {
     color: white;
-    line-height: 1.5;
+    line-height: 1;
+    font-family:'Poppins';
+    font-weight:400;
+    
 }
 
 .orderSection {
@@ -78,6 +83,7 @@
     color: #A98754;
     margin-bottom: 20px;
     font-weight: 600;
+    font-family:'Poppins';
 }
 
 .purchaseContract {
@@ -85,12 +91,16 @@
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 20px;
+    font-family:'Poppins';
+    font-weight:300;
 }
 
 .purchaseContract h3 {
     color: #A98754;
     margin-bottom: 16px;
-    font-weight: 600;
+    /* font-weight: 600; */
+    font-family:'Poppins';
+    font-weight:500;
 }
 
 .priceBreakdown {
@@ -126,6 +136,8 @@
 .additionalServices h3 {
     color: #A98754;
     margin-bottom: 16px;
+    font-family:'Poppins';
+    font-weight:500;
 }
 
 .serviceRow {
@@ -133,6 +145,8 @@
     justify-content: space-between;
     color: white;
     margin-bottom: 12px;
+    font-family:'Poppins';
+    font-weight:300;
 }
 
 .termsSection {
@@ -170,6 +184,12 @@
     cursor: pointer;
     position: relative;
     flex-shrink: 0;
+    
+}
+
+.cheboxPara{
+    font-family:'Poppins';
+    font-weight:400;
 }
 
 .checkboxRow input[type="checkbox"]:checked {
@@ -205,9 +225,11 @@
     border: none;
     border-radius: 4px;
     padding: 16px;
-    font-weight: bold;
+    /* font-weight: bold; */
     cursor: pointer;
     transition: background-color 0.3s;
+    font-weight:500;
+    font-family:'Poppins'
 }
 
 .confirmButton:disabled {
@@ -283,6 +305,9 @@
     color: #fff;
     font-size: 28px;
     margin-bottom: 32px;
+    font-family: 'Poppins';
+    font-weight: 500;
+    
 }
 
 .checkIcon {
@@ -305,6 +330,8 @@
     cursor: pointer;
     transition: background-color 0.3s;
     margin-top: 24px;
+    font-family: 'Poppins';
+    font-weight: 500;
 }
 
 .backToDashboard:hover {
@@ -365,11 +392,17 @@
     font-weight: 500;
     margin: 0 0 8px 0;
     padding: 10px 24px;
+    font-family: 'Poppins';
+    font-weight: 500;
+}
+.baughtPara {
+    font-family: 'Poppins', sans-serif !important;  
+    font-weight: 400 !important;  
 }
 
 .watchInfo p {
     color: rgba(255, 255, 255, 0.7);
-    font-size: 20px;
+    /* font-size: 20px; */
     margin: 0;
     padding: 0 24px;
 }

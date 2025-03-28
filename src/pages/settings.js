@@ -352,7 +352,7 @@ const Settings = () => {
                                     />
                                     <span className={styles.slider}></span>
                                 </label>
-                                <span>EMAIL</span>
+                                <span className={styles.email}>EMAIL</span>
                             </div>
                             <div className={styles.toggle}>
                                 <label className={styles.toggleSwitch}>
@@ -363,7 +363,7 @@ const Settings = () => {
                                     />
                                     <span className={styles.slider}></span>
                                 </label>
-                                <span>SMS</span>
+                                <span className={styles.email}>SMS</span>
                             </div>
                             <div className={styles.toggle}>
                                 <label className={styles.toggleSwitch}>
@@ -374,7 +374,7 @@ const Settings = () => {
                                     />
                                     <span className={styles.slider}></span>
                                 </label>
-                                <span>APP</span>
+                                <span className={styles.email}>APP</span>
                             </div>
                         </div>
                     </div>

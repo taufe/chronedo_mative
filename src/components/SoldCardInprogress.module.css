@@ -39,6 +39,8 @@
   font-weight: 500;
   margin: 0 0 16px 0;
   line-height: 1.2;
+  font-family:'Poppins';
+  font-weight: 500;
 }
 
 .statusContainer {
@@ -50,6 +52,8 @@
 
 .statusText {
   color: #0075ff;
+  font-family:'Poppins';
+  font-weight: 400;
   font-size: 14px;
 }
 
@@ -57,11 +61,14 @@
   color: #8a8f98;
   font-size: 14px;
   margin-left: auto;
+  font-family:'Poppins';
+  font-weight: 300;
 }
 
 .price {
   color: #fff;
   font-size: 20px;
+  font-family:'Poppins';
   font-weight: 500;
 }
 
@@ -83,6 +90,8 @@
   gap: 8px;
   margin-bottom: 16px;
   cursor: pointer;
+  font-family:'Poppins';
+  font-weight: 500;
 }
 
 .sellerDetails {
@@ -99,11 +108,15 @@
 .label {
   color: #8a8f98;
   font-size: 16px;
+  font-family:'Poppins';
+  font-weight: 300;
 }
 
 .value {
   color: #ff8a00;
   font-size: 16px;
+  font-family:'Poppins';
+  font-weight: 300;
 }
 
 .sellButton {
@@ -117,4 +130,6 @@
   font-size: 18px;
   font-weight: 500;
   margin-top: 12px;
+  font-family:'Poppins';
+  font-weight: 500;
 }

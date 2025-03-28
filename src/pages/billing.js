@@ -75,7 +75,7 @@ console.log('query in billing screen',router.query);
                 </div>
                 <div className={styles.watchInfo}>
                     <h1>Rolex Daytona White Panda 2017</h1>
-                    <p>bought at Bucherer 2022</p>
+                    <p className={styles.baughtPara}>bought at Bucherer 2022</p>
                 </div>
             </div>
 
@@ -204,7 +204,7 @@ console.log('query in billing screen',router.query);
                                     checked={termsAccepted}
                                     onChange={(e) => setTermsAccepted(e.target.checked)}
                                 />
-                                <p>
+                                <p className={styles.cheboxPara}>
                                     I hereby acknowledge and accept the{" "}
                                     <Link href="/terms">Terms and Conditions</Link>.
                                 </p>
@@ -215,7 +215,7 @@ console.log('query in billing screen',router.query);
                                     checked={customsDutyAccepted}
                                     onChange={(e) => setCustomsDutyAccepted(e.target.checked)}
                                 />
-                                <p>
+                                <p className={styles.cheboxPara}>
                                     I am aware that this purchase may incur additional customs
                                     duties and import taxes.
                                 </p>
@@ -226,7 +226,7 @@ console.log('query in billing screen',router.query);
                                     checked={legalBindingAccepted}
                                     onChange={(e) => setLegalBindingAccepted(e.target.checked)}
                                 />
-                                <p>
+                                <p className={styles.cheboxPara}>
                                     I am aware that this is a legally binding purchase request to
                                     the seller.
                                 </p>

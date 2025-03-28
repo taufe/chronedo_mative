@@ -10,6 +10,7 @@ import {Chat} from "../components/chat";
 const Product = () => {
   const [isMoreExpanded, setIsMoreExpanded] = useState(false);
   const [productData, setProductData] = useState(null);
+  const [questionId, setQuestionId] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -23,7 +24,8 @@ const Product = () => {
             },
           }
         );
-        console.log('product screen response------------',response.data.data[0])
+        // console.log('product screen response------------',response.data.data[0])
+        setQuestionId(response?.data?.data[0]?.id)
         if (response.data.success && response.data.data.length > 0) {
           setProductData(response.data.data[0]); // Set the first product from the list
         }
@@ -179,7 +181,7 @@ const Product = () => {
                 height={24}
                 style={{ objectFit: "contain" }}
               />
-              <span>NEW/ORIGINAL PACKED</span>
+              <span className={styles.buttonText}>NEW/ORIGINAL PACKED</span>
             </div>
             <div className={styles.tag}>
               <Image
@@ -189,7 +191,7 @@ const Product = () => {
                 height={24}
                 style={{ objectFit: "contain" }}
               />
-              <span>PRIVATE SELLER</span>
+              <span className={styles.buttonText}>PRIVATE SELLER</span>
             </div>
             <div className={styles.tag}>
               <Image
@@ -199,7 +201,7 @@ const Product = () => {
                 height={24}
                 style={{ objectFit: "contain" }}
               />
-              <span>≈ 10 DAYS TO YOUR HOME</span>
+              <span className={styles.buttonText}>≈ 10 DAYS TO YOUR HOME</span>
             </div>
             <div className={styles.tag}>
               <Image
@@ -209,7 +211,7 @@ const Product = () => {
                 height={24}
                 style={{ objectFit: "contain" }}
               />
-              <span>WITH WARRANTY</span>
+              <span className={styles.buttonText}>WITH WARRANTY</span>
             </div>
           </div>
 
@@ -708,7 +710,7 @@ const Product = () => {
       </div>
      
      {/* message container */}
-      <Chat />
+      <Chat questionId={questionId} />
 {/* phose section */}
 
 <div className={styles.photosSection}>
@@ -720,25 +722,25 @@ const Product = () => {
       {
         id: "cover",
         label: "Polishing and Cleaning",
-        icon: "/assets/WatchDetails/cover.png",
+        icon: "/assets/WatchDetails/service1.png",
         title: "Learn more",
       },
       {
         id: "back",
         label: "Trust Check incl. Fake Check",
-        icon: "/assets/WatchDetails/back.png",
+        icon: "/assets/WatchDetails/service2.png",
         title: "Learn more",
       },
       {
         id: "wristshot",
         label: "Transport Insurance",
-        icon: "/assets/WatchDetails/wristshot.png",
+        icon: "/assets/WatchDetails/service3.png",
         title: "Learn more",
       },
       {
         id: "defects",
         label: "Shipping",
-        icon: "/assets/WatchDetails/defects.png",
+        icon: "/assets/WatchDetails/service4.png",
         title: "Learn more",
       },
     ].map((item) => (

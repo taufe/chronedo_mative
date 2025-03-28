@@ -32,6 +32,8 @@
     font-weight: 500;
     margin: 0 0 16px 0;
     line-height: 1.2;
+    font-family: 'Poppins';
+    font-weight:500
 }
 
 .statusContainer {

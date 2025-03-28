@@ -88,8 +88,8 @@ const Affiliate = () => {
         </div>
         <div className={styles.watchInfo}>
           <h1>Rolex Daytona White Panda 2017</h1>
-          <p>bought at Bucherer 2022</p>
-        </div>
+          <p style={{ fontWeight: 400, fontFamily: 'Poppins' }}>bought at Bucherer 2022</p>
+          </div>
       </div>
 
       <div className={styles.billingContainer}>

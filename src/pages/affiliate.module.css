@@ -163,6 +163,8 @@
     font-weight: 500;
     margin: 0 0 8px 0;
     padding: 10px 24px;
+    font-family:'Poppins';
+    font-weight:500
 }
 
 .watchInfo p {
@@ -246,12 +248,16 @@
     color: #A98754;
     font-size: 24px;
     margin-bottom: 8px;
+    font-family: 'Poppins'; 
+    font-weight: 500;
 }
 
 .affiliateSection p {
     color: rgba(255, 255, 255, 0.7);
     font-size: 14px;
     margin-bottom: 16px;
+    font-family: 'Poppins'; 
+    font-weight: 300;
 }
 
 .affiliateRow {
@@ -260,6 +266,8 @@
     align-items: center;
     margin-bottom: 16px;
     color: white;
+    font-family: 'Poppins'; 
+    font-weight: 300;
 }
 
 .discount {
@@ -339,6 +347,8 @@
     cursor: pointer;
     transition: background-color 0.3s;
     margin-top: 16px;
+    font-family: 'Poppins'; 
+    font-weight: 500;
 }
 
 .generateButton:hover {

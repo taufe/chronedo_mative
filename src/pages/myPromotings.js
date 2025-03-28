@@ -163,7 +163,10 @@ const MyPromotings = () => {
 
                         <div className={styles.upgradeSection}>
                             <h2>Upgrade your level</h2>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                            <p style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 300 }}>
+  Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+</p>
+
                             <button className={styles.upgradeButton}>Upgrade</button>
                         </div>
                     </>

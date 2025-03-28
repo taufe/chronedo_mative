@@ -147,12 +147,16 @@
   font-size: 50px;
   font-weight: 500;
   margin: 0;
+  font-weight: 500;
+  font-family: "Poppins";
 }
 
 .feeType {
   color: #fff;
   margin: 8px 0 0;
   font-size: 14px;
+  font-weight: 400;
+  font-family: "Poppins";
 }
 
 .cardTitle {
@@ -161,6 +165,8 @@
   text-align: center;
   margin: 0;
   min-height: 60px;
+  font-weight: 600;
+  font-family: "Poppins";
 }
 
 .features {
@@ -175,6 +181,8 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  font-weight: 400;
+  font-family: "Poppins";
 }
 
 .feature span {
@@ -190,6 +198,8 @@
   font-size: 16px;
   cursor: pointer;
   transition: background 0.3s ease;
+  font-weight: 500;
+  font-family: "Poppins";
 }
 
 .buyButton:hover {
@@ -261,6 +271,8 @@
   padding: 12px 0;
   line-height: 1.5;
   font-size: 16px;
+  font-weight: 400;
+  font-family: "Poppins";
 }
 
 .cpcFeatures .feature span {

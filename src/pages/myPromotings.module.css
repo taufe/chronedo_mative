@@ -1440,12 +1440,16 @@
 .statsCard h3 {
   font-size: 16px;
   margin: 0;
+  font-family:'Poppins';
+  font-weight: 500;
 }
 
 .statsCard span {
   font-size: 50px;
   font-weight: 500;
   margin: 0;
+  font-family:'Poppins';
+  font-weight: 600;
 }
 
 .statsNumber {
@@ -1461,6 +1465,8 @@
   padding: 30px;
   border-radius: 10px;
   color: white;
+  font-family:'Poppins';
+  font-weight: 500;
 }
 
 .upgradeButton {
@@ -1473,6 +1479,8 @@
   cursor: pointer;
   margin-top: 20px;
   width: 100%;
+  font-family:'Poppins';
+  font-weight: 500;
 }
 
 .upgradeButton:hover {

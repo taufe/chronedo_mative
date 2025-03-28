@@ -179,14 +179,14 @@ export const MySellingInProgressDetails = ({
           <>
             <div>
               <div className={styles.ratingContainer}>
-                <h4>Communication with the seller</h4>
+                <h4 style={{fontFamily:'Poppins', fontWeight:400}}>Communication with the seller</h4>
                 <Rating
                   onClick={handleRating}
                   initialValue={orderData?.seller_communication_rating || 0}
                 />
               </div>
               <div className={styles.ratingContainer}>
-                <h4>Recommendation of the seller to a friend</h4>
+                <h4 style={{fontFamily:'Poppins', fontWeight:400}}>Recommendation of the seller to a friend</h4>
                 <Rating
                   onClick={handleRating}
                   onPointerEnter={onPointerEnter}
@@ -195,7 +195,7 @@ export const MySellingInProgressDetails = ({
                 />
               </div>
               <div className={styles.ratingContainer}>
-                <h4>Rating of the seller</h4>
+                <h4 style={{fontFamily:'Poppins', fontWeight:400}}>Rating of the seller</h4>
                 <textarea
                   id={postTextAreaId}
                   name="postContent"
@@ -208,7 +208,7 @@ export const MySellingInProgressDetails = ({
               </div>
 
               <div className={styles.ratingContainer}>
-                <h4>Satisfaction with chronedo</h4>
+                <h4 style={{fontFamily:'Poppins', fontWeight:400}}>Satisfaction with chronedo</h4>
                 <Rating
                   onClick={handleRating}
                   onPointerEnter={onPointerEnter}
@@ -217,7 +217,7 @@ export const MySellingInProgressDetails = ({
                 />
               </div>
               <div className={styles.ratingContainer}>
-                <h4>Share with us your opinion</h4>
+                <h4 style={{fontFamily:'Poppins', fontWeight:400}}>Share with us your opinion</h4>
                 <textarea
                   value={orderData?.seller_feedback_of_app || ''}
                   onChange={(e) => handleFeedbackChange(e.target.value)}
@@ -350,7 +350,7 @@ export const MySellingInProgressDetails = ({
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
             <Image src={successIcon} alt="Success" width={100} height={100} />
-            <p>Your rating has been submitted successfully.</p>
+            <p style={{fontFamily:'Poppins', fontWeight:400}}>Your rating has been submitted successfully.</p>
             <button
               onClick={() => setIsModalOpen(false)}
               className={styles.closeButton}

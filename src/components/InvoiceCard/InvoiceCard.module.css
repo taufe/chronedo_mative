@@ -45,13 +45,18 @@
     margin: 0;
     color: #fff;
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 500;
+    font-family:'Poppins'
+    
 }
 
 .infoRows {
     display: flex;
     flex-direction: column;
     gap: 8px;
+     font-weight: 300;
+    font-family:'Poppins';
+    line-height: 1;
 }
 
 .infoRow {
@@ -75,6 +80,9 @@
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 0.85rem;
+    font-weight: 500;
+    font-family:'Poppins';
+    
 }
 
 .paid {
@@ -83,6 +91,8 @@
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 0.85rem;
+    font-weight: 400;
+    font-family:'Poppins';
 }
 
 
@@ -96,10 +106,13 @@
     cursor: pointer;
     transition: all 0.3s ease;
     width: 120px;
+    font-weight: 400;
+    font-family:'Poppins';
 }
 
 .payButton:hover {
     background: rgba(169, 135, 84, 0.2);
+    
 }
 
 /* Responsive styles */

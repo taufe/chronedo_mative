@@ -120,7 +120,7 @@ export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChan
                     <>
                         <div>
                             <div className={styles.ratingContainer}>
-                                <h4>Communication with the seller</h4>
+                                <h4 style={{fontFamily:'Poppins', fontWeight:400}}>Communication with the seller</h4>
                                 <Rating
                                     onClick={handleRating}
                                     onPointerEnter={onPointerEnter}
@@ -129,7 +129,7 @@ export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChan
                                 />
                             </div>
                             <div className={styles.ratingContainer}>
-                                <h4>Recommendation of the seller to a friend</h4>
+                                <h4 style={{fontFamily:'Poppins', fontWeight:400}}>Recommendation of the seller to a friend</h4>
                                 <Rating
                                     onClick={handleRating}
                                     onPointerEnter={onPointerEnter}
@@ -138,7 +138,7 @@ export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChan
                                 />
                             </div>
                             <div className={styles.ratingContainer}>
-                                <h4>Rating of the seller</h4>
+                                <h4 style={{fontFamily:'Poppins', fontWeight:400}}>Rating of the seller</h4>
                                 <textarea
                                     id={postTextAreaId}
                                     name="postContent"
@@ -151,7 +151,7 @@ export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChan
                             </div>
 
                             <div className={styles.ratingContainer}>
-                                <h4>Satisfaction with chronedo</h4>
+                                <h4 style={{fontFamily:'Poppins', fontWeight:400}}>Satisfaction with chronedo</h4>
                                 <Rating
                                     onClick={handleRating}
                                     onPointerEnter={onPointerEnter}

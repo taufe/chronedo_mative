@@ -247,6 +247,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-family:'Poppins';
+  font-weight:300;
 }
 
 .clockIcon {
@@ -313,6 +315,8 @@
   color: white;
   cursor: pointer;
   border-radius: 5px;
+  font-family:'Poppins';
+  font-weight:500
 }
 
 .closeButton:hover {

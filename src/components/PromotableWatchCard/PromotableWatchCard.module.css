@@ -46,12 +46,17 @@
   color: #fff;
   font-size: 1.1rem;
   font-weight: 600;
+  font-family: 'Poppins';
+ 
 }
 
 .infoRows {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  font-weight:300;
+  font-family:'Poppins';
+  line-height:1
 }
 
 .infoRow {
@@ -94,6 +99,8 @@
   cursor: pointer;
   transition: all 0.3s ease;
   width: 120px;
+  font-family:'Poppins';
+  font-weight:400
 }
 
 .payButton:hover {

@@ -69,7 +69,8 @@ const WatchCardMyPromotings = ({ image, name, price, location, promoterCount, se
           </div>
         </div>
         <div className={styles.sellerCode}>
-          <span>CODE: </span>
+        <span style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize:12 }}>CODE:</span>
+
           <span className={styles.codeValue}>{sellerCode}</span>
           <button className={styles.copyButton} onClick={(e) => {
             e.stopPropagation();

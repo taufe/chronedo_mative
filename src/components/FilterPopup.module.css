@@ -55,6 +55,8 @@
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 16px;
+    font-weight: 400;
+  font-family:'Poppins';
 }
 
 .filterItem:hover {
@@ -79,6 +81,8 @@
     padding: 12px 0;
     cursor: pointer;
     color: #fff;
+    font-weight: 300;
+  font-family:'Poppins';
 }
 
 .optionItem input[type="checkbox"] {

@@ -46,6 +46,8 @@
 .watchCard h3 {
   font-size: 16px;
   color: #fff;
+  font-family: 'Poppins';
+    font-weight:500
 }
 
 .watchDate {
@@ -106,6 +108,8 @@
   flex-direction: column;
   gap: 8px;
   margin: 10px 0;
+  font-family: 'Poppins';
+    font-weight:300
 }
 
 .infoItem {
@@ -138,7 +142,10 @@
 
 .codeValue {
   color: #A98754;
-  font-weight: bold;
+  /* font-weight: bold; */
+  font-family: 'Poppins';
+    font-weight:600;
+    font-size:12px
 }
 
 .copyButton {

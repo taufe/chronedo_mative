@@ -1417,14 +1417,14 @@ const MySelling = () => {
 
                   <div className={styles.timingSection}>
                     <div className={styles.startGroup}>
-                      <label>Start*</label>
+                      <label style={{fontWeight:400, fontFamily:'Poppins'}}>Start*</label>
                       <label className={styles.checkboxLabel}>
                         <input
                           type="checkbox"
                           checked={isInstantStart}
                           onChange={(e) => setIsInstantStart(e.target.checked)}
                         />
-                        <span>instant</span>
+                        <span style={{fontWeight:400, fontFamily:'Poppins'}}>instant</span>
                       </label>
                       <div className={styles.dateTimeGroup}>
                         <input
@@ -1441,14 +1441,14 @@ const MySelling = () => {
                     </div>
 
                     <div className={styles.endGroup}>
-                      <label>End*</label>
+                      <label style={{fontWeight:400, fontFamily:'Poppins'}}>End*</label>
                       <label className={styles.checkboxLabel}>
                         <input
                           type="checkbox"
                           checked={isMaximumEnd}
                           onChange={(e) => setIsMaximumEnd(e.target.checked)}
                         />
-                        <span>maximum (15 days)</span>
+                        <span style={{fontWeight:400, fontFamily:'Poppins'}}>maximum (15 days)</span>
                       </label>
                       <div className={styles.dateTimeGroup}>
                         <input
@@ -1466,7 +1466,7 @@ const MySelling = () => {
                   </div>
 
                   <div className={styles.reactivationSection}>
-                    <label>Automatic Reactivation</label>
+                    <label style={{fontWeight:400, fontFamily:'Poppins'}}>Automatic Reactivation</label>
                     <div className={styles.reactivationOptions}>
                       {[
                         "none",
@@ -1515,7 +1515,7 @@ const MySelling = () => {
                 <p className={styles.mandatoryText}>3 open mandatory fields</p>
                 <div className={styles.paymentDeliverySection}>
                   <div className={styles.methodsSection}>
-                    <label>Accepted payment methods*</label>
+                    <label style={{fontWeight:400, fontFamily:'Poppins'}}>Accepted payment methods*</label>
                     <div className={styles.methodsOptions}>
                       <button
                         className={`${styles.methodButton} ${

@@ -77,6 +77,8 @@
   color: white;
   margin-bottom: 1.5rem;
   font-weight: 600;
+  /* font-weight: 500; */
+  font-family:'Poppins';
 }
 
 .formGroup {
@@ -87,6 +89,8 @@
   display: block;
   color: white;
   margin-bottom: 0.5rem;
+  font-weight: 400;
+  font-family:'Poppins';
 }
 
 .formSelect,
@@ -124,6 +128,12 @@
   border-radius: 0.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-weight: 500;
+  font-family:'Poppins';
+}
+.email{
+  font-weight: 500;
+  font-family:'Poppins';
 }
 
 .changeButton:hover {
@@ -133,6 +143,8 @@
 .verified {
   color: #4caf50;
   margin-left: 0.5rem;
+  font-weight: 400;
+  font-family:'Poppins';
 }
 
 .stayLoggedIn {
@@ -167,6 +179,8 @@
 .notificationGroup h3 {
   color: white;
   margin-bottom: 1rem;
+  font-weight: 600;
+  font-family:'Poppins';
 }
 
 .toggleGroup {

@@ -104,7 +104,13 @@ const PromotableWatches = () => {
                                     width={121} 
                                     height={39}
                                     onClick={handleSort}
-                                    style={{ cursor: 'pointer', boxFit: 'contain' }}
+                                    style={{ 
+                                        cursor: 'pointer', 
+                                        boxFit: 'contain', 
+                                        fontWeight: 500, 
+                                        fontFamily: 'Poppins' 
+                                    }}
+                                    
                                 />
                             </div>
                             <div key="filter-button">
@@ -114,7 +120,12 @@ const PromotableWatches = () => {
                                     width={121} 
                                     height={39}
                                     onClick={handleFilter}
-                                    style={{ cursor: 'pointer', boxFit: 'contain' }}
+                                    style={{ 
+                                        cursor: 'pointer', 
+                                        boxFit: 'contain', 
+                                        fontWeight: 500, 
+                                        fontFamily: 'Poppins' 
+                                    }}
                                 />
                             </div>
                         </div>

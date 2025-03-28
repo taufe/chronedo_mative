@@ -196,7 +196,7 @@ const Messages = () => {
                                     height={32} 
                                     className={styles.userAvatar} 
                                 />
-                                <h3>{selectedUser ? selectedUser.Name : 'Select a conversation'}</h3>
+                                <h3 style={{fontFamily:'Poppins', fontWeight:500}}>{selectedUser ? selectedUser.Name : 'Select a conversation'}</h3>
                             </div>
                             <div className={styles.chatActions}>
                                 <Image src="/assets/icons/info.png" alt="Info" width={24} height={24} />
