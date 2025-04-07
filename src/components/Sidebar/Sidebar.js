@@ -72,6 +72,12 @@ const sidebarItems = [
     path: "/mySubscriptions",
   },
   {
+    icon: "/assets/icons/sidebar/subscription.png",
+    activeIcon: "/assets/icons/sidebar/subscriptionOn.png",
+    label: "Online Payment",
+    path: "/onlinePayment",
+  },
+  {
     icon: "/assets/icons/sidebar/logout.png",
     activeIcon: "/assets/icons/sidebar/logoutOn.png",
     label: "Log Out",

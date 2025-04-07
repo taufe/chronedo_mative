@@ -1,0 +1,289 @@
+/* .dashboardContainer {
+    padding: 0px 50px 0px 80px;
+  } */
+
+
+  .dashboardContainer {
+    padding: 0px 50px 0px 80px;
+  }
+  
+  .container {
+    background-color: rgb(43, 50, 65);
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+  }
+  
+  .loaderOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .loader {
+    color: white;
+    font-size: 1.5rem;
+  }
+  
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+  
+  .backButton {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+  
+  .userImage {
+    height: 3.5rem;
+    width: 3.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .registrationWrapper{
+    /* align-self: center; */
+  }
+
+  .merchantStatus{
+    text-align: center;
+  }
+  .paragraph{
+    font-family:'Poppins';
+    font-weight: 400;
+  }
+  
+  .title {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+    margin: 0.5rem 0 .5rem;
+  }
+  
+  .accountTypeContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    gap: 1rem;
+  }
+  
+  .accountTypeContainer {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .accountTypeButton {
+    padding: 0.75rem 2rem;
+    border: none;
+    background-color: transparent;
+    color: #000;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid #ccc;
+  }
+  
+  .accountTypeButton.active {
+    background-color: #A98754;
+    color: white;
+    border-color: #A98754;
+  }
+  
+  .label {
+    color: #fff;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  
+  .select, .input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+  
+  .buttonGroup {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+  
+  .registerButton {
+    background-color: #A98754;
+    color: white;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .messageContainer {
+    text-align: center;
+    margin-top: 2rem;
+  }
+  
+  .messageText {
+    color: #fff;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .actionButton {
+    background-color: #A98754;
+    color: white;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+  
+  .withdrawalForm {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-top: 1.5rem;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .balanceText {
+    color: #fff;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  
+  .amountInput {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid #A98754;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 7px;
+    font-size: 1rem;
+  }
+  
+  .confirmButton {
+    background-color: #A98754;
+    color: white;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+  }
+
+.subtitle{
+    margin-top: 0;
+}
+  
+  .withdrawalDetails {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-top: 1.5rem;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .detailsTitle {
+    color: #A98754;
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  .detailRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+  
+  .detailLabel {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+  }
+  
+  .detailValue {
+    color: white;
+    font-size: 0.9rem;
+  }
+  
+  .statusBadge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+  }
+  
+  .pending {
+    background-color: #A98754;
+  }
+  
+  .completed {
+    background-color: #4CAF50;
+  }
+  
+  .separator {
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin: 1rem 0;
+  }
+  
+  .sectionTitle {
+    color: #A98754;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .closeButton {
+    background-color: #A98754;
+    color: white;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 1.5rem;
+  }
+  
+  .dashboardContainer {
+    padding: 0 50px 0 80px;
+  }
+  

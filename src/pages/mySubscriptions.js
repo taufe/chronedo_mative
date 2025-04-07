@@ -6,8 +6,39 @@ import { useState, useEffect } from 'react';
 
 const MySubscriptions = () => {
     const [bottomTabIndex, setBottomTabIndex] = useState(1);
-    const [sellerPlans, setSellerPlans] = useState([]); // State to store seller plans
-    const [isLoading, setIsLoading] = useState(false); // State to handle loading state
+    const [sellerPlans, setSellerPlans] = useState([]); 
+    const [isLoading, setIsLoading] = useState(false);
+    const [influencerCurrentPlan, setInfluencerCurrentPlan] = useState([])
+
+    useEffect(() => {
+        if (bottomTabIndex === 1) {
+            const fetchSellerPlans = async () => {
+                setIsLoading(true); // Start loading
+                const token = '222|wq0yIWuRTDsOMPsWwfQLH4WEhVHDCO1RLLzLj0lXb7c13b88';
+                try {
+                    const response = await fetch('https://chronedo.webjerky.com/api/getInfluencerCurrentPlan', {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    const data = await response.json();
+                    console.log('response in subscription-----', data);
+    
+                    const sellerInfluencerPlans = data.plans.filter(plan => plan.account_type === 'Seller');
+                    setInfluencerCurrentPlan(sellerInfluencerPlans); // ✅ Fix here
+                } catch (error) {
+                    console.error('There was a problem with the fetch operation:', error);
+                } finally {
+                    setIsLoading(false); // Stop loading
+                }
+            };
+    
+            fetchSellerPlans();
+        }
+    }, [bottomTabIndex]);
+    
 
     useEffect(() => {
         // Fetch seller plans only when the "My Sellers Level" tab is active
@@ -40,7 +71,9 @@ const MySubscriptions = () => {
 
             fetchSellerPlans();
         }
-    }, [bottomTabIndex]); // Re-run effect when bottomTabIndex changes
+    }, [bottomTabIndex]);
+
+
 
     return (
         <DashboardLayout>
@@ -90,9 +123,8 @@ const MySubscriptions = () => {
                     </button>
                 </div>
 
-                {bottomTabIndex === 1 && (
+                {/* {bottomTabIndex === 1 && (
                     <div className={styles.subscriptionCards}>
-                        {/* Content for Influencer Level */}
                         <div className={styles.card}>
                             <div className={styles.feeSection}>
                                 <h3 className={styles.feeAmount}>None</h3>
@@ -113,33 +145,75 @@ const MySubscriptions = () => {
                             <button className={styles.buyButton}>Buy Now</button>
                         </div>
                     </div>
-                )}
+                )} */}
+                {bottomTabIndex === 1 && (
+    <div className={styles.subscriptionCards}>
+        {isLoading ? (
+            <div className={styles.loader}>Loading...</div>
+        ) : influencerCurrentPlan?.length === 0 ? (
+            <div className={styles.noPlan}>No active plan found for the user.</div>
+        ) : (
+            influencerCurrentPlan?.map((plan) => (
+                <div key={plan.id} className={styles.card}>
+                    <div className={styles.feeSection}>
+                        <h3 className={styles.feeAmount}>
+                            {plan.monthly_fees === "0" ? "None" : `$${plan.monthly_fees}`}
+                        </h3>
+                        <p className={styles.feeType}>Monthly Fees</p>
+                    </div>
+                    <h2 className={styles.cardTitle}>{plan.level}</h2>
+                    <div className={styles.features}>
+                        <div className={styles.feature}>
+                            <span>✓</span> {plan.type_of_commission === 0 ? 'Fixed Commission' : 'Variable Commission'}
+                        </div>
+                        <div className={styles.feature}>
+                            <span>✓</span> {plan.free_code_listing === 0 ? 'No Free Listings' : `${plan.free_code_listing} Free Listings`}
+                        </div>
+                        <div className={styles.feature}>
+                            <span>✓</span> {plan.commission_payout_period_months ? `${plan.commission_payout_period_months} days Payout` : 'No Payout Period'}
+                        </div>
+                    </div>
+                    <button className={styles.buyButton}>Buy Now</button>
+                </div>
+            ))
+        )}
+    </div>
+)}
 
-                {bottomTabIndex === 2 && (
-                   <div className={styles.subscriptionCards}>
-                   {sellerPlans.map((plan) => (
-                       <div key={plan.id} className={styles.card}>
-                           <div className={styles.feeSection}>
-                               <h3 className={styles.feeAmount}>{plan.monthly_fees === "0" ? "None" : `$${plan.monthly_fees}`}</h3>
-                               <p className={styles.feeType}>Monthly Fees</p>
-                           </div>
-                           <h2 className={styles.cardTitle}>{plan.level}</h2>
-                           <div className={styles.features}>
-                               <div className={styles.feature}>
-                                   <span>✓</span> {plan.type_of_commission === 0 ? 'Fixed Commission' : 'Variable Commission'}
-                               </div>
-                               <div className={styles.feature}>
-                                   <span>✓</span> {plan.free_code_listing === 0 ? 'No Free Listings' : `${plan.free_code_listing} Free Listings`}
-                               </div>
-                               <div className={styles.feature}>
-                                   <span>✓</span> {plan.commission_payout_period_months ? `${plan.commission_payout_period_months} months Payout` : 'No Payout Period'}
-                               </div>
-                           </div>
-                           <button className={styles.buyButton}>Buy Now</button>
-                       </div>
-                   ))}
-               </div>
-                )}
+
+
+        {bottomTabIndex === 2 && (
+            <div className={styles.subscriptionCards}>
+             {isLoading ? (
+            <div className={styles.loader}>Loading...</div>
+             ) : (
+            sellerPlans?.map((plan) => (
+                <div key={plan.id} className={styles.card}>
+                    <div className={styles.feeSection}>
+                        <h3 className={styles.feeAmount}>
+                            {plan.monthly_fees === "0" ? "None" : `$${plan.monthly_fees}`}
+                        </h3>
+                        <p className={styles.feeType}>Monthly Fees</p>
+                    </div>
+                    <h2 className={styles.cardTitle}>{plan.level}</h2>
+                    <div className={styles.features}>
+                        <div className={styles.feature}>
+                            <span>✓</span> {plan.type_of_commission === 0 ? 'Fixed Commission' : 'Variable Commission'}
+                        </div>
+                        <div className={styles.feature}>
+                            <span>✓</span> {plan.free_code_listing === 0 ? 'No Free Listings' : `${plan.free_code_listing} Free Listings`}
+                        </div>
+                        <div className={styles.feature}>
+                            <span>✓</span> {plan.commission_payout_period_months ? `${plan.commission_payout_period_months} months Payout` : 'No Payout Period'}
+                        </div>
+                    </div>
+                    <button className={styles.buyButton}>Buy Now</button>
+                </div>
+            ))
+        )}
+    </div>
+)}
+
 
                 {bottomTabIndex === 3 && (
                     <div className={`${styles.subscriptionCards} ${styles.singleCard}`}>
