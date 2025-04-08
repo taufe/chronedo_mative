@@ -26,6 +26,7 @@ const SignUp = () => {
   const [terms, setTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [passwordFocused, setPasswordFocused] = useState(false);
 
   const isValidForm = (password) => {
     if (!isCapital(password)) {
@@ -97,20 +98,15 @@ const SignUp = () => {
     setError("");
 
     try {
-      // Simulate pin code generation
-      const pin_code = Math.floor(1000 + Math.random() * 9000); // Generates a 4-digit random pin
-
-      // Send email, password, and pin code to the backend or use them for redirection
+      const pin_code = Math.floor(1000 + Math.random() * 9000); 
       const response = await axios.post("/api/verifythemailApi", { email });
 
       console.log("API Response:", response.data);
 
       if (response.data.success === true) {
         console.log(response.data.message);
-        
-        // Redirect with email, password, and pin_code in the query string
-        router.push({
-          pathname: "/verifyEmail",  // or another page like /registerPhone
+          router.push({
+          pathname: "/verifyEmail",  
           query: {
             email: email,
             password: password,
@@ -162,6 +158,7 @@ const SignUp = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
+            
           />
         </div>
 
@@ -185,9 +182,10 @@ const SignUp = () => {
             value={password}
             onChange={(e) => isValidForm(e.target.value)}
             placeholder="Password"
+            onFocus={()=>setPasswordFocused(true)}
           />
         </div>
-
+        {passwordFocused ? (
         <div className={styles.conditionsContainer}>
           {capitalLetters ? (
             <div className={styles.condition}>
@@ -280,7 +278,8 @@ const SignUp = () => {
               <p className={styles.errorText}>10 - 20 letters</p>
             </div>
           )}
-        </div>
+        </div>):null
+}
 
         <div className={styles.checkboxContainer}>
           <label className={styles.checkboxLabel}>

@@ -76,7 +76,6 @@ const MySelling = () => {
 
   const getSoldWatches = async () => {
     setLoading(true);
-    // const STATIC_TOKEN = "223|fQCZy8Ol01rCyB1aAH7bAM1vqLWG7h1mGUYVEzid85dc39bc";
     try {
       const headers = {
         Authorization: `Bearer ${token}`,

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import styles from './onlinePayment.module.css';
 import DashboardLayout from '../components/Layout/DashboardLayout';
@@ -17,6 +18,8 @@ const OnlinePaymentRegistration = () => {
   const [gotMerchant, setGotMerchant] = useState(false);
   const [merchantData, setMerchantData] = useState(null);
   const [error, setError] = useState(null);
+  const [bankAccountData, setBankAccountData] = useState(null);
+  const [bankAccountCreated, setBankAccountCreated] = useState(false); // New state to track bank account creation
 
   const handleCountryChange = (e) => {
     const selectedCountry = countryListOPP.find(c => c.code === e.target.value);
@@ -41,12 +44,12 @@ const OnlinePaymentRegistration = () => {
       }
     } catch (err) {
       console.error('GET Merchant Error:', err);
-      // Silently fail - we'll assume no merchant exists yet
       setGotMerchant(false);
     } finally {
       setLoading(false);
     }
   };
+  
   useEffect(() => {
     getMerchant();
   }, []);
@@ -57,7 +60,6 @@ const OnlinePaymentRegistration = () => {
   
     try {
       const token = localStorage.getItem('token');
-      console.log('token in get api', token);
   
       if (!token) {
         throw new Error('Please login first');
@@ -75,7 +77,6 @@ const OnlinePaymentRegistration = () => {
           'Content-Type': 'application/json',
         },
       });
-      console.log('response of post api',response.data)
     
     } catch (err) {
       const message = err.response?.data?.error || err.message || 'Registration failed';
@@ -86,30 +87,32 @@ const OnlinePaymentRegistration = () => {
     }
   };
 
-
   const createBankAccount = async () => {
+    setLoading(true);  
     const token = await localStorage.getItem('token');
-    
     try {
-        const response = await axios.get('https://chronedo.webjerky.com/api/createBankAccount', {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        });
-        console.log('respone of get api for create bank account',response.data)
-        if (response.status === 200) {
-            console.log('Bank account created successfully');
-        } else {
-            console.log('Error creating bank account');
+      const response = await axios.get('https://chronedo.webjerky.com/api/createBankAccount', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         }
+      });
+      
+      if (response.status === 200 && response.data) {
+        setBankAccountData(response.data); 
+        setBankAccountCreated(true);  
+        console.log('Bank account created successfully');
+      } else {
+        console.log('Error creating bank account');
+      }
     } catch (error) {
-        console.log('Error creating bank account please try again later', error);
+      console.log('Error creating bank account, please try again later', error);
+    } finally {
+      setLoading(false); 
     }
-}
-
-
+  };
+  
 
   return (
     <DashboardLayout>
@@ -122,39 +125,35 @@ const OnlinePaymentRegistration = () => {
             height={24}
           />
           <h1 className={styles.title}>Online Payment Platform</h1>
-          <h2 style={{marginTop:0}} className={styles.subtitle}>Registration</h2>
+          <h2 style={{ marginTop: 0 }} className={styles.subtitle}>Registration</h2>
         </div>
 
-        {loading && <div className={styles.loader}>Loading...</div>}
+        {/* {loading && <div className={styles.loader}>Loading...</div>} */}
         {error && <div className={styles.error}>{error}</div>}
 
         {!gotMerchant ? (
           <>
-           <div className={styles.accountTypeContainer}>
-            <button
-                className={`${styles.accountTypeButton} ${
-                accountType === 'consumer' ? styles.active : ''
-                }`}
+            <div className={styles.accountTypeContainer}>
+              <button
+                className={`${styles.accountTypeButton} ${accountType === 'consumer' ? styles.active : ''}`}
                 onClick={() => setAccountType('consumer')}
                 style={{
-                backgroundColor: accountType === 'consumer' ? '#A98754' : 'transparent',
-                color: accountType === 'consumer' ? 'white' : 'rgba(255, 255, 255, 0.7)',
+                  backgroundColor: accountType === 'consumer' ? '#A98754' : 'transparent',
+                  color: accountType === 'consumer' ? 'white' : 'rgba(255, 255, 255, 0.7)',
                 }}
-            >
+              >
                 Consumer
-            </button>
-            <button
-                className={`${styles.accountTypeButton} ${
-                accountType === 'business' ? styles.active : ''
-                }`}
+              </button>
+              <button
+                className={`${styles.accountTypeButton} ${accountType === 'business' ? styles.active : ''}`}
                 onClick={() => setAccountType('business')}
                 style={{
-                backgroundColor: accountType === 'business' ? '#A98754' : 'transparent',
-                color: accountType === 'business' ? 'white' : 'rgba(255, 255, 255, 0.7)',
+                  backgroundColor: accountType === 'business' ? '#A98754' : 'transparent',
+                  color: accountType === 'business' ? 'white' : 'rgba(255, 255, 255, 0.7)',
                 }}
-            >
+              >
                 Business
-            </button>
+              </button>
             </div>
 
             <div className={styles.formGroup}>
@@ -199,7 +198,7 @@ const OnlinePaymentRegistration = () => {
           <div className={styles.merchantStatus}>
             {merchantData?.bank_uid ? (
               <>
-                <h3>Registration Complete</h3>
+                <h3 className={styles.h3}>Registration Complete</h3>
                 <p>Your merchant account has been successfully created.</p>
                 <div className={styles.merchantDetails}>
                   <p>Status: {merchantData.status}</p>
@@ -208,15 +207,38 @@ const OnlinePaymentRegistration = () => {
               </>
             ) : (
               <div className={styles.registrationWrapper}>
-                {/* <h3>Registration Successful</h3> */}
-                <p className={styles.paragraph}>You have registered for the online payment Platform. Create a bank account to complete the process.</p>
+                {!bankAccountCreated ? (
+                  <>
+                    <div className={styles.registrationWrapper}>
+                <p className={styles.paragraph}>
+                  You have registered for the online payment platform. Please click the button below to create your bank account and proceed with verification.
+                </p>
                 <button 
                   className={styles.actionButton}
                   disabled={loading}
                   onClick={createBankAccount}
                 >
-                  Create Bank Account
+                  {/* Create Bank Account */}
+                  {loading ? 'Processing...' : 'Create Bank Account'}
                 </button>
+              </div>
+                  </>
+                ) : (
+                  <div className={styles.bankVerificationWrapper}>
+                    <h3 className={styles.h3}>Bank Account Created</h3>
+                    <p className={styles.paragraph}>
+                    Your Online Payment Platform registration requires personal verification. We are required to review your personal details in order to comply with financial legislation.
+                    </p>
+                    <a 
+                      href={bankAccountData.verification_url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className={styles.verificationLink}
+                    >
+                      👉 Click here to verify your bank account
+                    </a>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -227,3 +249,4 @@ const OnlinePaymentRegistration = () => {
 };
 
 export default OnlinePaymentRegistration;
+
