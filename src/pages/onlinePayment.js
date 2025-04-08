@@ -89,6 +89,7 @@ const OnlinePaymentRegistration = () => {
 
   const createBankAccount = async () => {
     const token = await localStorage.getItem('token');
+    
     try {
         const response = await axios.get('https://chronedo.webjerky.com/api/createBankAccount', {
             headers: {
