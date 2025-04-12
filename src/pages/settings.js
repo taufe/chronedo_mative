@@ -160,14 +160,14 @@ const Settings = () => {
                         />
                     </div>
 
-                    <div className={styles.stayLoggedIn}>
+                    {/* <div className={styles.stayLoggedIn}>
                         <label className={styles.toggleSwitch}>
                             <input type="checkbox" />
                             <span className={styles.slider}></span>
                         </label>
                         <span>Stay logged in</span>
                         <p className={styles.loginHelper}>I would like to store my login details on this device so that I have to log in to it less often.</p>
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Language and Currency Section */}

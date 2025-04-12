@@ -4,6 +4,36 @@
     margin: 0 auto;
     margin-left: 4%;
 }
+.radio {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #b38e5d;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .radioSelected {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #b38e5d;
+    border-radius: 50%;
+    position: relative;
+    font-weight: 500;
+    font-family: 'Poppins';
+  }
+  
+  .radioSelected::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #A98754;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
 
 .title {
     color: #A98754;
@@ -102,6 +132,9 @@
 .close {
     color: #A98754;
     cursor: pointer;
+    font-family:'Poppins';
+    font-weight: 400;
+    font-size:14px
 }
 
 .option {
@@ -129,7 +162,7 @@
     height: 20px;
     border-radius: 50%;
     border: 2px solid #A98754;
-    background: #A98754;
+    /* background: #A98754; */
     font-family: 'Poppins';
     font-weight: 400;
 }
@@ -173,11 +206,15 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
     padding: 4px 8px;
     border-radius: 4px;
+    font-family:'Poppins';
+    font-weight: 300;
 }
 
 .fees {
     color: #8A94A0;
     font-size: 14px;
+    font-family:'Poppins';
+    font-weight: 300;
 }
 
 .feeItem {

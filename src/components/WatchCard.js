@@ -26,7 +26,7 @@ const WatchCard = ({ image, name, date, buyNowPrice, bidPrice, onPress }) => {
             <span className={styles.buyNow}>Buy Now</span>
           </div>
           <div className={styles.bidPrice}>
-            <span className={styles.buyPrice}>${buyNowPrice.toLocaleString()}</span>
+            <span className={styles.buyPrice}>${buyNowPrice?.toLocaleString()}</span>
           </div>
         </div>
       </div>

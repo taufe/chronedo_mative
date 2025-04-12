@@ -25,7 +25,6 @@ const MyPurchase = () => {
   const [loading, setLoading] = useState(false);
   const [openWatch, setOpenWatch] = useState([]);
 
-
   setTimeout(() => {
     setLoading(false); 
   }, 2000); 
@@ -36,26 +35,32 @@ const MyPurchase = () => {
       console.error('Token is missing');
       return;
     }
-      
+  
     const fetchOpenWatchApi = async () => {
-      const response = await axios.get('https://chronedo.webjerky.com/api/getOpenWatches', {
-        headers: {
-          Authorization: `Bearer ${token}`
+      const token = await localStorage.getItem('token')
+      try {
+        const response = await axios.get('https://chronedo.webjerky.com/api/getOpenWatches', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        if (Array.isArray(response.data.data)) {
+          setOpenWatch(response.data.data);
+        } else {
+          console.error('Data is not an array');
         }
-      });
-      if (Array.isArray(response.data.data)) {
-        setOpenWatch(response.data.data);
-      } else {
-        console.error('Data is not an array');
+      } catch (error) {
+        console.log('error', error);
       }
     };
-
+  
     fetchOpenWatchApi();
-  }, []);
-
+  }, [token]); // Make sure token is in the dependency array
+  
   const getPurchasedWatches = async () => {
     setLoading(true);
     console.log("Fetching purchased watches...");
+    const token =  localStorage.getItem('token')
     try {
       const headers = {
         Authorization: `Bearer ${token}`,
@@ -149,10 +154,10 @@ const MyPurchase = () => {
                 key={purchase?.id}
                 image={purchase?.watch?.cover}
                 name={purchase?.watch?.listing_title}
-                price={purchase?.watch?.fixed_price_value}
+                price={purchase?.watch?.fixed_price}
                 date={`${purchase.created_at.split("T")[0]} ${purchase.created_at.split("T")[1].split(".")[0]}`}
-                sellerName={`${purchase?.buyer?.first_name} ${purchase?.buyer?.last_name}`}
-                email={purchase.buyer.email}
+                sellerName={`${purchase?.seller?.first_name} ${purchase?.seller?.last_name}`}
+                email={purchase.seller.email}
               />
             ))
           )
@@ -173,8 +178,8 @@ const MyPurchase = () => {
                 name={purchase?.watch?.listing_title}
                 price={purchase?.watch?.fixed_price_value}
                 date={`${purchase?.created_at?.split("T")[0]} ${purchase?.created_at?.split("T")[1]?.split(".")[0]}`}
-                sellerName={`${purchase?.buyer?.first_name} ${purchase?.buyer?.last_name}`}
-                email={purchase?.buyer?.email}
+                sellerName={`${purchase?.seller?.first_name} ${purchase?.seller?.last_name}`}
+                email={purchase?.seller?.email}
                 onSellNow={handleSellNow}
                 showDetails={false}
                 purchaseOrderId={purchase?.buyer?.id}
@@ -198,8 +203,8 @@ const MyPurchase = () => {
                 name={purchase.watch.listing_title}
                 price={purchase.watch.fixed_price_value}
                 date={`${purchase.created_at?.split("T")[0]} ${purchase?.created_at?.split("T")[1]?.split(".")[0]}`}
-                sellerName={`${purchase?.buyer?.first_name} ${purchase?.buyer?.last_name}`}
-                email={purchase.buyer.email}
+                sellerName={`${purchase?.seller?.first_name} ${purchase?.seller?.last_name}`}
+                email={purchase.seller.email}
               />
             ))
           )

@@ -46,41 +46,41 @@ export const MySellingInProgressDetails = ({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    const fetchOrderStatus = async () => {
-      try {
-        const response = await axios.get(
-          `https://chronedo.webjerky.com/api/orderStatus/${orderId}`,
-          {
-            headers: {
-              Authorization: `Bearer 223|fQCZy8Ol01rCyB1aAH7bAM1vqLWG7h1mGUYVEzid85dc39bc`
-            }
-          }
-        );
-        console.log('response in selling of location',response.data.data)
-        if (response.data.success) {
-          setOrderData(response.data.data);
-          // If pickup_date_time exists in API response, use it
-          if (response.data.data.pickup_date_time) {
-            console.log('response in selling of location',response.data.data)
-            setSelectedDate(new Date(response.data.data.pickup_date_time));
-          }
-          // If pickup_details exists in API response, use it
-          if (response.data.data.pickup_details) {
-            setPickupAddress(response.data.data.pickup_details);
-          }
-          // Set active step based on order_status
-          if (response.data.data.order_status !== null) {
-            setActiveStep(response.data.data.order_status);
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching order status:', error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchOrderStatus = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `https://chronedo.webjerky.com/api/orderStatus/${orderId}`,
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer 223|fQCZy8Ol01rCyB1aAH7bAM1vqLWG7h1mGUYVEzid85dc39bc`
+  //           }
+  //         }
+  //       );
+  //       console.log('response in selling of location',response.data.data)
+  //       if (response.data.success) {
+  //         setOrderData(response.data.data);
+  //         // If pickup_date_time exists in API response, use it
+  //         if (response.data.data.pickup_date_time) {
+  //           console.log('response in selling of location',response.data.data)
+  //           setSelectedDate(new Date(response.data.data.pickup_date_time));
+  //         }
+  //         // If pickup_details exists in API response, use it
+  //         if (response.data.data.pickup_details) {
+  //           setPickupAddress(response.data.data.pickup_details);
+  //         }
+  //         // Set active step based on order_status
+  //         if (response.data.data.order_status !== null) {
+  //           setActiveStep(response.data.data.order_status);
+  //         }
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching order status:', error);
+  //     }
+  //   };
 
-    fetchOrderStatus();
-  }, [orderId]);
+  //   fetchOrderStatus();
+  // }, [orderId]);
 
   const handleNextStep = () => {
     if (activeStep < 3) {

@@ -35,12 +35,12 @@ const sidebarItems = [
     label: "My Promotings",
     path: "/myPromotings",
   },
-  {
-    icon: "/assets/icons/sidebar/invoices.png",
-    activeIcon: "/assets/icons/sidebar/invoices.png",
-    label: "Invoices",
-    path: "/invoices",
-  },
+  // {
+  //   icon: "/assets/icons/sidebar/invoices.png",
+  //   activeIcon: "/assets/icons/sidebar/invoices.png",
+  //   label: "Invoices",
+  //   path: "/invoices",
+  // },
   {
     icon: "/assets/icons/sidebar/watchlist.png",
     activeIcon: "/assets/icons/sidebar/watchlistOn.png",

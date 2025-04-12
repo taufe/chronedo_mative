@@ -26,7 +26,7 @@ const PurchasedCardPending = ({ image, name, price, date, email, sellerName }) =
                         <span className={styles.statusText}>Pending</span>
                         <span className={styles.date}>{date}</span>
                     </div>
-                    <div className={styles.price}>CHF {price.toLocaleString()}</div>
+                    <div className={styles.price}>CHF {price?.toLocaleString()}</div>
                 </div>
             </div>
 

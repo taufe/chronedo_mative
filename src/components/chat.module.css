@@ -79,6 +79,7 @@
   position: relative;
   font-family: 'Poppins';
   color: #fff;
+  font-weight: 400;
 }
 
 .ownMessage .messageContent {

@@ -1,80 +1,68 @@
-import fs from 'fs';
-import path from 'path';
+import axios from 'axios';
+import { IncomingForm } from 'formidable';
 import FormData from 'form-data';
+import { createReadStream } from 'fs';
 
 export const config = {
   api: {
-    bodyParser: false, // Disable default body parser for handling multipart form data
+    bodyParser: false, // Disable default body parsing
   },
 };
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json({ message: 'Method not allowed' });
+  }
+
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized' });
   }
 
   try {
-    const chunks = [];
-    for await (const chunk of req) {
-      chunks.push(chunk);
-    }
-    const buffer = Buffer.concat(chunks);
-
-    // Manual multipart parsing (using boundary)
-    const boundary = req.headers['content-type'].split('boundary=')[1];
-    const parts = buffer.toString().split(`--${boundary}`);
-
-    const fields = {};
-    const files = {};
-
-    parts.forEach((part) => {
-      if (part.includes('Content-Disposition: form-data')) {
-        const match = part.match(/name="([^"]+)"\s*(?:; filename="([^"]+)")?/);
-        if (match) {
-          const name = match[1];
-          const filename = match[2];
-
-          if (filename) {
-            const fileData = part.split('\r\n\r\n')[1].trim();
-            files[name] = {
-              filename,
-              data: Buffer.from(fileData),
-            };
-          } else {
-            const value = part.split('\r\n\r\n')[1].trim();
-            fields[name] = value;
-          }
-        }
-      }
-    });
-
-    // Prepare formData for backend
+    const form = new IncomingForm();
     const formData = new FormData();
-    Object.entries(fields).forEach(([key, value]) => formData.append(key, value));
 
-    // Append images/files (cover, side1, side2, etc.)
-    for (const [key, file] of Object.entries(files)) {
-      formData.append(key, file.data, file.filename);
-    }
-
-    // API call to the watch backend
-    const backendResponse = await fetch('https://chronedo.webjerky.com/api/watches', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer 222|wq0yIWuRTDsOMPsWwfQLH4WEhVHDCO1RLLzLj0lXb7c13b88`,
-        ...formData.getHeaders(), // Include headers for multipart form data
-      },
-      body: formData,
+    // Parse incoming form data
+    const [fields, files] = await new Promise((resolve, reject) => {
+      form.parse(req, (err, fields, files) => {
+        if (err) reject(err);
+        resolve([fields, files]);
+      });
     });
 
-    if (!backendResponse.ok) {
-      throw new Error('Failed to submit watch data to the backend');
-    }
+    // Add fields to formData
+    Object.entries(fields).forEach(([key, values]) => {
+      values.forEach(value => formData.append(key, value));
+    });
 
-    const backendData = await backendResponse.json();
-    return res.status(200).json(backendData);
+    // Add files to formData
+    Object.entries(files).forEach(([key, fileArray]) => {
+      fileArray.forEach(file => {
+        formData.append(key, createReadStream(file.filepath), {
+          filename: file.originalFilename,
+          contentType: file.mimetype,
+        });
+      });
+    });
+
+    // Forward to backend API
+    const response = await axios.post(
+      'https://chronedo.webjerky.com/api/watches',
+      formData,
+      {
+        headers: {
+          ...formData.getHeaders(),
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    res.status(200).json(response.data);
   } catch (error) {
-    console.error('Error:', error);
-    return res.status(500).json({ error: 'Failed to process the request' });
+    console.error('API route error:', error);
+    res.status(500).json({
+      message: error.response?.data?.message || 'Internal server error',
+    });
   }
 }

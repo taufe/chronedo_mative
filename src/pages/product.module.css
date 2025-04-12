@@ -2,6 +2,25 @@
   /* padding: 0px 80px; */
   padding: 0px 50px 0px 80px;
 }
+.radio {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  /* background-color: white; */
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.radioSelected {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #0070f3;
+  margin-right: 10px;
+  
+}
+
 
 @media (max-width: 768px) {
   .dashboardContainer {
@@ -59,6 +78,7 @@
   gap: 24px;
   margin-left: 16px;
   margin-right: 16px;
+  
 }
 
 .productContainer {
@@ -334,6 +354,8 @@
   background: none;
   border: none;
   cursor: pointer;
+  font-weight: 400;
+  font-family: 'Poppins';
 }
 
 .descriptionText {
@@ -543,6 +565,8 @@
   padding: 16px 0 0;
   width: 100%;
   text-align: right;
+  font-weight: 400;
+  font-family: 'Poppins';
 }
 
 .showDetailsButton:hover {
@@ -569,9 +593,9 @@
 
 .scopeSection,
 .paymentSection {
-  /* background: rgba(31, 28, 28, 0.28); */
+  background: rgba(31, 28, 28, 0.28);
   border-radius: 12px;
-  /* padding: 24px; */
+  padding: 24px;
   margin-bottom: 24px;
 }
 
@@ -697,12 +721,16 @@
 .sellerLabel {
   color: #fff;
   font-size: 16px;
+  font-weight: 400;
+  font-family: 'Poppins';
 }
 
 .sellerValue {
   color: #fff;
   font-size: 16px;
   text-align: right;
+  font-weight: 400;
+  font-family: 'Poppins';
 }
 
 .ratingWrapper {
@@ -1168,10 +1196,12 @@
 .photosSection,
 .accessoriesSection {
   margin-top: 32px;
-  background: rgba(179, 142, 93, 0.1);
+  /* background: rgba(179, 142, 93, 0.1); */
   border-radius: 20px;
   margin: 0px 60px 0px 100px;
   margin-top: 20px;
+  background: rgba(31, 28, 28, 0.28);
+  padding:20px
 }
 
 .photosSectionTitle {
@@ -1225,6 +1255,7 @@ padding-left:15px
   justify-items: center; /* Center align content */
   align-items: center;
   width: 100%;
+  
 }
 
 .photoUploadBox {

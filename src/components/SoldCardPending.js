@@ -2,7 +2,7 @@ import Image from 'next/image';
 import styles from './SoldCardPending.module.css';
 import { useEffect, useState } from 'react';
 
-const SoldCardPending = ({ image, name, price, date, email, sellerName, onAccept, onReject, promoting = false }) => {
+const SoldCardPending = ({ image, name, price, date, email, sellerName, onAccept, onReject,orderId, promoting = false }) => {
 
     const [size, setSize] = useState(20);
 
@@ -40,7 +40,7 @@ const SoldCardPending = ({ image, name, price, date, email, sellerName, onAccept
                         <span className={styles.statusText}>Pending</span>
                         <span className={styles.date}>{date}</span>
                     </div>
-                    <div className={styles.price}>CHF {price.toLocaleString()}</div>
+                    <div className={styles.price}>CHF {price?.toLocaleString()}</div>
                 </div>
             </div>
 
@@ -70,7 +70,7 @@ const SoldCardPending = ({ image, name, price, date, email, sellerName, onAccept
 
             {!promoting && (
                 <div className={styles.actionButtons}>
-                    <button className={styles.acceptButton}>
+                    <button onClick={()=>onAccept(orderId)} className={styles.acceptButton}>
                         Accept
                     </button>
                     <button className={styles.rejectButton}>

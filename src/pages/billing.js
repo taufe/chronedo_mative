@@ -9,7 +9,17 @@ import { useData } from '../context/contextApi';
 
 const Billing = () => {
     const router = useRouter();
-const { id, watch_price, total_price, watch_name, final_price, delivery_method } = router.query;
+// const { id, watch_price, total_price, watch_name, final_price, delivery_method } = router.query;
+const {
+    watch_id,
+    watch_price,
+    total_price,
+    watch_name,
+    final_price,
+    delivery_method,
+    promo_id, // Optional
+    payment_method // Optional if you want to send it later
+  } = router.query;
 console.log('query in billing screen',router.query);
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
     const [termsAccepted, setTermsAccepted] = useState(false);
@@ -17,15 +27,17 @@ console.log('query in billing screen',router.query);
     const [legalBindingAccepted, setLegalBindingAccepted] = useState(false);
     const [loading, setLoading] = useState(false)
     const [error, setError]= useState('')
+    const [loader, setLoader] = useState(false);
     const {token} = useData()
     console.log('billing page token for fixed price',token)
 
     const handleConfirmPurchase = async () => {
-    
+        setLoader(true)
+        const token = localStorage.getItem('token');
         try {
 
-          const response = await axios.post("/api/fixedPriceApi", { id, watch_price,total_price, watch_name,final_price,delivery_method, token });
-        
+          const response = await axios.post("/api/fixedPriceApi", { watch_id, watch_price,total_price, watch_name,final_price,delivery_method, token:token});
+            console.log('resonse on biling screen of post api',response.data)
           if (response.data.success === true) {
             console.log(response.data.message);
             setShowSuccessPopup(true);
@@ -34,7 +46,7 @@ console.log('query in billing screen',router.query);
           }
         } catch (err) {
           console.error("API error:", err);
-    
+            setLoader(false)
           if (err.response?.status === 401) {
             setError("Invalid email or password.");
           } else {
@@ -42,6 +54,7 @@ console.log('query in billing screen',router.query);
           }
         } finally {
           setLoading(false);
+          setLoader(false)
         }
       };
 
@@ -240,7 +253,12 @@ console.log('query in billing screen',router.query);
                             }
                             onClick={handleConfirmPurchase}
                         >
-                            CONFIRM PURCHASE
+                            
+                            {loader ? (
+                            <span className={styles.loader}></span> 
+                        ) : (
+                            "CONFIRM PURCHASE"
+                        )}
                         </button>
                     </div>
                 </div>
@@ -274,6 +292,7 @@ console.log('query in billing screen',router.query);
                                     onClick={() => router.push("/dashboard")}
                                 >
                                     Back to Dashboard
+                                    
                                 </button>
                             </div>
                         </div>

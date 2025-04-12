@@ -4,6 +4,22 @@
     margin: 0 auto;
     margin-left:85px
 }
+.loader {
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #000;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    animation: spin 0.8s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
 
 .billingCard {
     background: rgba(31, 28, 28, 0.28);
@@ -119,6 +135,8 @@
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: 16px;
     margin-top: 16px;
+    font-family:'Poppins';
+    font-weight:500
 }
 
 .totalRow p {

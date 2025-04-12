@@ -6,7 +6,7 @@ import React, { useState, useEffect, useRef } from "react"; // Import useRef
 import { useRouter } from "next/router";
 import FilterPopup from "../components/FilterPopup";
 import styles from "./index.module.css";
-// import  NewArrivalWatch  from "../components/NewArrivalWatch";
+import  NewArrivalWatch  from "../components/NewArrivalWatch";
 
 // Define PopularBrands component outside of Home
 const PopularBrands = () => {
@@ -488,7 +488,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      {/* <NewArrivalWatch /> */}
+      <NewArrivalWatch />
     </>
   );
 };

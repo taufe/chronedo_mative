@@ -12,6 +12,7 @@ import MyOpenWatch from "../components/MyOpenWatch";
 import MyEndedWatch from "../components/MyEndedWatch";
 import axios from "axios";
 import { useData } from "../context/contextApi";
+import { currencyList } from "../components/currency";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -69,6 +70,335 @@ const MySelling = () => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const {token} = useData()
+  console.log('token cheking page',token)
+
+  // Form states with initial values
+  const [refNumber, setRefNumber] = useState("");
+  const [type, setType] = useState("Wrist watch");
+  const [gender, setGender] = useState("Men/Unisex");
+  const [brand, setBrand] = useState("Rolex");
+  const [model, setModel] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [listingTitle, setListingTitle] = useState("");
+  const [subtitle, setSubtitle] = useState("");
+  const [movement, setMovement] = useState("Automatic");
+  const [age, setAge] = useState("2016");
+  const [unknown, setUnknown] = useState(false);
+  const [diameter, setDiameter] = useState("");
+  const [height, setHeight] = useState("");
+  const [caseMaterial, setCaseMaterial] = useState("");
+  const [bezelMaterial, setBezelMaterial] = useState("");
+  const [crystal, setCrystal] = useState("");
+  const [braceletMaterial, setBraceletMaterial] = useState("");
+  const [claspMaterial, setClaspMaterial] = useState("");
+  const [caliber, setCaliber] = useState("");
+  const [powerReserve, setPowerReserve] = useState("");
+  const [dialColor, setDialColor] = useState("");
+  const [condition, setCondition] = useState("");
+  const [warrantyUntil, setWarrantyUntil] = useState("");
+  const [noWarranty, setNoWarranty] = useState(false);
+  const [warrantyOfMeUntil, setWarrantyOfMeUntil] = useState("");
+  const [noWarrantyFromSeller, setNoWarrantyFromSeller] = useState(true);
+  const [description, setDescription] = useState("");
+  const [descriptionScope, setDescriptionScope] = useState("");
+  const [currency, setCurrency] = useState("CHF");
+  const [fixedPrice, setFixedPrice] = useState("25000.00");
+  const [startingPrice, setStartingPrice] = useState("");
+  const [salesCommissionAmount, setSalesCommissionAmount] = useState(0);
+  const [promotable, setPromotable] = useState(false);
+  const [loader, setLoader] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [ingestionDate, setIngestionDate] = useState('');
+  const [ingestionTime, setIngestionTime] = useState('');
+  const [serviceDate, setServiceDate] = useState('');
+  const [serviceTime, setServiceTime] = useState('');
+  const [price, setPrice] = useState('');
+  const [status, setStatus] = useState(1);
+  const [orderStatus, setOrderStatus] = useState(1);
+
+  // Image states
+  const [cover, setCover] = useState(null);
+  const [back, setBack] = useState(null);
+  const [side1, setSide1] = useState(null);
+  const [side2, setSide2] = useState(null);
+  const [wristShot, setWristShot] = useState(null);
+  const [defects, setDefects] = useState(null);
+  const [more1, setMore1] = useState(null);
+  const [more2, setMore2] = useState(null);
+  const [boxOutside, setBoxOutside] = useState(null);
+  const [boxInside, setBoxInside] = useState(null);
+  const [papersImg, setPapersImg] = useState(null);
+  const [more3, setMore3] = useState(null);
+  const [more4, setMore4] = useState(null);
+  const [more5, setMore5] = useState(null);
+
+  // Dropdown options
+  const watchTypes = [
+    'Wrist watch',
+    'Pocket Watch',
+    'Other',
+    ];
+  const genders = [
+    'Men',
+    'Women',
+    'Unisex',
+    ];;
+  const brands = ["Rolex", "Patek Philippe", "Audemars Piguet", "Omega", "Tag Heuer"];
+  const movements = [
+    'Automatic',
+    'Manual Binding',
+    'Quartz',
+    ];
+    
+  const years = Array.from({length: 30}, (_, i) => (2023 - i).toString());
+  const caseMaterials =  [
+    'Aluminium',
+    'Bronze',
+    'Carbon',
+    'Yellow Gold',
+    'Bicolor (Gold/Steel)',
+    'Ceramic',
+    'Plastic Kunststoff',
+    'Palladium',
+    'Platinum',
+    'Pink Gold',
+    'Red Gold',
+    'Silver',
+    'Steel',
+    'Tantalum',
+    'Titanium',
+    'White Gold',
+    'Tungsten',
+    ];
+  const bezelMaterials =  [
+    'Aluminium',
+    'Bronze',
+    'Carbon',
+    'Yellow Gold',
+    'Bicolor (Gold/Steel)',
+    'Ceramic',
+    'Plastic',
+    'Palladium',
+    'Platinum',
+    'Pink Gold',
+    'Red Gold',
+    'Silver',
+    'Steel',
+    'Tantalum',
+    'Titanium',
+    'White Gold',
+    'Tungsten',
+    ];
+  const crystals = [
+    'Glass',
+    'Plastic',
+    'Mineral Glass',
+    'Plexi Glass',
+    'Sapphire Glass',
+    ];
+  const braceletMaterials = ["Stainless Steel", "Leather", "Rubber", "Gold", "Nylon"];
+  const claspMaterials = ["Stainless Steel", "Gold", "Titanium"];
+  const dialColors = [
+    'Beige',
+    'Blue',
+    'Bordeaux',
+    'Brown',
+    'Bronze',
+    'Yellow',
+    'Gold',
+    'Bicolor (Gold/Steel)',
+    'Gery',
+    'Green',
+    'Orange',
+    'Pink',
+    'Red',
+    'Black',
+    'Silver',
+    'Solid Silver',
+    'Transparent',
+    'Steel',
+    'Purple',
+    'white',
+    'Mother of Pearl'
+    ];
+   const conditionList = [
+      'Used',
+      'New/Original Packed',
+      'New/Unworn',
+      'New/See Description',
+      'Broken',
+      ];
+  const currencies = ["CHF", "EUR", "USD", "GBP"];
+  const reactivationOptions = ["none", "1 Mal", "2 Mal", "3 Mal", "4 Mal", "5 Mal"];
+  const paymentMethods = ["Bank payment", "Cash payment upon collection", "Credit card", "PayPal"];
+  const availabilityOptions = [
+    "Instant ready for delivery",
+    "Ready for delivery in 3-5 workdays",
+    "Ready for delivery in 6-10 workdays"
+  ];
+  const deliveryOptions = [
+    "Mandatory: Shipping domestic",
+    "Pick up at my address"
+  ];
+
+  // Helper function to extract currency code
+  const extractCurrencyCode = (currencyString) => {
+    if (!currencyString) return "CHF";
+    return currencyString.split(" ")[0];
+  };
+
+  // Handle image uploads
+  const handleImageUpload = (e, setImageFunction) => {
+    const file = e.target.files[0];
+    if (file) {
+      const previewData = {
+        path: URL.createObjectURL(file),
+        mime: file.type,
+        file: file,
+      };
+  
+      setImageFunction(previewData);
+  
+      console.log("Uploaded image data:", previewData);
+    }
+  };
+  
+  
+  // Publish watch function
+  const publishWatch = async () => {
+    console.log("Sales Commission Amount:", salesCommissionAmount.toFixed(2));
+    setLoader(true);
+    console.log("Publishing watch");
+  
+    try {
+      const formData = new FormData();
+      console.log("FormData initialized");
+  
+      // Append all form data
+      formData.append("reference_no", refNumber);
+      formData.append("watch_type", type);
+      formData.append("gender", gender);
+      formData.append("brand", brand);
+      formData.append("model", model);
+      formData.append("nickname", nickname);
+      formData.append("listing_title", listingTitle);
+      formData.append("subtitle", subtitle);
+      formData.append("movement", movement);
+      formData.append("age_year_of_sale", age);
+      formData.append("unknown", unknown);
+      formData.append("case_diameter", diameter);
+      formData.append("case_height", height);
+      formData.append("case_material", caseMaterial);
+      formData.append("bezel_material", bezelMaterial);
+      formData.append("crystal", crystal);
+      formData.append("bracelet_material", braceletMaterial);
+      formData.append("bracelet_color", "");
+      formData.append("clasp_material", claspMaterial);
+      formData.append("clasp_type", selectedClaspType);
+      formData.append("movement_type", movement);
+      formData.append("caliber", caliber);
+      formData.append("power_reserve", powerReserve);
+      formData.append("dial_color", dialColor);
+      formData.append("dial_format", selectedDialFormat);
+      formData.append("function_value", JSON.stringify(selectedFunctions));
+      formData.append("condition_name", condition);
+      formData.append("manufacturer_warranty_until", warrantyUntil);
+      formData.append("manufacturer_years_after_sale", "1");
+      formData.append("manufacturer_no_warranty", noWarranty);
+      formData.append("warranty_of_me_until", warrantyOfMeUntil);
+      formData.append("me_years_after_sale", "2");
+      formData.append("me_no_warranty", noWarrantyFromSeller);
+      formData.append("condition_description", description);
+      formData.append("box", selectedBox);
+      formData.append("scope_of_delivery_papers", selectedPapers.length > 0 ? "Yes" : "No");
+      formData.append("scope_of_delivery_description", descriptionScope);
+      formData.append("isAuction", "true");
+      formData.append("currency", extractCurrencyCode(currency));
+      formData.append("starting_price", startingPrice);
+      formData.append("fixed_price", fixedPrice);
+      formData.append("automatic_reactivation", selectedReactivation);
+      formData.append("sales_commission", salesCommissionAmount.toFixed(2));
+
+      // Append images
+      if (cover) formData.append("cover", cover.file);
+      if (back) formData.append("back", back.file);
+      if (side1) formData.append("side1", side1.file);
+      if (side2) formData.append("side2", side2.file);
+      if (wristShot) formData.append("wrist_shot", wristShot.file);
+      if (defects) formData.append("defect", defects.file);
+
+      const response = await axios.post('/api/storeWatchApi', formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+  
+      console.log("Response of publish watch:", response.data);
+  
+      setNewIndex(0);
+      setLoader(false);
+      setModalVisible(true);
+      setShowSuccessPopup(true);
+    } catch (error) {
+      console.error("Error while publishing watch:", error);
+      setLoader(false);
+    }
+  };
+  
+
+  // Update the photo upload handler to use our new handleImageUpload
+  const handlePhotoUpload = (e, id) => {
+    console.log("Uploading photo for:", id);
+  
+    switch (id) {
+      case "cover":
+        handleImageUpload(e, setCover);
+        break;
+      case "back":
+        handleImageUpload(e, setBack);
+        break;
+      case "wristshot":
+        handleImageUpload(e, setWristShot);
+        break;
+      case "defects":
+        handleImageUpload(e, setDefects);
+        break;
+      case "side1":
+        handleImageUpload(e, setSide1);
+        break;
+      case "side2":
+        handleImageUpload(e, setSide2);
+        break;
+      case "more1":
+        handleImageUpload(e, setMore1);
+        break;
+      case "more2":
+        handleImageUpload(e, setMore2);
+        break;
+      case "box-outside":
+        handleImageUpload(e, setBoxOutside);
+        break;
+      case "box-inside":
+        handleImageUpload(e, setBoxInside);
+        break;
+      case "papers":
+        handleImageUpload(e, setPapersImg);
+        break;
+      case "more3":
+        handleImageUpload(e, setMore3);
+        break;
+      case "more4":
+        handleImageUpload(e, setMore4);
+        break;
+      case "more5":
+        handleImageUpload(e, setMore5);
+        break;
+      default:
+        console.warn("Unknown image ID:", id);
+        break;
+    }
+  };
 
   setTimeout(() => {
     setLoading(false); 
@@ -76,6 +406,7 @@ const MySelling = () => {
 
   const getSoldWatches = async () => {
     setLoading(true);
+    const token = await localStorage.getItem('token')
     try {
       const headers = {
         Authorization: `Bearer ${token}`,
@@ -91,10 +422,10 @@ const MySelling = () => {
         (sale) => sale.order_status === 0
       );
       const inProgress = response.data.data.filter(
-        (sale) => sale.order_status === 1
+        (sale) => sale.status === 1
       );
       const completed = response.data.data.filter(
-        (sale) => sale.order_status === 2
+        (sale) => sale.status === 2
       );
 
       setPendingSales(pending);
@@ -107,10 +438,47 @@ const MySelling = () => {
     }
   };
 
+
+const updateOrderStatus = async (orderId) => {
+  console.log('Updating order ID:', orderId);
+
+  const token = localStorage.getItem("token");
+  const data = {
+    id: orderId,
+    order_status: status, 
+    status: orderStatus,
+    token: token
+  };
+
+  console.log("Sending data to API:", data);
+
+  try {
+    const response = await axios.post("/api/orderStatusApi", data);
+    console.log("API Response:", response.data);
+
+    if (response.data.success) {
+      // Update your UI state accordingly
+      setPendingSales(prev => prev.filter(sale => sale.id !== orderId));
+      const updatedSale = soldData.find(sale => sale.id === orderId);
+      updatedSale.order_status = 1;
+      setInProgressSales(prev => [...prev, updatedSale]);
+
+      console.log("Order status updated successfully");
+    } else {
+      console.error("Order update failed:", response.data.message);
+    }
+  } catch (error) {
+    console.error("API error:", error.response?.data || error.message);
+  }
+};
+
+
+
   // Fetch ended watches data
   const fetchEndedWatches = async () => {
+    const token = await localStorage.getItem('token')
     try {
-      const response = await fetch(`${baseUrl}/getcloseWatches`, {
+      const response = await fetch(`https://chronedo.webjerky.com/api/getcloseWatches`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -134,12 +502,14 @@ const MySelling = () => {
 
   // Fetch open watches data
   const fetchOpenWatches = async () => {
+    const token = await localStorage.getItem('token')
     try {
-      const response = await fetch(`${baseUrl}/getOpenWatches`, {
+      const response = await fetch(`https://chronedo.webjerky.com/api/getOpenWatches`, {
         headers: {
-          Authorization: `Bearer 223|fQCZy8Ol01rCyB1aAH7bAM1vqLWG7h1mGUYVEzid85dc39bc`,
+          Authorization: `Bearer ${token}`,
         },
       });
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -163,9 +533,8 @@ const MySelling = () => {
     fetchOpenWatches();
   }, []);
 
-  const handleListingComplete = () => {
-    setShowSuccessPopup(true);
-  };
+  // const handleListingComplete = () => {
+  // };
 
   const handleSellNow = (saleDetails) => {
     setSelectedSaleDetails(saleDetails);
@@ -205,13 +574,6 @@ const MySelling = () => {
     );
   };
 
-  const handlePhotoUpload = (event, id) => {
-    const file = event.target.files[0];
-    if (file) {
-      console.log(`Uploading file for ${id}:`, file);
-    }
-  };
-
   const togglePaper = (paper) => {
     setSelectedPapers((prev) =>
       prev.includes(paper) ? prev.filter((p) => p !== paper) : [...prev, paper]
@@ -225,6 +587,7 @@ const MySelling = () => {
         : [...prev, method]
     );
   };
+
   return (
     <DashboardLayout>
       <div className={styles.dashboardContainer}>
@@ -285,8 +648,8 @@ const MySelling = () => {
             <Image
               src="/assets/Home/new.png"
               alt="New"
-              width={32}
-              height={32}
+              width={28}
+              height={28}
               className={styles.bottomTabImage}
             />
             <span className={styles.bottomTabText}>New</span>
@@ -371,6 +734,8 @@ const MySelling = () => {
                     type="text"
                     placeholder="Reference number"
                     className={styles.referenceInput}
+                    value={refNumber}
+                    onChange={(e) => setRefNumber(e.target.value)}
                   />
                   <p className={styles.helperText}>
                     Start by entering the reference number.
@@ -398,27 +763,51 @@ const MySelling = () => {
                 <div className={styles.formGrid}>
                   <div className={styles.formGroup}>
                     <label>Type of Watch*</label>
-                    <select className={styles.formSelect}>
-                      <option>Wrist watch</option>
+                    <select 
+                      className={styles.formSelect}
+                      value={type}
+                      onChange={(e) => setType(e.target.value)}
+                    >
+                      {watchTypes.map((type) => (
+                        <option key={type} value={type}>{type}</option>
+                      ))}
                     </select>
                   </div>
 
                   <div className={styles.formGroup}>
                     <label>Gender*</label>
-                    <select className={styles.formSelect}>
-                      <option>Men/Unisex</option>
+                    <select 
+                      className={styles.formSelect}
+                      value={gender}
+                      onChange={(e) => setGender(e.target.value)}
+                    >
+                      {genders.map((gender) => (
+                        <option key={gender} value={gender}>{gender}</option>
+                      ))}
                     </select>
                   </div>
 
                   <div className={styles.formGroup}>
                     <label>Reference number</label>
-                    <input type="text" className={styles.formInput} />
+                    <input 
+                      type="text" 
+                      className={styles.formInput} 
+                      value={refNumber}
+                      onChange={(e) => setRefNumber(e.target.value)}
+                      placeHolder={'Reference Number'}
+                    />
                   </div>
 
                   <div className={styles.formGroup}>
                     <label>Brand*</label>
-                    <select className={styles.formSelect}>
-                      <option>Rolex</option>
+                    <select 
+                      className={styles.formSelect}
+                      value={brand}
+                      onChange={(e) => setBrand(e.target.value)}
+                    >
+                      {brands.map((brand) => (
+                        <option key={brand} value={brand}>{brand}</option>
+                      ))}
                     </select>
                   </div>
 
@@ -427,7 +816,9 @@ const MySelling = () => {
                     <input
                       type="text"
                       className={styles.formInput}
-                      value="Daytona"
+                      value={model}
+                      onChange={(e) => setModel(e.target.value)}
+                      placeHolder={'Daytona'}
                     />
                   </div>
 
@@ -436,7 +827,9 @@ const MySelling = () => {
                     <input
                       type="text"
                       className={styles.formInput}
-                      value="White Panda 2017"
+                      value={nickname}
+                      onChange={(e) => setNickname(e.target.value)}
+                      placeHolder={'White Panda 2017'}
                     />
                   </div>
 
@@ -445,8 +838,9 @@ const MySelling = () => {
                     <input
                       type="text"
                       className={styles.formInput}
-                      value="Rolex Daytona White Panda 2017"
-                      disabled
+                      value={listingTitle}
+                      onChange={(e) => setListingTitle(e.target.value)}
+                      placeholder="Rolex Daytona White Panda 2017"
                     />
                   </div>
 
@@ -456,27 +850,47 @@ const MySelling = () => {
                       <input
                         type="text"
                         className={styles.formInput}
-                        value="very good condition / incl. box"
+                        value={subtitle}
+                        onChange={(e) => setSubtitle(e.target.value)}
+                        style={{ width: '100%' }}
+                        placeHolder={'subtitle'}
                       />
-                      <span className={styles.charCount}>30/30</span>
+                      <span className={styles.charCount}>{subtitle.length}/30</span>
                     </div>
                   </div>
 
                   <div className={styles.formGroup}>
                     <label>Movement*</label>
-                    <select className={styles.formSelect}>
-                      <option>Automatic</option>
+                    <select 
+                      className={styles.formSelect}
+                      value={movement}
+                      onChange={(e) => setMovement(e.target.value)}
+                    >
+                      {movements.map((movement) => (
+                        <option key={movement} value={movement}>{movement}</option>
+                      ))}
                     </select>
                   </div>
 
                   <div className={styles.formGroup}>
                     <label>Age/year of sale to first owner</label>
                     <div className={styles.yearContainer}>
-                      <select className={styles.yearSelect}>
-                        <option>2016</option>
+                      <select 
+                        className={styles.yearSelect}
+                        value={age}
+                        onChange={(e) => setAge(e.target.value)}
+                      >
+                        {years.map((year) => (
+                          <option key={year} value={year}>{year}</option>
+                        ))}
                       </select>
                       <label className={styles.checkboxLabel}>
-                        <input type="checkbox" /> unknown
+                        <input 
+                          type="checkbox" 
+                          checked={unknown}
+                          onChange={(e) => setUnknown(e.target.checked)}
+                          
+                        /> unknown
                       </label>
                     </div>
                   </div>
@@ -487,7 +901,10 @@ const MySelling = () => {
                       <input
                         type="text"
                         className={styles.formInput}
-                        value="41.5"
+                        value={diameter}
+                        onChange={(e) => setDiameter(e.target.value)}
+                        placeHolder={'41.5'}
+                        style={{ width: '100%' }}
                       />
                       <span className={styles.unit}>mm</span>
                     </div>
@@ -519,21 +936,7 @@ const MySelling = () => {
                 </p>
 
                 <div className={styles.detailsContentNav}>
-                  {/* <button
-                    className={`${styles.detailsNavButton} ${
-                      detailsContentIndex === 0 ? styles.activeDetailsNav : ""
-                    }`}
-                    onClick={() => setDetailsContentIndex(0)}
-                  >
-                    <Image
-                      src="/assets/WatchDetails/case.png"
-                      alt="Case"
-                      width={80}
-                      height={80}
-                      style={{ objectFit: "contain" }}
-                    />
-                    <span>Case</span>
-                  </button> */}
+              
                   <button
                     className={`${styles.detailsNavButton} ${
                       detailsContentIndex === 1 ? styles.activeDetailsNav : ""
@@ -596,7 +999,7 @@ const MySelling = () => {
                   </button>
                 </div>
 
-                {detailsContentIndex == 0 && (
+                {detailsContentIndex === 0 && (
                   <>
                     <div className={styles.formGrid}>
                       <div className={styles.formGroup}>
@@ -605,7 +1008,10 @@ const MySelling = () => {
                           <input
                             type="text"
                             className={styles.formInput}
-                            value="41.5"
+                            value={diameter}
+                            onChange={(e) => setDiameter(e.target.value)}
+                            placeHolder={'41.5'}
+                            style={{ width: '100%' }}
                           />
                           <span className={styles.unit}>mm</span>
                         </div>
@@ -617,7 +1023,10 @@ const MySelling = () => {
                           <input
                             type="text"
                             className={styles.formInput}
-                            value="12.5"
+                            value={height}
+                            onChange={(e) => setHeight(e.target.value)}
+                            placeHolder='12.5'
+                            style={{ width: '100%' }}
                           />
                           <span className={styles.unit}>mm</span>
                         </div>
@@ -625,22 +1034,43 @@ const MySelling = () => {
 
                       <div className={styles.formGroup}>
                         <label>Case Material</label>
-                        <select className={styles.formSelect}>
-                          <option>Please select</option>
+                        <select 
+                          className={styles.formSelect}
+                          value={caseMaterial}
+                          onChange={(e) => setCaseMaterial(e.target.value)}
+                        >
+                          <option value="">Please select</option>
+                          {caseMaterials.map((material) => (
+                            <option key={material} value={material}>{material}</option>
+                          ))}
                         </select>
                       </div>
 
                       <div className={styles.formGroup}>
                         <label>Bezel material</label>
-                        <select className={styles.formSelect}>
-                          <option>Please select</option>
+                        <select 
+                          className={styles.formSelect}
+                          value={bezelMaterial}
+                          onChange={(e) => setBezelMaterial(e.target.value)}
+                        >
+                          <option value="">Please select</option>
+                          {bezelMaterials.map((material) => (
+                            <option key={material} value={material}>{material}</option>
+                          ))}
                         </select>
                       </div>
 
                       <div className={styles.formGroup}>
                         <label>Crystal</label>
-                        <select className={styles.formSelect}>
-                          <option>Please select</option>
+                        <select 
+                          className={styles.formSelect}
+                          value={crystal}
+                          onChange={(e) => setCrystal(e.target.value)}
+                        >
+                          <option value="">Please select</option>
+                          {crystals.map((crystal) => (
+                            <option key={crystal} value={crystal}>{crystal}</option>
+                          ))}
                         </select>
                       </div>
                     </div>
@@ -686,7 +1116,6 @@ const MySelling = () => {
                     </div>
                   </>
                 )}
-
                 {detailsContentIndex == 1 && (
                   <>
                     <div className={styles.formGrid}>
@@ -768,19 +1197,29 @@ const MySelling = () => {
                     <div className={styles.formGrid}>
                       <div className={styles.formGroup}>
                         <label>Movement</label>
-                        <select className={styles.formSelect}>
-                          <option>Automatic</option>
-                        </select>
+                        <select 
+                      className={styles.formSelect}
+                      value={movement}
+                      onChange={(e) => setMovement(e.target.value)}
+                    >
+                      {movements.map((movement) => (
+                        <option key={movement} value={movement}>{movement}</option>
+                      ))}
+                    </select>
                       </div>
 
                       <div className={styles.formGroup}>
                         <label>Caliber</label>
                         <div className={styles.caliberContainer}>
-                          <input
-                            type="text"
-                            className={styles.formInput}
-                            value="MT5813"
-                          />
+                        <input
+                        type="text"
+                        className={styles.formInput}
+                        value={caliber}
+                        onChange={(e) => setCaliber(e.target.value)}
+                        placeholder="caliber"
+                        style={{width:"100%"}}
+                      />
+
                           <span className={styles.caliberDate}>06/20</span>
                         </div>
                       </div>
@@ -788,11 +1227,15 @@ const MySelling = () => {
                       <div className={styles.formGroup}>
                         <label>Power Reserve</label>
                         <div className={styles.powerReserveContainer}>
-                          <input
-                            type="text"
-                            className={styles.formInput}
-                            value="72"
-                          />
+                        <input
+                      type="text"
+                      className={styles.formInput}
+                      value={powerReserve}
+                      onChange={(e) => setPowerReserve(e.target.value)}
+                      placeholder="72"
+                      style={{ width: "100%" }}
+                    />
+
                           <span className={styles.unit}>h</span>
                         </div>
                       </div>
@@ -843,9 +1286,19 @@ const MySelling = () => {
                     <div className={styles.formGrid}>
                       <div className={styles.formGroup}>
                         <label>Dial Color</label>
-                        <select className={styles.formSelect}>
-                          <option>select</option>
-                        </select>
+                        <select
+                    className={styles.formSelect}
+                    value={dialColor}
+                    onChange={(e) => setDialColor(e.target.value)}
+                  >
+                    <option value="">Select</option>
+                    {dialColors.map((color) => (
+                      <option key={color} value={color}>
+                        {color}
+                      </option>
+                    ))}
+                  </select>
+
                       </div>
                     </div>
 
@@ -1052,16 +1505,49 @@ const MySelling = () => {
                           className={styles.hiddenInput}
                           onChange={(e) => handlePhotoUpload(e, item.id)}
                         />
-                        <label htmlFor={item.id} className={styles.uploadLabel}>
-                          <Image
-                            src={item.icon}
-                            alt={item.label}
-                            width={80}
-                            height={120}
-                            style={{ objectFit: "contain" }}
-                          />
-                          <span>{item.label}</span>
-                        </label>
+                       <label htmlFor={item.id} className={styles.uploadLabel}>
+  {(() => {
+    const imageMap = {
+      cover,
+      back,
+      wristShot,
+      defects,
+      side1,
+      side2,
+      more1,
+      more2,
+      "box-outside": boxOutside,
+      "box-inside": boxInside,
+      papers: papersImg,
+      more3,
+      more4,
+      more5,
+    };
+
+    const uploaded = imageMap[item.id];
+
+    return uploaded && uploaded.path ? (
+      <img
+        src={uploaded.path}
+        alt={item.label}
+        width={80}
+        height={120}
+        style={{ objectFit: "cover", borderRadius: 4 }}
+      />
+    ) : (
+      <Image
+        src={item.icon}
+        alt={item.label}
+        width={80}
+        height={120}
+        style={{ objectFit: "contain" }}
+      />
+    );
+  })()}
+  <span>{item.label}</span>
+</label>
+
+
                       </div>
                     ))}
                   </div>
@@ -1113,15 +1599,39 @@ const MySelling = () => {
                           onChange={(e) => handlePhotoUpload(e, item.id)}
                         />
                         <label htmlFor={item.id} className={styles.uploadLabel}>
-                          <Image
-                            src={item.icon}
-                            alt={item.label}
-                            width={80}
-                            height={120}
-                            style={{ objectFit: "contain" }}
-                          />
-                          <span>{item.label}</span>
-                        </label>
+  {(() => {
+    const imageMap = {
+      boxOutside,
+      boxInside,
+      papersImg,
+      more3,
+      more4,
+      more5,
+    };
+    const uploaded = imageMap[item.id];
+    console.log(`Preview check for [${item.id}]:`, uploaded);
+
+    return uploaded && uploaded.path ? (
+      <img
+        src={uploaded.path}
+        alt={item.label}
+        width={80}
+        height={120}
+        style={{ objectFit: "cover", borderRadius: 4 }}
+      />
+    ) : (
+      <Image
+        src={item.icon}
+        alt={item.label}
+        width={80}
+        height={120}
+        style={{ objectFit: "contain" }}
+      />
+    );
+  })()}
+  <span>{item.label}</span>
+</label>
+
                       </div>
                     ))}
                   </div>
@@ -1149,12 +1659,22 @@ const MySelling = () => {
                 <h2 className={styles.sectionTitle}>4. Condition</h2>
                 <p className={styles.mandatoryText}>5 open mandatory fields</p>
 
-                <div className={styles.formGrid}>
+                <div className={styles.formGridCondition}>
                   <div className={styles.formGroup}>
                     <label>Condition*</label>
-                    <select className={styles.formSelect}>
-                      <option>used</option>
-                    </select>
+                    <select
+                    className={styles.formSelect}
+                    value={condition}
+                    onChange={(e) => setCondition(e.target.value)}
+                  >
+                    <option value="">Select condition</option>
+                    {conditionList.map((option) => (
+                      <option key={option} value={option.toLowerCase()}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+
                   </div>
                 </div>
 
@@ -1162,18 +1682,23 @@ const MySelling = () => {
                   <div className={styles.warrantyGroup}>
                     <label className={styles.warrentyUnit}>Manufacturer warranty until*</label>
                     <div className={styles.warrantyInputGroup}>
-                      <input
+                    <input
                         type="text"
                         className={styles.formInput}
-                        value="01.01.2025"
+                        value={warrantyUntil}
+                        onChange={(e) => setWarrantyUntil(e.target.value)}
+                        placeholder="01.01.2025"
                         disabled={noManufacturerWarranty}
+                        style={{width:'100%'}}
                       />
+
                       <span className={styles.orText}>or</span>
                       <input
                         type="number"
                         className={`${styles.formInput} ${styles.yearInput}`}
                         placeholder="Years"
-                        disabled={noManufacturerWarranty}
+                        style={{width:'100%'}}
+                        // disabled={noManufacturerWarranty}
                       />
                       <span className={styles.yearText}>
                         Years after the sale here
@@ -1197,14 +1722,15 @@ const MySelling = () => {
                       <input
                         type="text"
                         className={styles.formInput}
-                        disabled={noSellerWarranty}
+                        
+                     style={{width:'100%'}}
                       />
                       <span className={styles.orText}>or</span>
                       <input
                         type="number"
                         className={`${styles.formInput} ${styles.yearInput}`}
                         placeholder="Years"
-                        disabled={noSellerWarranty}
+                       style={{width:'100%'}}
                       />
                       <span className={styles.yearText}>
                         Years after sale here
@@ -1222,10 +1748,12 @@ const MySelling = () => {
                 </div>
 
                 <div className={styles.descriptionSection}>
-                  <label>Description</label>
+                  <label className={styles.descriptionLabel}>Description</label>
                   <textarea
                     className={styles.descriptionInput}
-                    value="Rolex Daytona Ceramic 116500LN White Panda, 2017, as new.The watch comes with box and papers. Manufacturer warranty is still valid until 2025."
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Rolex Daytona Ceramic 116500LN White Panda, 2017, as new. The watch comes with box and papers. Manufacturer warranty is still valid until 2025."
                     rows={6}
                   />
                   <div className={styles.descriptionFooter}>
@@ -1353,10 +1881,13 @@ const MySelling = () => {
                   <div className={styles.scopeDescriptionSection}>
                     <label>Description of the scope of delivery</label>
                     <textarea
-                      className={styles.scopeDescriptionInput}
-                      value="Watch, box and warranty card from Rolex. In addition, a cleaning kit is supplied."
-                      rows={6}
-                    />
+                        className={styles.scopeDescriptionInput}
+                        value={descriptionScope}
+                        onChange={(e) => setDescriptionScope(e.target.value)}
+                        placeholder="Watch, box and warranty card from Rolex. In addition, a cleaning kit is supplied."
+                        rows={6}
+                      />
+
                     <div className={styles.characterCounter}>84/200</div>
                   </div>
                 </div>
@@ -1391,20 +1922,34 @@ const MySelling = () => {
 
                   <div className={styles.currencyPriceGrid}>
                     <div className={styles.formGroup}>
-                      <label>Currency*</label>
-                      <select className={styles.formSelect}>
-                        <option>select</option>
-                      </select>
+                    <label>Currency*</label>
+                  <select
+                    className={styles.formSelect}
+                    value={currency}
+                    onChange={(e) => setCurrency(e.target.value)}
+                  >
+                    <option value="">Select</option>
+                    {currencyList.map((cur, index) => (
+                      <option key={index} value={cur}>
+                        {cur}
+                      </option>
+                    ))}
+                  </select>
+
                     </div>
 
                     <div className={styles.formGroup}>
                       <label>Fixed Price*</label>
                       <div className={styles.priceInputGroup}>
-                        <input
-                          type="text"
-                          className={styles.formInput}
-                          value="25'000.00"
-                        />
+                      <input
+                        type="text"
+                        className={styles.formInput}
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                        placeholder="25'000.00"
+                        style={{width:'100%'}}
+                      />
+
                         <span className={styles.currencyLabel}>CHF</span>
                       </div>
                     </div>
@@ -1426,17 +1971,21 @@ const MySelling = () => {
                         <span style={{fontWeight:400, fontFamily:'Poppins'}}>instant</span>
                       </label>
                       <div className={styles.dateTimeGroup}>
-                        <input
+                      <input
                           type="text"
                           className={styles.formInput}
-                          value="25.10.2023"
+                          value={ingestionDate}
+                          onChange={(e) => setIngestionDate(e.target.value)}
+                          placeholder="25.10.2023"
                         />
                         <input
                           type="text"
                           className={styles.formInput}
-                          value="22:25 Uhr"
+                          value={ingestionTime}
+                          onChange={(e) => setIngestionTime(e.target.value)}
+                          placeholder="22:25 Uhr"
                         />
-                      </div>
+                                        </div>
                     </div>
 
                     <div className={styles.endGroup}>
@@ -1450,16 +1999,22 @@ const MySelling = () => {
                         <span style={{fontWeight:400, fontFamily:'Poppins'}}>maximum (15 days)</span>
                       </label>
                       <div className={styles.dateTimeGroup}>
-                        <input
-                          type="text"
-                          className={styles.formInput}
-                          value="07.11.2023"
-                        />
-                        <input
-                          type="text"
-                          className={styles.formInput}
-                          value="22:25 Uhr"
-                        />
+                      <input
+                      type="text"
+                      className={styles.formInput}
+                      value={serviceDate}
+                      onChange={(e) => setServiceDate(e.target.value)}
+                      placeholder="07.11.2023"
+                    />
+
+                    <input
+                      type="text"
+                      className={styles.formInput}
+                      value={serviceTime}
+                      onChange={(e) => setServiceTime(e.target.value)}
+                      placeholder="22:25 Uhr"
+                    />
+
                       </div>
                     </div>
                   </div>
@@ -1751,9 +2306,13 @@ const MySelling = () => {
                   </button>
                   <button
                     className={styles.nextButtonBasicData}
-                    onClick={handleListingComplete}
+                    onClick={publishWatch}
                   >
-                    Next
+                     {loader ? (
+    <span className={styles.loader}></span> 
+  ) : (
+    "Next"
+  )}
                   </button>
                 </div>
               </div>
@@ -1872,6 +2431,8 @@ const MySelling = () => {
                     date={`${sale?.created_at?.split("T")[0]} ${sale?.created_at?.split("T")[1]?.split(".")[0]}`}
                     sellerName={`${sale?.seller?.first_name} ${sale?.seller?.last_name}`}
                     email={sale?.buyer?.email}
+                    orderId={sale?.id}
+                    onAccept={updateOrderStatus}
                   />
                 ))}
               </div>
@@ -1954,21 +2515,27 @@ const MySelling = () => {
               />
             </button>
             <div className={styles.popupContent}>
-              <h2>Product Listed successfully</h2>
-              <div className={styles.checkIcon}>
-                <Image
-                  src="/assets/WatchDetails/check.png"
-                  alt="Success"
-                  width={80}
-                  height={80}
-                />
-              </div>
-              <button
-                className={styles.listNewButton}
-                onClick={handleNewProduct}
-              >
-                List New Product
-              </button>
+              <h2>{loader ? "Publishing..." : "Product Listed successfully"}</h2>
+              {loader ? (
+                <div className={styles.loader}>Loading...</div>
+              ) : (
+                <>
+                  <div className={styles.checkIcon}>
+                    <Image
+                      src="/assets/WatchDetails/check.png"
+                      alt="Success"
+                      width={80}
+                      height={80}
+                    />
+                  </div>
+                  <button
+                    className={styles.listNewButton}
+                    onClick={() => setShowSuccessPopup(false)}
+                  >
+                    List New Product
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>

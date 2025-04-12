@@ -217,6 +217,7 @@
   color: #fff;
   font-size: 16px;
   margin-bottom: 8px;
+
 }
 
 .infoText {
@@ -224,6 +225,8 @@
   font-size: 14px;
   line-height: 1.5;
   margin-bottom: 24px;
+  font-family: "Poppins";
+  font-weight:400
 }
 
 .nextButton {
@@ -291,6 +294,11 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
 }
+.formGridCondition {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 24px;
+}
 
 .formGroup {
   display: flex;
@@ -318,6 +326,7 @@
   font-size: 1rem;
   font-family: "Poppins";
   font-weight: 400;
+  background: rgba(31, 28, 28, 0.28);
 }
 
 .formInput:disabled {
@@ -336,6 +345,8 @@
 .charCount {
   color: #8a8f98;
   font-size: 14px;
+  font-family:'Poppins';
+  font-weight:400
 }
 
 .yearSelect {
@@ -349,6 +360,7 @@
   font-size: 1rem;
   font-family: "Poppins";
   font-weight: 400;
+  width:100%
 }
 
 .checkboxLabel {
@@ -360,6 +372,8 @@
 
 .unit {
   color: #fff;
+  font-family: "Poppins";
+  font-weight: 400;
 }
 
 .buttonContainer {
@@ -475,6 +489,8 @@
   font-size: 16px;
   margin-bottom: 16px;
   display: block;
+  font-family: "Poppins";
+  font-weight:400;
 }
 
 .certificationsButtons {
@@ -579,6 +595,8 @@
   right: 12px;
   color: rgba(255, 255, 255, 0.5);
   font-size: 14px;
+  font-family:"Poppins";
+  font-weight:400
 }
 
 .powerReserveContainer {
@@ -590,10 +608,16 @@
 .powerReserveContainer input {
   width: 80px;
 }
+.descriptionLabel{
+  font-family:'Poppins';
+  font-weight:400
+}
 
 .powerReserveContainer .unit {
   color: #fff;
   font-size: 16px;
+  font-family:'Poppins';
+  font-weight:400
 }
 
 .certificationCaliberSection {
@@ -780,6 +804,7 @@
   font-size: 24px;
   margin-bottom: 24px;
   font-weight: 500;
+  font-family:'Poppins'
 }
 
 .photosGrid {
@@ -907,7 +932,7 @@
 }
 
 .descriptionInput {
-  width: 100%;
+  width: 96%;
   min-height: 150px;
   padding: 16px;
   background: rgba(255, 255, 255, 0.1);
@@ -954,6 +979,8 @@
 .characterCount {
   color: rgba(255, 255, 255, 0.5);
   font-size: 14px;
+  font-family:'Poppins';
+  font-weight:400
 }
 
 @media (max-width: 768px) {
@@ -1036,7 +1063,7 @@
 }
 
 .scopeDescriptionInput {
-  width: 100%;
+  width: 95%;
   min-height: 120px;
   padding: 16px;
   background: rgba(255, 255, 255, 0.1);
@@ -1054,6 +1081,8 @@
   color: rgba(255, 255, 255, 0.5);
   font-size: 14px;
   margin-top: 8px;
+  font-family:"Poppins";
+  font-weight:400
 }
 
 /* Responsive styles */
@@ -1098,6 +1127,8 @@
   position: absolute;
   right: 16px;
   color: rgba(255, 255, 255, 0.5);
+  font-family:"Poppins";
+  font-weight:400
 }
 
 .priceNote {
@@ -1323,15 +1354,35 @@
 .boosterPrice {
   color: #b38e5d;
   font-size: 24px;
-  font-weight: bold;
+  /* font-weight: bold; */
   margin-bottom: 16px;
+  font-weight: 600;
+  font-family: "Poppins";
 }
+.loader {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #000;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 
 .boosterNote {
   color: rgba(255, 255, 255, 0.7);
   font-size: 14px;
   font-style: italic;
   margin: 0;
+  font-weight: 300;
+  font-family: "Poppins";
 }
 
 /* Responsive styles */

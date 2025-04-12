@@ -28,13 +28,14 @@ const Watchlist = () => {
         const fetchWatchApi = async () => {
             try {
                 const response = await axios.get(
-                    "https://chronedo.webjerky.com/api/watches?page=1&limit=8",
+                    "https://chronedo.webjerky.com/api/watches?page=1&limit=10",
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
                     }
                 );
+                console.log('response of watchlist',response.data)
                 setWatchList(response.data.data);
             } catch (error) {
                 console.error("Error fetching watches:", error);
@@ -68,7 +69,7 @@ const Watchlist = () => {
             if (response.data.success) {
                 const updatedFavorites = { ...favorites, [id]: !favorites[id] };
                 setFavorites(updatedFavorites);
-                localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+                // localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
             } else {
                 console.error("Failed to update favorites:", response.data.message);
             }
@@ -100,13 +101,16 @@ const Watchlist = () => {
     };
 
     const handleCardClick = async (watch) => {
+        console.log('watch clicked data-------',watch)
         if (isNavigating) return;
         
         setIsNavigating(true);
         try {
             const response = await incrementWatchClick(watch);
             console.log('Watch click recorded:', response);
-            
+            localStorage.setItem("selectedWatch", JSON.stringify(watch));
+            console.log("Watch saved to localStorage:", watch);
+
             await router.push({
                 pathname: '/product',
                 query: { id: watch.id }
