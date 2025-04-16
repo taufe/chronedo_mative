@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "./PurChaseCardInProgressDetails.module.css";
 import { LuDownload } from "react-icons/lu";
@@ -18,43 +18,83 @@ import { useId } from 'react';
 import axios from "axios";
 import { useData } from "../context/contextApi";
 
-export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChange,purchaseOrderId }) => {
+export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChange, purchaseOrderId }) => {
+   console.log("purchaseOrderId",purchaseOrderId)
     const [activeStep, setActiveStep] = useState(0);
     const [value, setValue] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [orderData, setOrderData] = useState(null)
-    const {token} = useData()
 
-    useEffect(()=>{
+    const { token } = useData()
 
-        const fetchGetApi = async ()=>{
-          
+    const updateOrderStatus = async (status1) => {
+        try {
+            const response = await axios.post('/api/buyOrderApi', { 
+                id: purchaseOrderId,
+                status: status1,
+                token: token
+            });
+
+            if (response.status === 200) {
+                fetchGetApi(); // Refresh order data
+            } else {
+                console.error("Failed to update order status");
+            }
+        } catch (error) {
+            console.error("Error updating order status:", error);
+        }
+    };
+
+    const fetchGetApi = async () => {
+
+        try {
+            const response = await axios.get(`https://chronedo.webjerky.com/api/orderStatus/150`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            console.log('purchase screen response-----', response?.data?.data?.pickup_details
+            )
+            if (response.data.success) {
+                setOrderData(response.data.data?.pickup_details);
+            }
+
+
+        } catch (error) {
+            console.error('Error fetching order status:', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchGetApi()
+    }, [purchaseOrderId])
+
+
+    const handleNextStep = async () => {
+        if (activeStep === 0) {
             try {
-                const response = await axios.get(`https://chronedo.webjerky.com/api/orderStatus/${purchaseOrderId}`,{
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                      }
-                })
-                console.log('purchase screen response-----',response.data.data)
-                if(response.data.success){
-                    console.log('data-----',response.data.data)
-                    setOrderData(response.data.data);
+                // Check if pickup details are available
+                if (!orderData?.address || !orderData?.dateTime) {
+                    console.error("No pickup details available");
+                    return;
                 }
 
-                
+                const response = await axios.post('/api/buyOrderApi', {
+                    id: purchaseOrderId,
+                    status: 1, // Approve pickup details
+                    token: token
+                });
+
+                if (response.status === 200) {
+                    setActiveStep(activeStep + 1);
+                    fetchGetApi(); // Refresh order data
+                } else {
+                    console.error("Failed to approve pickup details");
+                }
             } catch (error) {
-                console.error('Error fetching order status:', error);
+                console.error("Error approving pickup details:", error);
             }
-        } 
-
-        fetchGetApi()
-
-    },[purchaseOrderId])
-
-
-
-    const handleNextStep = () => {
-        if (activeStep < 3) {
+        } else if (activeStep < 3) {
             setActiveStep(activeStep + 1);
         } else {
             setIsModalOpen(true);
@@ -90,13 +130,12 @@ export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChan
                     <>
                         <label className={styles.label}>Pickup Details</label>
                         <div className={styles.pickupLocationBox}>
-                            4517 Washington Ave. Manchester,
-                            Kentucky 39495
+                            {orderData?.address}
                         </div>
 
                         <label className={styles.label}>Date & Time</label>
                         <div className={styles.pickupDateTimeBox}>
-                            25/10/2024 - 10:45 PM
+                            {orderData?.dateTime ? new Date(orderData.pickup_date).toLocaleString() : "No date selected"}
                             <AiOutlineClockCircle className={styles.clockIcon} />
                         </div>
                     </>
@@ -106,6 +145,11 @@ export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChan
                     <>
                         <label className={styles.label}>Payment Method</label>
                         <div className={styles.cashPayment}>Once you pay cash to the buyer please mark it as paid.</div>
+
+                        {/*Mark as Paid Button*/}
+                        <button className={styles.sellButton} onClick={() => updateOrderStatus(2)}>
+                            Mark as Paid
+                        </button>
                     </>
                 );
             case 2:
@@ -113,6 +157,12 @@ export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChan
                     <>
                         <label className={styles.label}>Watch Handover</label>
                         <div className={styles.inputBox}>If you have received the watch, please mark it as &quot;Watch Received&quot;</div>
+
+                        {/*Mark as Received Button */}
+                        <button className={styles.sellButton} onClick={() => updateOrderStatus(5)}>
+                            Mark as Received
+                        </button>
+
                     </>
                 );
             case 3:
@@ -120,7 +170,7 @@ export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChan
                     <>
                         <div>
                             <div className={styles.ratingContainer}>
-                                <h4 style={{fontFamily:'Poppins', fontWeight:400}}>Communication with the seller</h4>
+                                <h4 style={{ fontFamily: 'Poppins', fontWeight: 400 }}>Communication with the seller</h4>
                                 <Rating
                                     onClick={handleRating}
                                     onPointerEnter={onPointerEnter}
@@ -129,7 +179,7 @@ export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChan
                                 />
                             </div>
                             <div className={styles.ratingContainer}>
-                                <h4 style={{fontFamily:'Poppins', fontWeight:400}}>Recommendation of the seller to a friend</h4>
+                                <h4 style={{ fontFamily: 'Poppins', fontWeight: 400 }}>Recommendation of the seller to a friend</h4>
                                 <Rating
                                     onClick={handleRating}
                                     onPointerEnter={onPointerEnter}
@@ -138,7 +188,7 @@ export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChan
                                 />
                             </div>
                             <div className={styles.ratingContainer}>
-                                <h4 style={{fontFamily:'Poppins', fontWeight:400}}>Rating of the seller</h4>
+                                <h4 style={{ fontFamily: 'Poppins', fontWeight: 400 }}>Rating of the seller</h4>
                                 <textarea
                                     id={postTextAreaId}
                                     name="postContent"
@@ -151,7 +201,7 @@ export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChan
                             </div>
 
                             <div className={styles.ratingContainer}>
-                                <h4 style={{fontFamily:'Poppins', fontWeight:400}}>Satisfaction with chronedo</h4>
+                                <h4 style={{ fontFamily: 'Poppins', fontWeight: 400 }}>Satisfaction with chronedo</h4>
                                 <Rating
                                     onClick={handleRating}
                                     onPointerEnter={onPointerEnter}
@@ -209,7 +259,7 @@ export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChan
                         <span className={styles.statusText}>Sold</span>
                         <span className={styles.date}>{date}</span>
                     </div>
-                    <div className={styles.price}>CHF {price.toLocaleString()}</div>
+                    <div className={styles.price}>CHF {price?.toLocaleString()}</div>
                 </div>
             </div>
 
@@ -284,3 +334,10 @@ export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChan
         </div>
     );
 };
+
+
+
+
+
+
+

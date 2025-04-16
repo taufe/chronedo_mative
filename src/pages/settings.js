@@ -15,6 +15,7 @@ const Settings = () => {
     const [firstName, setFirstName] = useState('Nicolas');
     const [lastName, setLastName] = useState('Baumgartner');
     const [birthday, setBirthday] = useState('02.03.1991');
+    const [isLoading, setIsLoading] = useState(false);
 
     // States for address
     const [addressFirstName, setAddressFirstName] = useState('Nicolas');
@@ -58,9 +59,11 @@ const Settings = () => {
 
     useEffect(() => {
         const fetchProfileApi = async () => {
+          setIsLoading(true);
           const token = await localStorage.getItem('token');
           if (!token) {
             console.error('No token found');
+            setIsLoading(false);
             return;
           }
       
@@ -94,6 +97,8 @@ const Settings = () => {
             }
           } catch (error) {
             console.error('Error fetching profile:', error);
+          } finally {
+            setIsLoading(false);
           }
         };
       
@@ -160,14 +165,6 @@ const Settings = () => {
                         />
                     </div>
 
-                    {/* <div className={styles.stayLoggedIn}>
-                        <label className={styles.toggleSwitch}>
-                            <input type="checkbox" />
-                            <span className={styles.slider}></span>
-                        </label>
-                        <span>Stay logged in</span>
-                        <p className={styles.loginHelper}>I would like to store my login details on this device so that I have to log in to it less often.</p>
-                    </div> */}
                 </div>
 
                 {/* Language and Currency Section */}
@@ -379,6 +376,14 @@ const Settings = () => {
                         </div>
                     </div>
                 </div>
+
+                {isLoading && (
+                    <div className={styles.loadingContainer}>
+                        <div className={styles.spinnerWrapper}>
+                            <div className={styles.spinner}></div>
+                        </div>
+                    </div>
+                )}
             </div>
         </DashboardLayout>
     );

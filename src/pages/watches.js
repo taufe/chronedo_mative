@@ -34,7 +34,7 @@ const Watchlist = () => {
         try {
             setIsLoading(true);
             const response = await axios.get(
-                `https://chronedo.webjerky.com/api/favorites`,
+                `https://chronedo.webjerky.com/api/watches?page=${page}&limit=${pagination.limit}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -93,12 +93,14 @@ const Watchlist = () => {
         }
 
     }
-
+    // useEffect(() => {
+        
+    // }, [])
     
 
     const toggleFavorite = async (id,isFavorite) => {
         
-        console.log("toggle",isFavorite);
+    
         try {
             const response = await axios.post(
                 "/api/favouriteApi",
@@ -116,7 +118,11 @@ const Watchlist = () => {
                 
     
                 // update the watch list if applicable
-                setWatchList(prev => prev.filter(w => w.id !== id));
+                setWatchList(prev =>
+                    prev.map(w =>
+                        w.id === id ? { ...w, is_favorited: !isFavorite } : w
+                    )
+                );
             } else {
                 console.error("Failed to update favorites:", response.data.message);
             }
@@ -220,16 +226,7 @@ const Watchlist = () => {
                 <div className={styles.header}>
                     <div className={styles.searchContainer}>
                         <div className={styles.searchWrapper}>
-                            <input 
-                                type="text" 
-                                placeholder="Search..." 
-                                className={styles.searchInput} 
-                                style={{ 
-                                    color: 'white',
-                                    '--placeholder-color': 'white',
-                                    '--placeholder-opacity': '0.7'
-                                }}
-                            />
+                            <input type="text" placeholder="Search..." className={styles.searchInput} />
                             <button className={styles.searchButton}>
                                 <svg className={styles.searchIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -275,9 +272,11 @@ const Watchlist = () => {
                                             }}
 
                                         >
-                                            
-                                            <AiFillHeart size={20} color="red" />
-                                            
+                                            {watch?.is_favorited ? (
+                                                <AiFillHeart size={20} color="red" />
+                                            ) : (
+                                                <AiOutlineHeart size={20} color="white" />
+                                            )}
                                         </button>
                                         <button 
                                             className={styles.filterIcon}

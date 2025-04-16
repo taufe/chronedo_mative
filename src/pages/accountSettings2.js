@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './AccountSettings2.module.css';
 import Head from 'next/head';
@@ -7,6 +7,7 @@ import accountSttingsIcon from '../../public/assets/icons/accountSettings.png';
 import RegistrationCompletePopup from '../components/RegistrationCompletePopup';
 import BackButton from '../components/BackButton';
 import NextButton from '../components/NextButton';
+import Spinner from '../components/Spinner';
 
 const AccountSettings2 = () => {
     const router = useRouter();
@@ -19,24 +20,57 @@ const AccountSettings2 = () => {
     const [street, setStreet] = useState('');
     const [zipCode, setZipCode] = useState('');
     const [country, setCountry] = useState('');
+   
     const [city, setCity] = useState('');
+    const [state, setState] = useState('');
     const [selectedIdType, setSelectedIdType] = useState('id');
     const [showPopup, setShowPopup] = useState(false);
+    const [isRouterReady, setIsRouterReady] = useState(false);
 
     const [front, setFront] = useState(null);
     const [back, setBack] = useState(null);
     const [passport, setPassport] = useState(null);
+    const [frontPreview, setFrontPreview] = useState(null);
+    const [backPreview, setBackPreview] = useState(null);
+    const [passportPreview, setPassportPreview] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    useEffect(() => {
+        if (router.isReady) {
+            setIsRouterReady(true);
+            console.log("Router is ready with query params:", router.query);
+            
+            // Set default values from query parameters if they exist
+            if (router.query.accountType) {
+                console.log("Setting accountType from query:", router.query.accountType);
+            }
+            if (router.query.language) {
+                console.log("Setting language from query:", router.query.language);
+            }
+            if (router.query.currency) {
+                console.log("Setting currency from query:", router.query.currency);
+            }
+            if (router.query.deliveryCountry) {
+                console.log("Setting deliveryCountry from query:", router.query.deliveryCountry);
+            }
+        }
+    }, [router.isReady, router.query]);
 
     const handleFileUpload = (e, side) => {
         const file = e.target.files[0];
         if (file) {
-            const fileURL = URL.createObjectURL(file);
             if (side === 'front') {
-                setFront(fileURL);
+                setFront(file);
+                setFrontPreview(URL.createObjectURL(file));
+                console.log("Front ID image set:", file.name);
             } else if (side === 'back') {
-                setBack(fileURL);
+                setBack(file);
+                setBackPreview(URL.createObjectURL(file));
+                console.log("Back ID image set:", file.name);
             } else if (side === 'passport') {
-                setPassport(fileURL);
+                setPassport(file);
+                setPassportPreview(URL.createObjectURL(file));
+                console.log("Passport image set:", file.name);
             }
         }
     };
@@ -51,20 +85,47 @@ const AccountSettings2 = () => {
     };
 
     const handleNext = async () => {
+        if (!isRouterReady) {
+            console.log("Router not ready yet, waiting for query params");
+            return;
+        }
+
+        console.log("Sending data:", {
+            email,
+            accountType,
+            language,
+            currency,
+            deliveryCountry,
+            firstName,
+            lastName,
+            dateOfBirth,
+            zipCode,
+            city,
+            country,
+            street,
+            selectedIdType,
+            state
+        });
+
+
         const token = localStorage.getItem('token');
         const formData = new FormData();    
-        formData.append('email', email);    
-        formData.append('first_name', firstName);    
-        formData.append('last_name', lastName);    
-        formData.append('dob', dateOfBirth);    
-        formData.append('zip_code', zipCode);    
-        formData.append('city', city);    
-        formData.append('country', country);    
-        formData.append('account_type', accountType);    
-        formData.append('address', street);    
-        formData.append('language', language);    
-        formData.append('currency', currency);    
-        formData.append('shipping_country', deliveryCountry);        
+        formData.append('email', email || '');    
+        formData.append('first_name', firstName || '');    
+        formData.append('last_name', lastName || '');    
+        formData.append('date_of_birth', dateOfBirth || '');    
+        formData.append('zip_code', zipCode || '');    
+        formData.append('city', city || '');    
+        formData.append('state', state || '');    
+        formData.append('country', country || '');    
+        formData.append('account_type', accountType || '');    
+        formData.append('address_suffix', addressSuffix || '');    
+        formData.append('street', street || '');    
+        formData.append('default_language', language || '');    
+        formData.append('currency', currency || '');    
+        formData.append('shipping_country', deliveryCountry || ''); 
+               
+        
         if (selectedIdType === 'id') {
             console.log("ID type is 'id'");
     
@@ -74,11 +135,19 @@ const AccountSettings2 = () => {
                 return;
             }
     
-            formData.append('driver_license_picture_front', front);
-            console.log("Front ID image added:", front);
+            if (front instanceof File) {
+                formData.append('driver_license_picture_front', front);
+                console.log("Front ID image added:", front.name);
+            } else {
+                console.log("Front ID image is not a File object:", front);
+            }
     
-            formData.append('driver_license_picture_back', back);
-            console.log("Back ID image added:", back);
+            if (back instanceof File) {
+                formData.append('driver_license_picture_back', back);
+                console.log("Back ID image added:", back.name);
+            } else {
+                console.log("Back ID image is not a File object:", back);
+            }
         } else {
             console.log("ID type is not 'id', assuming passport");
     
@@ -88,19 +157,24 @@ const AccountSettings2 = () => {
                 return;
             }
     
-            formData.append('passport_picture', passport);
-            console.log("Passport image added:", passport);
+            if (passport instanceof File) {
+                formData.append('passport_picture', passport);
+                console.log("Passport image added:", passport.name);
+            } else {
+                console.log("Passport image is not a File object:", passport);
+            }
         }
     
         console.log("Final FormData contents:", formData);
     
         try {
             console.log("Starting API request...");
+            setLoading(true)
+            setError('')
             const response = await fetch('/api/profileApi', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'multipart/form-data',
                 },
                 body: formData,
             });
@@ -117,6 +191,7 @@ const AccountSettings2 = () => {
         } catch (error) {
             console.error('Error details:', error);
             alert('Failed to submit form. Please try again.');
+            setLoading(false)
         }
     };
     
@@ -223,6 +298,15 @@ const AccountSettings2 = () => {
                             />
                         </div>
                         <div className={styles.inputGroup}>
+                            <label style={{ fontFamily: 'Poppins', fontWeight: 500 }}>State</label>
+                            <input
+                                type="text"
+                                className={styles.input}
+                                value={state}
+                                onChange={(e) => setState(e.target.value)}
+                            />
+                        </div>
+                        <div className={styles.inputGroup}>
                             <label style={{ fontFamily: 'Poppins', fontWeight: 500 }}>Country</label>
                             <select
                                 className={styles.input}
@@ -270,9 +354,9 @@ const AccountSettings2 = () => {
                                     <span>Front</span>
                                 </div>
                                 <label className={styles.uploadArea} htmlFor="frontUpload">
-                                    {front ? (
+                                    {frontPreview ? (
                                         <Image
-                                            src={front}
+                                            src={frontPreview}
                                             alt="Front Preview"
                                             width={100}
                                             height={100}
@@ -287,7 +371,8 @@ const AccountSettings2 = () => {
                                                 height={30}
                                                 style={{ objectFit: "contain" }}
                                             />
-                                            <span>Select file</span>
+                                    <span style={{fontFamily: 'Poppins', fontWeight: 400}}>Select file</span>
+
                                         </>
                                     )}
                                     <input
@@ -312,9 +397,9 @@ const AccountSettings2 = () => {
                                     <span>Back</span>
                                 </div>
                                 <label className={styles.uploadArea} htmlFor="backUpload">
-                                    {back ? (
+                                    {backPreview ? (
                                         <Image
-                                            src={back}
+                                            src={backPreview}
                                             alt="Back Preview"
                                             width={100}
                                             height={100}
@@ -329,7 +414,7 @@ const AccountSettings2 = () => {
                                                 height={30}
                                                 style={{ objectFit: "contain" }}
                                             />
-                                            <span>Select file</span>
+                                            <span style={{fontFamily: 'Poppins', fontWeight: 400}}>Select file</span>
                                         </>
                                     )}
                                     <input
@@ -358,9 +443,9 @@ const AccountSettings2 = () => {
                                     <span>Passport</span>
                                 </div>
                                 <label className={styles.uploadArea} htmlFor="passportUpload">
-                                    {passport ? (
+                                    {passportPreview ? (
                                         <Image
-                                            src={passport}
+                                            src={passportPreview}
                                             alt="Passport Preview"
                                             width={100}
                                             height={100}
@@ -375,7 +460,7 @@ const AccountSettings2 = () => {
                                                 height={30}
                                                 style={{ objectFit: "contain" }}
                                             />
-                                            <span>Select file</span>
+                                            <span style={{fontFamily: 'Poppins', fontWeight: 400}}>Select file</span>
                                         </>
                                     )}
                                     <input
@@ -393,7 +478,15 @@ const AccountSettings2 = () => {
 
                 <div className={styles.buttonContainer} style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
                     <BackButton onClick={handleBack} className={styles.buttons} >Back</BackButton>
-                    <NextButton onClick={handleNext} className={styles.buttons} >Next</NextButton>
+                    <NextButton onClick={handleNext} className={styles.buttons} >
+                    {loading ? (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                        <Spinner size="small" />
+                        </div>
+                    ) : (
+                        "Next"
+                    )}
+                    </NextButton>
                 </div>
 
                 {showPopup && (

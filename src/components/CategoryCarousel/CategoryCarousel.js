@@ -28,7 +28,8 @@ const CategoryCarousel = () => {
             <div className={styles.categoriesContainer}>
                 <h2 style={{fontFamily:'Poppins', fontWeight:600, marginBottom:0}}>Categories</h2>
                 <div className={styles.categoriesHeader}>
-                    <p>Lorem Ipsum is simply dummy text of the<br /> printing and typesetting industry</p>
+                    <p style={{ fontFamily: 'Poppins', fontWeight: 400 }}
+                    >Lorem Ipsum is simply dummy text of the<br /> printing and typesetting industry</p>
                     <div className={styles.navigationArrows}>
                         <button 
                             type="button"

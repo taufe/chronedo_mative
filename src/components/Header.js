@@ -8,6 +8,7 @@ const Header = () => {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [tokenAvailable, setTokenAvailable] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -25,6 +26,12 @@ const Header = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  useEffect(() => {
+    const token =  localStorage?.getItem("token");
+    console.log('token-------++++++++ in header',token)
+    setTokenAvailable(!!token);
+  }, []);
 
   return (
     <header className="header">
@@ -46,56 +53,55 @@ const Header = () => {
           }}
         />
       </div>
-      <nav
-        style={{ paddingRight: "7%" }}
-        className={`nav-links ${isMenuOpen ? "active" : ""}`}
+      <nav style={{ paddingRight: "7%" }} className={`nav-links ${isMenuOpen ? "active" : ""}`}>
+  <ul>
+    <li>
+      <Link
+        href="/"
+        style={{ fontFamily: "Poppins", fontWeight: "400", fontSize: "14px" }}
       >
-        <ul>
-          <li>
-            <Link
-              href="/"
-              style={{
-                fontFamily: "Poppins",
-                fontWeight: "400",
-                fontSize: "14px",
-              }}
-            >
-              Home
-            </Link>
-          </li>
-          {/* <li><Link href="/about">About</Link></li>
-                    <li><Link href="/contact">Contact</Link></li>
-                    <li><Link href="/product">Products</Link></li> */}
-          <li>
-            <Link
-              style={{
-                fontFamily: "Poppins",
-                fontWeight: "400",
-                fontSize: "14px",
-              }}
-              href="/login"
-            >
-              Login
-            </Link>
-          </li>
-          <li>
-            <Link
-              style={{
-                fontFamily: "Poppins",
-                fontWeight: "400",
-                fontSize: "14px",
-              }}
-              href="/signup"
-            >
-              Sign Up
-            </Link>
-          </li>
-        </ul>
-      </nav>
-      <div className="header-icons">
-        {/* <FaShoppingCart className="icon" /> */}
-        <FaUser onClick={() => router.push("/login")} className="icon" />
-      </div>
+        Home
+      </Link>
+    </li>
+
+    {/* 👇 These stay in DOM but are hidden when logged in */}
+    <li style={{ visibility: tokenAvailable ? 'hidden' : 'visible' }}>
+      <Link
+        href="/login"
+        style={{ fontFamily: "Poppins", fontWeight: "400", fontSize: "14px" }}
+      >
+        Login
+      </Link>
+    </li>
+    <li style={{ visibility: tokenAvailable ? 'hidden' : 'visible' }}>
+      <Link
+        href="/signup"
+        style={{ fontFamily: "Poppins", fontWeight: "400", fontSize: "14px" }}
+      >
+        Sign Up
+      </Link>
+    </li>
+  </ul>
+</nav>
+
+{/* ✅ Show user icon when logged in */}
+<div className="header-icons">
+  <FaUser
+    onClick={() => router.push("/dashboard")}
+    className="icon"
+    style={{ visibility: tokenAvailable ? "visible" : "hidden" }}
+  />
+</div>
+
+
+
+
+      {/* <div className="header-icons">
+        {!tokenAvailable && (
+          <FaUser onClick={() => router.push("/login")} className="icon" />
+        )}
+      </div> */}
+
       {isMobile && (
         <button className="menu-toggle" onClick={toggleMenu}>
           {isMenuOpen ? <FaTimes /> : <FaBars />}

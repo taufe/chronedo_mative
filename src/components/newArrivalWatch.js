@@ -4,107 +4,138 @@ import WatchCard from './WatchCard';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 
- const NewArrivalWatch = () => {
+const NewArrivalWatch = () => {
     const router = useRouter();
     const [watchList, setWatchList] = useState([]);
-    const [favorites, setFavorites] = useState({}); 
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [pagination, setPagination] = useState({
+        currentPage: 1,
+        totalPages: 1,
+        totalItems: 0,
+        limit: 10,
+    });
 
     useEffect(() => {
-        const fetchWatchApi = async () => {
+        const fetchWatchApi = async (page = 1) => {
+            setIsLoading(true);
             try {
                 const response = await axios.get(
-                    "https://chronedo.webjerky.com/api/watches?page=1&limit=8",
-                    {
-                        headers: {
-                            Authorization:
-                                "Bearer 222|wq0yIWuRTDsOMPsWwfQLH4WEhVHDCO1RLLzLj0lXb7c13b88",
-                        },
-                    }
+                    `https://chronedo.webjerky.com/api/guestWatches?page=${page}`
                 );
-                // console.log('searches-----------',response.data)
-                setWatchList(response.data.data);
+
+                setWatchList(response.data?.data?.watches || []);
+                setPagination({
+                    currentPage: parseInt(response.data?.data?.meta?.page || 1),
+                    totalPages: response.data?.data?.meta?.last_page || 1,
+                    totalItems: response.data?.data?.meta?.total || 0,
+                    limit: parseInt(response.data?.data?.meta?.limit || 10),
+                });
+                setError(null);
             } catch (error) {
                 console.error("Error fetching watches:", error);
+                setError("Failed to load watches. Please try again later.");
+                setWatchList([]);
+            } finally {
+                setIsLoading(false);
             }
         };
 
-        fetchWatchApi();
-    }, []);
+        fetchWatchApi(pagination.currentPage);
+    }, [pagination.currentPage]);
 
-    // Load favorites from localStorage when component mounts
-    useEffect(() => {
-        const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || {};
-        setFavorites(storedFavorites);
-    }, []);
+    const handlePageChange = (page) => {
+        setPagination(prev => ({ ...prev, currentPage: page }));
+    };
 
-    // Toggle favorite function
-    const toggleFavorite = async (id) => {
-        const isFavorite = favorites[id];
+    const renderPagination = () => {
+        if (pagination.totalPages <= 1) return null;
 
-        try {
-            const response = await axios.post(
-                "/api/favouriteApi",
-                { id, action: isFavorite ? "remove" : "add" }, // Send action to API
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
+        const pages = [];
+        for (let i = 1; i <= pagination.totalPages; i++) {
+            pages.push(
+                <button
+                    key={i}
+                    className={`${styles.paginationButton} ${pagination.currentPage === i ? styles.activePage : ''}`}
+                    onClick={() => handlePageChange(i)}
+                >
+                    {i}
+                </button>
             );
-            // console.log('post response------',response.data)
-
-            console.log("Response:", response.data);
-
-            if (response.data.success) {
-                const updatedFavorites = { ...favorites, [id]: !favorites[id] };
-                setFavorites(updatedFavorites);
-
-                // Store updated favorites in localStorage
-                localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-            } else {
-                console.error("Failed to update favorites:", response.data.message);
-            }
-        } catch (error) {
-            console.error("Error updating favorites:", error.response?.data || error.message);
         }
+
+        return (
+            <div className={styles.paginationContainer}>
+                <button
+                    className={styles.paginationButton}
+                    disabled={pagination.currentPage === 1}
+                    onClick={() => handlePageChange(pagination.currentPage - 1)}
+                >
+                    Previous
+                </button>
+                {pages}
+                <button
+                    className={styles.paginationButton}
+                    disabled={pagination.currentPage === pagination.totalPages}
+                    onClick={() => handlePageChange(pagination.currentPage + 1)}
+                >
+                    Next
+                </button>
+            </div>
+        );
     };
 
     return (
-            <div className={styles.dashboardContainer}>
-        
-
-                <div className={styles.watchesGrid}>
-                    {watchList.map((watch) => (
-                        <div key={watch.id} className={styles.watchCard}>
-                            <WatchCard
-                                image={watch.cover}
-                                name={watch.listing_title}
-                                date={watch.age_year_of_sale}
-                                buyNowPrice={watch.fixed_price_value}
-                                bidPrice={watch.starting_price}
-                                onPress={() => router.push('/product')}
-                            />
-                            <div className={styles.iconContainer}>
-                                <button className={styles.favoriteIcon} onClick={() => toggleFavorite(watch.id)}>
-                                    {favorites[watch.id] ? (
-                                        <AiFillHeart size={20} color="red" />
-                                    ) : (
-                                        <AiOutlineHeart size={20} color="white" />
-                                    )}
-                                </button>
-                                <button className={styles.filterIcon}>
-                                    <Image src="/assets/productPage/compare.png" alt="Filter" width={20} height={20} />
-                                </button>
-                            </div>
-                        </div>
-                    ))}
+        <div className={styles.dashboardContainer}>
+            {isLoading ? (
+                <div className={styles.loadingContainer}>
+                    <div className={styles.spinnerWrapper}>
+                        <div className={styles.spinner}></div>
+                    </div>
                 </div>
-            </div>
+            ) : error ? (
+                <div className={styles.errorContainer}>
+                    <p>{error}</p>
+                    <button
+                        className={styles.retryButton}
+                        onClick={() => window.location.reload()}
+                    >
+                        Retry
+                    </button>
+                </div>
+            ) : (
+                <>
+                    <div className={styles.watchesGrid}>
+                        {watchList && watchList.length > 0 ? (
+                            watchList.map((watch) => (
+                                <div key={watch?.id} className={styles.watchCard}>
+                                    <WatchCard
+                                        image={watch?.cover}
+                                        name={watch?.listing_title}
+                                        date={watch?.age_year_of_sale}
+                                        buyNowPrice={watch?.fixed_price}
+                                        bidPrice={watch?.starting_price}
+                                        onPress={() => router.push('/product')}
+                                    />
+                                    <div className={styles.iconContainer}>
+                                        <button className={styles.filterIcon}>
+                                            <Image src="/assets/productPage/compare.png" alt="Filter" width={20} height={20} />
+                                        </button>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <div className={styles.noWatchesMessage}>
+                                No watches available at the moment.
+                            </div>
+                        )}
+                    </div>
+                    {renderPagination()}
+                </>
+            )}
+        </div>
     );
 };
 
-export default NewArrivalWatch
-
-
+export default NewArrivalWatch;

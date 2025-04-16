@@ -13,8 +13,8 @@ import MyEndedWatch from "../components/MyEndedWatch";
 import axios from "axios";
 import { useData } from "../context/contextApi";
 import { currencyList } from "../components/currency";
-
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+import {braceletMaterialList} from "../components/bracelet"
+import {claspMaterialList} from "../components/clasp"
 
 const MySelling = () => {
   const [bottomTabIndex, setBottomTabIndex] = useState(1);
@@ -102,7 +102,7 @@ const MySelling = () => {
   const [description, setDescription] = useState("");
   const [descriptionScope, setDescriptionScope] = useState("");
   const [currency, setCurrency] = useState("CHF");
-  const [fixedPrice, setFixedPrice] = useState("25000.00");
+  const [fixedPrice, setFixedPrice] = useState("");
   const [startingPrice, setStartingPrice] = useState("");
   const [salesCommissionAmount, setSalesCommissionAmount] = useState(0);
   const [promotable, setPromotable] = useState(false);
@@ -240,6 +240,8 @@ const MySelling = () => {
     "Mandatory: Shipping domestic",
     "Pick up at my address"
   ];
+
+
 
   // Helper function to extract currency code
   const extractCurrencyCode = (currencyString) => {
@@ -421,6 +423,7 @@ const MySelling = () => {
       const pending = response.data.data.filter(
         (sale) => sale.order_status === 0
       );
+      console.log("Pending sales:", pending);
       const inProgress = response.data.data.filter(
         (sale) => sale.status === 1
       );
@@ -1121,16 +1124,34 @@ const updateOrderStatus = async (orderId) => {
                     <div className={styles.formGrid}>
                       <div className={styles.formGroup}>
                         <label>Clasp Material</label>
-                        <select className={styles.formSelect}>
-                          <option>Please select</option>
-                        </select>
+                        <select
+                        className={styles.formSelect}
+                        value={claspMaterial}
+                        onChange={(e) => setClaspMaterial(e.target.value)}
+                      >
+                        <option value="">Please select</option>
+                        {claspMaterialList?.map((claspMaterial, index) => (
+                          <option key={index} value={claspMaterial}>
+                            {claspMaterial}
+                          </option>
+                        ))}
+                      </select>
                       </div>
 
                       <div className={styles.formGroup}>
                         <label>Bracelet Material</label>
-                        <select className={styles.formSelect}>
-                          <option>Please select</option>
-                        </select>
+                        <select  
+                        className={styles.formSelect}
+                        value={braceletMaterial}
+                        onChange={(e) => setBraceletMaterial(e.target.value)}
+                      >
+                        <option value="">Please select</option>
+                        {braceletMaterialList?.map((material, index) => (
+                          <option key={index} value={material}>
+                            {material}
+                          </option>
+                        ))}
+                      </select>
                       </div>
                     </div>
 
@@ -1879,7 +1900,7 @@ const updateOrderStatus = async (orderId) => {
                   </div>
 
                   <div className={styles.scopeDescriptionSection}>
-                    <label>Description of the scope of delivery</label>
+                    <label style={{fontWeight:400, fontFamily:'Poppins'}}>Description of the scope of delivery</label>
                     <textarea
                         className={styles.scopeDescriptionInput}
                         value={descriptionScope}
@@ -1944,8 +1965,8 @@ const updateOrderStatus = async (orderId) => {
                       <input
                         type="text"
                         className={styles.formInput}
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
+                        value={fixedPrice}
+                        onChange={(e) => setFixedPrice(e.target.value)}
                         placeholder="25'000.00"
                         style={{width:'100%'}}
                       />
@@ -2339,7 +2360,7 @@ const updateOrderStatus = async (orderId) => {
       {bottomTabIndex === 3 && (
   <div className={styles.noWatches}>
     {loading ? (
-      <p style={{ fontFamily: 'Poppins', textAlign: 'center' }}>Loading...</p>
+      <div className={styles.loadingContainer}><div className={styles.spinnerWrapper}><div className={styles.spinner}></div></div></div>
     ) : endedWatches?.length === 0 ? (
       <p style={{ fontFamily: 'Poppins', textAlign: 'center', fontSize:18 }}>
         No ended watches available.
@@ -2417,9 +2438,13 @@ const updateOrderStatus = async (orderId) => {
 
           {sellingStatus === "pending" && (
             loading ? ( 
-              <p style={{ fontFamily: 'Poppins' }}>Loading...</p>  
+              <div className={styles.loadingContainer}>
+                <div className={styles.spinnerWrapper}>
+                  <div className={styles.spinner}></div>
+                </div>
+              </div>
             ) : pendingSales?.length === 0 ? (
-              <p style={{ fontFamily: 'Poppins',textAlign:'center'  }}> No data found</p>  
+              <p style={{ fontFamily: 'Poppins', textAlign:'center' }}> No data found</p>  
             ) : (
               <div className={styles.sellingGrid}>
                 {pendingSales.map((sale) => (
@@ -2429,8 +2454,8 @@ const updateOrderStatus = async (orderId) => {
                     name={sale?.watch?.listing_title}
                     price={sale?.watch?.fixed_price_value}
                     date={`${sale?.created_at?.split("T")[0]} ${sale?.created_at?.split("T")[1]?.split(".")[0]}`}
-                    sellerName={`${sale?.seller?.first_name} ${sale?.seller?.last_name}`}
                     email={sale?.buyer?.email}
+                    sellerName={`${sale?.seller?.first_name} ${sale?.seller?.last_name}`}
                     orderId={sale?.id}
                     onAccept={updateOrderStatus}
                   />
@@ -2441,7 +2466,11 @@ const updateOrderStatus = async (orderId) => {
 
           {sellingStatus === "inProgress" && (
             loading ? ( 
-              <p style={{ fontFamily: 'Poppins' }}>Loading...</p>  
+              <div className={styles.loadingContainer}>
+                <div className={styles.spinnerWrapper}>
+                  <div className={styles.spinner}></div>
+                </div>
+              </div>
             ) : inProgressSales?.length === 0 ? (
               <p style={{ fontFamily: 'Poppins',textAlign:'center'  }}> No data found</p>  
             ) : (
@@ -2455,29 +2484,39 @@ const updateOrderStatus = async (orderId) => {
                   }}
                 />
               ) : (
+             
                 <div className={styles.sellingGrid}>
-                  {inProgressSales.map((sale) => (
-                    <div key={sale?.id} className={styles.gridItem}>
-                      <SoldCardInprogress
-                        image={sale?.watch?.cover}
-                        name={sale?.watch?.listing_title}
-                        price={sale?.watch?.fixed_price_value}
-                        date={`${sale?.created_at?.split("T")[0]} ${sale?.created_at?.split("T")[1]?.split(".")[0]}`}
-                        email={sale?.buyer?.email}
-                        sellerName={`${sale?.seller?.first_name} ${sale?.seller?.last_name}`}
-                        id={sale?.id}
-                        onSellNow={(details) => handleSellNow({ ...details, id: sale.id })}
-                        orderId={sale?.seller?.id}
-                      />
-                    </div>
-                  ))}
-                </div>
+  {inProgressSales.map((sale) => {
+    console.log(sale); 
+
+    return (
+      <div key={sale?.id} className={styles.gridItem}>
+        <SoldCardInprogress
+          image={sale?.watch?.cover}
+          name={sale?.watch?.listing_title}
+          price={sale?.watch?.fixed_price_value}
+          date={`${sale?.created_at?.split("T")[0]} ${sale?.created_at?.split("T")[1]?.split(".")[0]}`}
+          email={sale?.buyer?.email}
+          sellerName={`${sale?.seller?.first_name} ${sale?.seller?.last_name}`}
+          id={sale?.id}
+          onSellNow={(details) => handleSellNow({ ...details, id: sale.id })}
+          orderId={sale?.seller?.id}
+        />
+      </div>
+    );
+  })}
+</div>
+
               )
             )
           )}
                       {sellingStatus === "completed" && (
-            loading ? ( 
-              <p style={{ fontFamily: 'Poppins' }}>Loading...</p>  
+            loading ? (
+              <div className={styles.loadingContainer}>
+                <div className={styles.spinnerWrapper}>
+                  <div className={styles.spinner}></div>
+                </div>
+              </div>
             ) : completedSales?.length === 0 ? (
               <p style={{ fontFamily: 'Poppins', textAlign:'center' }}> No data found</p>  
             ) : (

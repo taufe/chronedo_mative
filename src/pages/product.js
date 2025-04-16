@@ -460,20 +460,20 @@ const Product = () => {
                   // }}
                   onClick={() => {
                     const queryParams = {
-                      watch_id: productData.id,
-                      reference_no: productData.reference_no,
-                      watch_price: productData.starting_price,
-                      total_price: productData.fixed_price,
-                      watch_name: productData.listing_title,
-                      brand: productData.brand,
-                      model: productData.model,
-                      currency: productData.currency,
-                      cover: productData.cover,
-                      condition: productData.condition_name,
-                      condition_description: productData.condition_description,
-                      warranty_until: productData.manufacturer_warranty_until,
-                      box: productData.box,
-                      papers: productData.scope_of_delivery_papers,
+                      watch_id: productData?.id,
+                      reference_no: productData?.reference_no,
+                      watch_price: productData?.starting_price,
+                      total_price: productData?.fixed_price,
+                      watch_name: productData?.listing_title,
+                      brand: productData?.brand,
+                      model: productData?.model,
+                        currency: productData?.currency,
+                      cover: productData?.cover,
+                      condition: productData?.condition_name,
+                      condition_description: productData?.condition_description,
+                      warranty_until: productData?.manufacturer_warranty_until,
+                      box: productData?.box,
+                      papers: productData?.scope_of_delivery_papers,
                     };
                   
                     console.log("🚀 Navigating to /checkout with query params:", queryParams);

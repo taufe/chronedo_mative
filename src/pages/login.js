@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "./Login.module.css";
 import Head from "next/head";
@@ -7,6 +7,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Cookies from "js-cookie"; // Import js-cookie for cookie management
+import { GoogleLogin } from '@react-oauth/google';
+import Spinner from '../components/Spinner';
 
 import userIcon from "../../public/assets/icons/user.png";
 import eyeCloseIcon from "../../public/assets/icons/eyeclose.png";
@@ -17,13 +19,30 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [secure, setSecure] = useState(true);
-  const [privacyPolicy, setPrivacyPolicy] = useState(false);
+  // const [privacyPolicy, setPrivacyPolicy] = useState(false);
   const [terms, setTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
 
   const { setToken } = useData();
+
+  // Add error timeout effect
+  useEffect(() => {
+    let errorTimeout;
+    if (error) {
+      errorTimeout = setTimeout(() => {
+        setError('');
+      }, 4000); // 4 seconds
+    }
+    
+    // Cleanup timeout on component unmount or when error changes
+    return () => {
+      if (errorTimeout) {
+        clearTimeout(errorTimeout);
+      }
+    };
+  }, [error]);
 
   const handleLogin = async () => {
     // Validation
@@ -32,10 +51,6 @@ const Login = () => {
       return;
     }
 
-    if (!privacyPolicy || !terms) {
-      setError("Please accept the privacy policy and terms.");
-      return;
-    }
 
     setLoading(true);
     setError("");
@@ -69,6 +84,37 @@ const Login = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Handle Google Sign-In
+  const handleGoogleSuccess = async (response) => {
+    try {
+      setLoading(true);
+      setError("");
+      
+      const res = await axios.post('/api/googleAuthApi', {
+        idToken: response.credential
+      });
+
+      if (res.data.success) {
+        const token = res.data.token;
+        Cookies.set("token", token, { expires: 7 });
+        localStorage.setItem("token", token);
+        setToken(token);
+        router.push("/dashboard");
+      } else {
+        setError(res.data.message || 'Google Sign-In failed');
+      }
+    } catch (error) {
+      console.error('Google Sign-In Error:', error);
+      setError(error.response?.data?.message || 'An error occurred during Google Sign-In');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleFailure = () => {
+    setError('Google Sign-In failed');
   };
 
   return (
@@ -135,70 +181,51 @@ const Login = () => {
           </span>
         </div>
 
-        <div className={styles.checkboxContainer}>
-          <label className={styles.checkboxLabel}>
-            <div
-              className={styles.customCheckbox}
-              onClick={() => setPrivacyPolicy(!privacyPolicy)}
-            >
-              {privacyPolicy && (
-                <Image
-                  src="/assets/icons/on.png"
-                  alt="Checked"
-                  width={20}
-                  height={20}
-                />
-              )}
-            </div>
-            I accept the privacy policy.
-          </label>
-          <label className={styles.checkboxLabel}>
-            <div
-              className={styles.customCheckbox}
-              onClick={() => setTerms(!terms)}
-            >
-              {terms && (
-                <Image
-                  src="/assets/icons/on.png"
-                  alt="Checked"
-                  width={20}
-                  height={20}
-                />
-              )}
-            </div>
-            I accept the terms and conditions.
-          </label>
-        </div>
+      
 
         <button
           className={styles.submitButton}
           onClick={handleLogin}
           disabled={loading}
         >
-          {loading ? "Logging in..." : "Log In"}
+          {loading ? (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+              <Spinner size="small" />
+            </div>
+          ) : (
+            "Log In"
+          )}
         </button>
 
         <p className={styles.orText}>Or</p>
 
-        <button className={styles.socialButton}>
-          <div className={styles.socialRectangle}>in</div>
-          Continue with LinkedIn
-        </button>
-
-        <button className={styles.socialButton}>
-          <div className={styles.socialRectangle}>G</div>
-          Continue with Google
-        </button>
-
-        <button className={styles.socialButton}>
-          <div className={styles.socialRectangle}>f</div>
-          Continue with Facebook
-        </button>
-
-        <button className={styles.socialButton}>
-          <div className={styles.socialRectangle}>t</div>
-          Continue with Twitter
-        </button>
+        <div style={{ width: '95%', margin: '0 auto' }}>
+          <GoogleLogin
+            clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+            onSuccess={handleGoogleSuccess}
+            onFailure={handleGoogleFailure}
+            cookiePolicy={'single_host_origin'}
+            render={renderProps => (
+              <button
+                className={styles.socialButton}
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled || loading}
+              >
+                {loading ? (
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                    <Spinner size="small" />
+                    <span>Processing...</span>
+                  </div>
+                ) : (
+                  <>
+                    <div className={styles.socialRectangle}>G</div>
+                    Continue with Google
+                  </>
+                )}
+              </button>
+            )}
+          />
+        </div>
 
         <Link href="/signup" passHref>
           <button className={styles.alreadyHaveAccount}>

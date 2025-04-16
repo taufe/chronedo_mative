@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './RegistrationSuccessPopup.module.css';
 import userIcon from '../../public/assets/icons/user.png';
 import Image from 'next/image';
+import NextButton from './NextButton';
 
 const RegistrationCompletePopup = ({ closePopup }) => {
     return (
@@ -21,7 +22,11 @@ const RegistrationCompletePopup = ({ closePopup }) => {
                 <p className={styles.message}>
                     Your registration is complete now. To buy or sell watches, please login to your profile.
                 </p>
+                <NextButton onClick={closePopup} className={styles.buttons} >
+                    Close
+                    </NextButton>
             </div>
+           
         </div>
     );
 };

@@ -142,7 +142,11 @@ const MyPurchase = () => {
     return (
       <div className={styles.purchasedGrid}>
         {loading ? (
-          <p style={{ fontFamily: 'Poppins', textAlign: 'center' }}>Loading...</p>
+          <div className={styles.spinnerContainer}>
+            <div className={styles.spinnerWrapper}>
+              <div className={styles.spinner}></div>
+            </div>
+          </div>
         ) : purchaseStatus === "pending" ? (
           pendingPurchases?.length === 0 ? (
             <p style={{ fontFamily: 'Poppins', textAlign: 'center', marginTop:-20 }}>
@@ -164,7 +168,11 @@ const MyPurchase = () => {
         ) : null}
   
         {loading ? (
-          <p style={{ fontFamily: 'Poppins', textAlign: 'center' }}>Loading...</p>
+          <div className={styles.spinnerContainer}>
+            <div className={styles.spinnerWrapper}>
+              <div className={styles.spinner}></div>
+            </div>
+          </div>
         ) : purchaseStatus === "inProgress" ? (
           inProgressPurchases?.length === 0 ? (
             <p style={{ fontFamily: 'Poppins', textAlign: 'center',marginTop:-20 }}>
@@ -189,7 +197,11 @@ const MyPurchase = () => {
         ) : null}
   
         {loading ? (
-          <p style={{ fontFamily: 'Poppins', textAlign: 'center' }}>Loading...</p>
+          <div className={styles.spinnerContainer}>
+            <div className={styles.spinnerWrapper}>
+              <div className={styles.spinner}></div>
+            </div>
+          </div>
         ) : purchaseStatus === "completed" ? (
           completedPurchases?.length === 0 ? (
             <p style={{ fontFamily: 'Poppins', textAlign: 'center',marginTop:-20 }}>
@@ -329,20 +341,24 @@ const MyPurchase = () => {
                 {bottomTabIndex === 1 && (
           <div className={styles.watchesGrid}>
             {loading ? ( 
-              <p style={{fontFamily:'Poppins'}}>Loading...</p>  
+              <div className={styles.spinnerContainer}>
+                <div className={styles.spinnerWrapper}>
+                  <div className={styles.spinner}></div>
+                </div>
+              </div>
             ) : openWatch?.length === 0 ? (
               <p style={{fontFamily:'Poppins'}}>No data found</p>  
             ) : (
               openWatch?.map((watch, index) => (
                 <WatchCard
                   key={index}
-                  image={watch.cover}
-                  name={watch.reference_no}
+                  image={watch?.cover}
+                  name={watch?.reference_no}
                   date={watch?.created_at
-                    ? `${watch.created_at.split("T")[0]} ${watch.created_at.split("T")[1].split(".")[0]}`
+                    ? `${watch?.created_at?.split("T")[0]} ${watch?.created_at?.split("T")[1]?.split(".")[0]}`
                     : "N/A"}
-                  buyNowPrice={watch.fixed_price}
-                  bidPrice={watch.starting_price}
+                  buyNowPrice={watch?.fixed_price}
+                  bidPrice={watch?.starting_price}
                 />
               ))
             )}

@@ -24,7 +24,8 @@ export const MySellingInProgressDetails = ({
   name,
   price,
   date,
-  orderId
+  orderId,
+  onBack // Add onBack prop to handle navigation
 }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [value, setValue] = useState("");
@@ -36,6 +37,14 @@ export const MySellingInProgressDetails = ({
   );
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [orderData, setOrderData] = useState(null);
+    const [communicationRating, setCommunicationRating] = useState(0);
+    const [recommendationRating, setRecommendationRating] = useState(0);
+    const [processingRating, setProcessingRating] = useState(0);
+    const [satisfactionRating, setSatisfactionRating] = useState(0);
+  // Load token from local storage
+  const [token, setToken] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -46,47 +55,208 @@ export const MySellingInProgressDetails = ({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // useEffect(() => {
-  //   const fetchOrderStatus = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `https://chronedo.webjerky.com/api/orderStatus/${orderId}`,
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer 223|fQCZy8Ol01rCyB1aAH7bAM1vqLWG7h1mGUYVEzid85dc39bc`
-  //           }
-  //         }
-  //       );
-  //       console.log('response in selling of location',response.data.data)
-  //       if (response.data.success) {
-  //         setOrderData(response.data.data);
-  //         // If pickup_date_time exists in API response, use it
-  //         if (response.data.data.pickup_date_time) {
-  //           console.log('response in selling of location',response.data.data)
-  //           setSelectedDate(new Date(response.data.data.pickup_date_time));
-  //         }
-  //         // If pickup_details exists in API response, use it
-  //         if (response.data.data.pickup_details) {
-  //           setPickupAddress(response.data.data.pickup_details);
-  //         }
-  //         // Set active step based on order_status
-  //         if (response.data.data.order_status !== null) {
-  //           setActiveStep(response.data.data.order_status);
-  //         }
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching order status:', error);
-  //     }
-  //   };
+    useEffect(() => {
+        // Function to load token from local storage
+        const loadToken = async () => {
+            const storedToken = localStorage.getItem('token');
+            if (storedToken) {
+                setToken(storedToken);
+            }
+        };
 
-  //   fetchOrderStatus();
-  // }, [orderId]);
+        loadToken();
+    }, []);
 
-  const handleNextStep = () => {
-    if (activeStep < 3) {
-      setActiveStep(activeStep + 1);
-    } else {
-      setIsModalOpen(true);
+
+  useEffect(() => {
+    const fetchOrderData = async () => {
+      try {
+          const storedToken = localStorage.getItem('token');
+          const response = await axios.get(
+            `https://chronedo.webjerky.com/api/orderStatus/${orderId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${storedToken}`,
+              },
+            }
+          );
+        setOrderData(response.data.data);
+        console.log('store token------------',response.data)
+      } catch (error) {
+        console.error("Error fetching order data:", error);
+      }
+    };
+
+    fetchOrderData();
+  }, [orderId]);
+
+  const validatePickupDetails = () => {
+    if (!pickupAddress.trim()) {
+      setError('Please enter a pickup address');
+      return false;
+    }
+    if (!selectedDate) {
+      setError('Please select a pickup date and time');
+      return false;
+    }
+    return true;
+  };
+
+  const validateRatings = () => {
+    if (rating === 0) {
+      setError('Please provide a rating');
+      return false;
+    }
+    return true;
+  };
+
+  const handleNextStep = async () => {
+    setIsLoading(true);
+    try {
+      if (activeStep === 0) {
+        if (!validatePickupDetails()) {
+          setIsLoading(false);
+          return;
+        }
+        
+        const pickupDetails = {
+          address: pickupAddress,
+          dateTime: selectedDate.toISOString()
+        };
+
+        const token = localStorage.getItem('token');
+        console.log('token++++++++', token)
+
+        const response = await axios.post(
+            '/api/saleOrderApi',
+            {
+                id: orderId,
+                order_status: 2,
+                status: 1,
+                pickup_details: JSON.stringify(pickupDetails),
+                token: token
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        console.log('reponse of first step', response.data)
+        if (response.status === 200) {
+            setActiveStep(activeStep + 1);
+        } else {
+            console.error("Failed to update order status");
+        }
+      }
+
+         else if (activeStep === 1) {
+          try {
+             
+              const storedToken = localStorage.getItem('token');
+
+              const response = await axios.post(
+                  '/api/saleOrderApi',
+                  {
+                      id: orderId,
+                      order_status: 3, 
+                      status:2,
+                      token: storedToken
+                  },
+                  {
+                      headers: {
+                          'Content-Type': 'application/json'
+                      }
+                  }
+              );
+
+              console.log('response of api-------+++++++++---------------',response.data)
+
+              if (response.status === 200) {
+                  setActiveStep(activeStep + 1);
+             
+              } else {
+                  console.error("Failed to update order status");
+              }
+          } catch (error) {
+              console.error("Error updating order status:", error);
+          }
+      } else if (activeStep === 2) {
+          try {
+              const pickupDetails = {
+                  address: pickupAddress,
+                  dateTime: selectedDate.toISOString()
+              };
+
+              const storedToken = localStorage.getItem('token');
+
+              const response = await axios.post(
+                  '/api/saleOrderApi',
+                  {
+                      id: orderId,
+                      order_status: 4, 
+                      status:3,
+                      token: storedToken
+                  },
+                  {
+                      headers: {
+                          'Content-Type': 'application/json'
+                      }
+                  }
+              );
+
+              if (response.status === 200) {
+                  setActiveStep(activeStep + 1);
+                  
+              } else {
+                  console.error("Failed to update order status");
+              }
+          } catch (error) {
+              console.error("Error updating order status:", error);
+          }
+      } else if (activeStep === 3) {
+          if (!validateRatings()) {
+            setIsLoading(false);
+            return;
+          }
+         
+
+          const token = localStorage.getItem('token');
+          console.log('token cchecking in progress details',token)
+
+          const response = await axios.post(
+              '/api/saleOrderApi',
+              {
+                  id: orderId,
+                  order_status: 5, 
+                  status:4,
+                  token: token
+              },
+              {
+                  headers: {
+                      'Content-Type': 'application/json'
+                  }
+              }
+          );
+
+          console.log('resposnse -----------------------',response.data)
+
+          if (response.status === 200) {
+              setActiveStep(activeStep + 1);
+           
+          } else {
+              console.error("Failed to update order status");
+          }
+      }
+        else {
+        setIsModalOpen(true);
+      }
+    } catch (error) {
+      console.error("Error updating order status:", error);
+      setError('Failed to update order status. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -157,7 +327,7 @@ export const MySellingInProgressDetails = ({
           <>
             <label className={styles.label}>Payment Method</label>
             <div className={styles.cashPayment}>
-              {orderData?.payment_method === 'Cash' 
+              {orderData?.payment_method === 'Cash'
                 ? 'Once you pay cash to the buyer please mark it as paid.'
                 : `Payment method: ${orderData?.payment_method || 'Cash'}`}
             </div>
@@ -168,7 +338,7 @@ export const MySellingInProgressDetails = ({
           <>
             <label className={styles.label}>Watch Handover</label>
             <div className={styles.inputBox}>
-              {orderData?.delivery_method === 'Delivery' 
+              {orderData?.delivery_method === 'Delivery'
                 ? 'Watch will be delivered to the specified address'
                 : 'If you have received the watch, please mark it as "Watch Received"'}
             </div>
@@ -251,6 +421,7 @@ export const MySellingInProgressDetails = ({
 
   return (
     <div className={styles.purchaseCard}>
+        <button onClick={onBack} style={{position: 'absolute', top: '10px', left: '10px', cursor: 'pointer'}}>Back</button>
       {/* Progress Bar Container */}
       <div className={styles.mainContent}>
         <div className={styles.imageContainer}>
@@ -334,6 +505,12 @@ export const MySellingInProgressDetails = ({
         ))}
       </div>
 
+      {error && (
+        <div className={styles.errorMessage}>
+          {error}
+        </div>
+      )}
+
       {/* Dynamic Section */}
       <div className={styles.pickupDetailsContainer}>{getStepContent()}</div>
 
@@ -342,8 +519,12 @@ export const MySellingInProgressDetails = ({
 
       {/* Buttons */}
       {activeStep < 4 && (
-        <button className={styles.sellButton} onClick={handleNextStep}>
-          {getButtonText()}
+        <button 
+          className={`${styles.sellButton} ${isLoading ? styles.loading : ''}`} 
+          onClick={handleNextStep}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Processing...' : getButtonText()}
         </button>
       )}
       {isModalOpen && (
@@ -360,6 +541,17 @@ export const MySellingInProgressDetails = ({
           </div>
         </div>
       )}
+      {isLoading && (
+        <div className={styles.loaderOverlay}>
+          <div className={styles.loader}></div>
+        </div>
+      )}
     </div>
   );
 };
+
+
+
+
+
+

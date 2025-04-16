@@ -1,47 +1,33 @@
-// pages/api/updateOrderStatusApi.js
-import axios from "axios";
+import axios from 'axios';
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
+    if (req.method === 'POST') {
+        try {
+            const { id, status, token } = req.body;
 
-  try {
-    const {
-      id,
-      order_status,
-      status,
-      token
-    } = req.body;
+            const requestData = {
+                id,
+                status: status
+            };
 
-    if (!id || order_status === undefined || !token) {
-      return res.status(400).json({ error: "Missing required fields" });
-    }
+            const externalApiResponse = await axios.post(
+                'https://chronedo.webjerky.com/api/orderStatus',
+                requestData,
+                {
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`, // Use token here
+                    },
+                }
+            );
 
-    const requestData = {
-      id,
-      order_status,
-      status: status ?? 0
-    };
-
-    const response = await axios.post(
-      "https://chronedo.webjerky.com/api/orderStatus",
-      requestData,
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
+            res.status(externalApiResponse.status).json(externalApiResponse.data);
+        } catch (error) {
+            console.error('Error calling external API:', error);
+            res.status(500).json({ message: 'Failed to call external API', error: error.message });
         }
-      }
-    );
-
-    return res.status(200).json(response.data);
-  } catch (error) {
-    console.error("Order Status Update Error:", error.response?.data || error.message);
-    return res.status(500).json({
-      message: "Internal Server Error",
-      error: error.response?.data || error.message
-    });
-  }
+    } else {
+        res.status(405).json({ message: 'Method not allowed' });
+    }
 }

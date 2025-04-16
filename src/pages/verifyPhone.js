@@ -12,6 +12,7 @@ import RegistrationSuccessPopup from '../components/RegistrationSuccessPopup';
 import phoneIcon from '../../public/assets/icons/iphone.png';
 import resendIcon from '../../public/assets/icons/resend.png';
 import axios from 'axios';
+import Spinner from '../components/Spinner';
 
 const VerifyPhone = () => {
     const router = useRouter();    
@@ -130,7 +131,7 @@ const VerifyPhone = () => {
 
                 <OtpInput length={4} onComplete={handleOtpComplete} />
 
-                <h4>The code was sent to the following phone number:<br />+41 79 123 45 67</h4>
+                {/* <h4>The code was sent to the following phone number:<br />+41 79 123 45 67</h4> */}
 
                 <div className={styles.resendContainer}>
                     <Image
@@ -145,7 +146,16 @@ const VerifyPhone = () => {
 
                 <div className={styles.buttonContainer} style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
                     <BackButton onClick={handleBack} width="175px">Back</BackButton>
-                    <NextButton onClick={handleNext} width="175px">Next</NextButton>
+                    <NextButton onClick={handleNext} width="175px">
+                    {loading ? (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                        <Spinner size="small" />
+                        </div>
+                    ) : (
+                        "Next"
+                    )}
+
+                    </NextButton>
                 </div>
                 {showPopup && (
                     <RegistrationSuccessPopup

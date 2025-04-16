@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { useData } from '../../context/contextApi';
 
-const API_URL = 'https://chronedo.webjerky.com/api/favorites';
+const ADD_API_URL = 'https://chronedo.webjerky.com/api/favorites';
 const REMOVE_API_URL = 'https://chronedo.webjerky.com/api/removeFavorites';
 // const token = '258|0WLP2jFTbmXN5YuRziGriKYcgP2AnW4T8gW0fPuUe7ea0c0a';
 
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
             const { id, action,token } = req.body;
             if (!id) return res.status(400).json({ success: false, message: 'ID is required' });
 
-            const apiUrl = action === 'remove' ? REMOVE_API_URL : API_URL;
+            const apiUrl = action === 'remove' ? REMOVE_API_URL : ADD_API_URL;
 
             const response = await axios.post(
                 apiUrl,

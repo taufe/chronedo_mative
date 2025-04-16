@@ -13,97 +13,86 @@ export default async function handler(req, res) {
   }
 
   try {
+    // Get the authorization token from the request headers
+    const token = req.headers.authorization;
+    console.log('Authorization token:', token);
+    
+    // Parse the multipart form data
     const chunks = [];
     for await (const chunk of req) {
       chunks.push(chunk);
     }
     const buffer = Buffer.concat(chunks);
-
-    // Parse the multipart form data manually
+    
+    // Get the boundary from the content-type header
     const boundary = req.headers['content-type'].split('boundary=')[1];
+    console.log('Boundary:', boundary);
+    
+    // Split the buffer by the boundary
     const parts = buffer.toString().split(`--${boundary}`);
-
-    const fields = {};
-    const files = {};
-
-    parts.forEach((part) => {
+    console.log('Number of parts:', parts.length);
+    
+    // Create a new FormData object to forward to the backend
+    const formData = new FormData();
+    
+    // Process each part
+    for (const part of parts) {
       if (part.includes('Content-Disposition: form-data')) {
-        const match = part.match(/name="([^"]+)"\s*(?:; filename="([^"]+)")?/);
-        if (match) {
-          const name = match[1];
-          const filename = match[2];
-
+        // Extract field name and filename if present
+        const nameMatch = part.match(/name="([^"]+)"/);
+        const filenameMatch = part.match(/filename="([^"]+)"/);
+        
+        if (nameMatch) {
+          const name = nameMatch[1];
+          const filename = filenameMatch ? filenameMatch[1] : null;
+          
+          // Get the content of the field
+          const contentStart = part.indexOf('\r\n\r\n') + 4;
+          const content = part.substring(contentStart, part.length - 2); // Remove trailing \r\n
+          
           if (filename) {
-            // Handle file upload
-            const fileData = part.split('\r\n\r\n')[1].trim();
-            files[name] = {
-              filename,
-              data: Buffer.from(fileData),
-            };
+            // This is a file upload
+            console.log(`Processing file upload: ${name}, filename: ${filename}`);
+            const fileBuffer = Buffer.from(content);
+            
+            // Create a Blob from the buffer
+            const blob = new Blob([fileBuffer], { type: 'application/octet-stream' });
+            
+            // Create a File object from the Blob
+            const file = new File([blob], filename, { type: 'application/octet-stream' });
+            
+            // Append the file to the FormData
+            formData.append(name, file);
+            console.log(`File uploaded: ${name}, filename: ${filename}, size: ${fileBuffer.length} bytes`);
           } else {
-            // Handle regular field
-            const value = part.split('\r\n\r\n')[1].trim();
-            fields[name] = value;
+            // This is a regular field
+            formData.append(name, content);
+            console.log(`Field added: ${name}, value: ${content}`);
           }
         }
       }
-    });
-
-    // Extract fields
-    const {
-      email,
-      first_name,
-      last_name,
-      account_type,
-      street,
-      date_of_birth,
-      selectedIdType,
-      language,
-      zip_code,
-      city,
-      country,
-      delivery_country,
-      currency,
-    } = fields;
-
-    // Prepare form data for the backend API
-    const formData = new FormData();
-    formData.append('email', email);
-    formData.append('first_name', first_name);
-    formData.append('last_name', last_name);
-    formData.append('account_type', account_type);
-    formData.append('address', street);
-    formData.append('dob', date_of_birth);
-    formData.append('type', selectedIdType === 'id' ? 'ID' : 'Passport');
-    formData.append('language', language);
-    formData.append('zip_code', zip_code);
-    formData.append('city', city);
-    formData.append('country', country);
-    formData.append('shipping_country', delivery_country);
-    formData.append('currency', currency);
-
-    // Append files to form data
-    for (const [key, file] of Object.entries(files)) {
-      formData.append(key, file.data, file.filename);
     }
-
-    // Send data to the backend API
-    const backendResponse = await fetch('https://chronedo.webjerky.com/api/profile', {
+    
+    // Log the form data keys for debugging
+    console.log('Form data keys:', Array.from(formData.keys()));
+    
+    // Forward the request to the backend API
+    console.log('Sending request to backend API...');
+    const response = await fetch('https://chronedo.webjerky.com/api/profile', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${req.headers.authorization}`,
+        'Authorization': token,
       },
       body: formData,
     });
-
-    if (!backendResponse.ok) {
-      throw new Error('Failed to submit form to the backend');
-    }
-
-    const backendData = await backendResponse.json();
-    return res.status(200).json(backendData);
+    
+    console.log('Backend API response status:', response.status);
+    const data = await response.json();
+    console.log('Backend API response data:', data);
+    
+    return res.status(response.status).json(data);
   } catch (error) {
-    console.error('Error:', error);
-    return res.status(500).json({ error: 'Failed to process the request' });
+    console.error('Error processing request:', error);
+    return res.status(500).json({ error: 'Internal server error', details: error.message });
   }
 }

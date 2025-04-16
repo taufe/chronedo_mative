@@ -6,20 +6,16 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { phone_no, country_code } = req.body;
+    const { accessToken } = req.body;
 
-    if (!phone_no || !country_code) {
-      return res.status(400).json({ error: "Phone number and country code are required." });
+    if (!accessToken) {
+      return res.status(400).json({ error: "Access token is required." });
     }
 
-    // Combine country code and phone number if they're separate
-    const fullPhoneNumber = `${country_code}${phone_no}`;
-
-    console.log("Sending data to external API:", { phone_no: fullPhoneNumber });
-
+    // Send the access token to your backend for verification and user creation/login
     const response = await axios.post(
-      "https://chronedo.webjerky.com/api/verifyPhone",
-      { phone_no: fullPhoneNumber },
+      "https://chronedo.webjerky.com/api/facebook-auth",
+      { accessToken },
       {
         headers: {
           Accept: "application/json",
@@ -28,11 +24,9 @@ export default async function handler(req, res) {
       }
     );
 
-    console.log("External API response:", response.data);
-
     res.status(200).json(response.data);
   } catch (error) {
-    console.error("API Error:", error.response?.data || error.message);
+    console.error("Facebook Auth API Error:", error.response?.data || error.message);
     
     if (error.response) {
       console.error("API Error Response Data:", error.response.data);
@@ -44,4 +38,4 @@ export default async function handler(req, res) {
       error: error.response?.data || error.message,
     });
   }
-}
+} 

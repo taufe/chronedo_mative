@@ -207,6 +207,14 @@
 
 .referenceInput::placeholder {
   color: rgba(255, 255, 255, 0.5);
+  font-family:'Poppins';
+  font-weight:400
+}
+.searchInput::placeholder {
+  color: white;
+  opacity: 0.7;
+  font-family:'Poppins';
+  font-weight:400
 }
 
 .referenceInput:focus {
@@ -1599,5 +1607,43 @@
   .iconsContainer {
     margin-left: 30px;
     margin-right: 16px;
+  }
+}
+
+.loadingContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 9999;
+}
+
+.spinnerWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  padding: 20px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #a98754;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }

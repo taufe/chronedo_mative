@@ -91,7 +91,7 @@ const OnlinePaymentRegistration = () => {
       };
   
       const response = await axios.post(
-        'https://chronedo.webjerky.com/api/createMerchant',
+        '/api/merchantApi',
         data,
         config
       );

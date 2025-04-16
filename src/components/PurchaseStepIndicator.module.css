@@ -1,0 +1,83 @@
+.progressContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+}
+
+.stepWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex: 1;
+}
+
+.stepLine {
+  position: absolute;
+  top: 25px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 1;
+}
+
+.stepIcon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  z-index: 2;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.activeStep {
+  transform: scale(1.1);
+}
+
+.stepLabel {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .progressContainer {
+    padding: 10px;
+  }
+  
+  .stepIcon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .stepLabel {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .progressContainer {
+    padding: 5px;
+  }
+  
+  .stepIcon {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .stepLabel {
+    font-size: 10px;
+  }
+} 

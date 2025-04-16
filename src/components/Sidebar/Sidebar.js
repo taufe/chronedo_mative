@@ -12,6 +12,12 @@ const sidebarItems = [
     path: "/dashboard",
   },
   {
+    icon: "/assets/icons/sidebar/watchlist.png",
+    activeIcon: "/assets/icons/sidebar/watchlistOn.png",
+    label: "Watches",
+    path: "/watches",
+  },
+  {
     icon: "/assets/icons/sidebar/messages.png",
     activeIcon: "/assets/icons/sidebar/messagesOn.png",
     label: "Messages",

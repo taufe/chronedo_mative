@@ -64,7 +64,7 @@ const SoldCardInprogress = ({
                 <span className={styles.statusText}>In-Progress</span>
                 <span className={styles.date}>{date}</span>
               </div>
-              <div className={styles.price}>CHF {price.toLocaleString()}</div>
+              <div className={styles.price}>CHF {price?.toLocaleString()}</div>
             </div>
           </div>
 

@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "./Signup.module.css";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
+import axios from "axios";
+import Spinner from '../components/Spinner';
 import userIcon from "../../public/assets/icons/user.png";
 import eyeCloseIcon from "../../public/assets/icons/eyeclose.png";
 import eyeOpenIcon from "../../public/assets/icons/eyeopen.png";
 import checkIcon from "../../public/assets/icons/check.png";
-import axios from "axios";
+
+// Import Google Sign-In
+import { GoogleLogin } from '@react-oauth/google';
 
 const SignUp = () => {
   const router = useRouter();
@@ -27,6 +30,23 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [passwordFocused, setPasswordFocused] = useState(false);
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+
+  // Get user location
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLatitude(position.coords.latitude);
+          setLongitude(position.coords.longitude);
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+        }
+      );
+    }
+  }, []);
 
   const isValidForm = (password) => {
     if (!isCapital(password)) {
@@ -87,10 +107,25 @@ const SignUp = () => {
     return regx.test(labelValue);
   };
 
+  const isValidEmail = (email) => {
+    const regx = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    return regx.test(email);
+  };
+
   const sendData = async () => {
     // Validation
     if (!email) {
       setError("Please enter your email.");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      setError("Please enter a valid email.");
+      return;
+    }
+
+    if (!(privacyPolicy && terms)) {
+      setError("Please accept Terms & Conditions/Privacy Policy");
       return;
     }
 
@@ -105,12 +140,14 @@ const SignUp = () => {
 
       if (response.data.success === true) {
         console.log(response.data.message);
-          router.push({
+        router.push({
           pathname: "/verifyEmail",  
           query: {
             email: email,
             password: password,
             pin_code: pin_code,
+            latitude: latitude,
+            longitude: longitude
           }
         });
       } else {
@@ -129,6 +166,27 @@ const SignUp = () => {
     }
   };
 
+  // Handle Google Sign-In
+  const handleGoogleSuccess = async (response) => {
+    try {
+      const res = await axios.post('/api/googleAuthApi', {
+        idToken: response.credential
+      });
+
+      if (res.data.success) {
+        localStorage.setItem('token', res.data.token);
+        router.push('/');
+      } else {
+        setError(res.data.message || 'Google Sign-In failed');
+      }
+    } catch (error) {
+      setError('Failed to authenticate with Google');
+    }
+  };
+
+  const handleGoogleFailure = (error) => {
+    setError('Google Sign-In failed');
+  };
 
   return (
     <>
@@ -151,6 +209,8 @@ const SignUp = () => {
         />
         <h2 className={styles.title}>REGISTER</h2>
 
+        {error && <div className={styles.errorMessage}>{error}</div>}
+
         <div className={styles.inputWrapper}>
           <input
             type="email"
@@ -158,7 +218,6 @@ const SignUp = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
-            
           />
         </div>
 
@@ -313,43 +372,41 @@ const SignUp = () => {
           </label>
         </div>
 
-        <button className={styles.submitButton} onClick={sendData}>
-          Next
+        <button 
+          className={styles.submitButton} 
+          onClick={sendData}
+          disabled={loading}
+        >
+          {loading ? (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+              <Spinner size="small" />
+            </div>
+          ) : (
+            "Log In"
+          )}
         </button>
 
         <p className={styles.orText}>Or</p>
 
-        <button
-          className={styles.socialButton}
-          onClick={() => console.log("LinkedIn login")}
-        >
-          <div className={styles.socialRectangle}>in</div>
-          Continue with LinkedIn
-        </button>
-
-        <button
-          className={styles.socialButton}
-          onClick={() => console.log("Google login")}
-        >
-          <div className={styles.socialRectangle}>G</div>
-          Continue with Google
-        </button>
-
-        <button
-          className={styles.socialButton}
-          onClick={() => console.log("Facebook login")}
-        >
-          <div className={styles.socialRectangle}>f</div>
-          Continue with Facebook
-        </button>
-
-        <button
-          className={styles.socialButton}
-          onClick={() => console.log("Twitter login")}
-        >
-          <div className={styles.socialRectangle}>t</div>
-          Continue with Twitter
-        </button>
+        <div style={{ width: '95%', margin: '0 auto' }}>
+          <GoogleLogin
+            clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+            onSuccess={handleGoogleSuccess}
+            onFailure={handleGoogleFailure}
+            cookiePolicy={'single_host_origin'}
+            render={renderProps => (
+              <button
+                className={styles.socialButton}
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+                style={{ padding: '18px 0', fontSize: '1.1rem' }}
+              >
+                <div className={styles.socialRectangle}>G</div>
+                Continue with Google
+              </button>
+            )}
+          />
+        </div>
 
         <Link href="/login" passHref>
           <button className={styles.alreadyHaveAccount}>

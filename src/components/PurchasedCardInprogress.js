@@ -21,7 +21,7 @@ const PurchasedCardInprogress = ({
         showDetails ? styles.fullContainerDetails : styles.fullContainer
       }
     >
-      {" "}
+
       {showDetails ? (
         <PurchaseCardInprogressDetails
           image={image}
@@ -57,7 +57,7 @@ const PurchasedCardInprogress = ({
                 <span className={styles.statusText}>In-Progress</span>
                 <span className={styles.date}>{date}</span>
               </div>
-              <div className={styles.price}>CHF {price.toLocaleString()}</div>
+              <div className={styles.price}>CHF {price?.toLocaleString()}</div>
             </div>
           </div>
 
@@ -91,7 +91,7 @@ const PurchasedCardInprogress = ({
               onSellNow({ image, name, price, date, email, sellerName,purchaseOrderId })
             }
           >
-            Sell Now
+           View Details
           </button>
         </div>
       )}

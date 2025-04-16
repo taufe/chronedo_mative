@@ -50,7 +50,8 @@ const PopularBrands = () => {
       <div className="categories-container">
         <h2>Popular Brands</h2>
         <div className="categories-header">
-          <p>
+          <p style={{ fontFamily: 'Poppins', fontWeight: 400 }}
+          >
             Lorem Ipsum is simply dummy text of the
             <br /> printing and typesetting industry
           </p>
@@ -220,7 +221,8 @@ const Categories = () => {
       <div className="categories-container">
         <h2>Categories</h2>
         <div className="categories-header">
-          <p>
+          <p style={{ fontFamily: 'Poppins', fontWeight: 400 }}
+          >
             Lorem Ipsum is simply dummy text of the
             <br /> printing and typesetting industry
           </p>
@@ -473,19 +475,7 @@ const Home = () => {
 
       <section className="new-arrivals">
         <div className="categories-container">
-          <h2>New Arrivals</h2>
-          <div className="new-arrivals-header">
-            <p>
-              Lorem Ipsum is simply dummy text of the
-              <br /> printing and typesetting industry
-            </p>
-          </div>
-          <div className="watch-grid">
-            {/* {newArrivals.map((watch, index) => (
-              <WatchCard key={index} {...watch} />
-            ))} */}
-           
-          </div>
+          <h2 style={{marginBottom:10}}>Watches</h2>
         </div>
       </section>
       <NewArrivalWatch />

@@ -4,17 +4,18 @@ import Image from 'next/image';
 import styles from './Signup.module.css';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import Spinner from '../components/Spinner';
 
 import phoneIcon from '../../public/assets/icons/iphone.png';
 
 const RegisterPhone = () => {
     const router = useRouter();
     const { email, password, pin_code } = router.query;
-
     const [phoneNo, setPhoneNo] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [countryCode, setCountryCode] = useState('+92'); // Default country code
+  
 
     const sendData = async () => {
         // Validation for phone number and country code
@@ -31,6 +32,8 @@ const RegisterPhone = () => {
                 phone_no: phoneNo,
                 country_code: countryCode,
             });
+
+            console.log('response of phone verficatin number',response.data)
 
             const verifiedPhoneNumber = response.data.data?.phone_no;
             if (response.data.success === true) {
@@ -96,7 +99,13 @@ const RegisterPhone = () => {
                 </div>
 
                 <button className={styles.submitButton} onClick={sendData} disabled={loading}>
-                    {loading ? 'Loading...' : 'Next'}
+                    {loading ? (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                        <Spinner size="small" />
+                        </div>
+                    ) : (
+                        "Next"
+                    )}
                 </button>
 
                 {error && <p className={styles.errorText}>{error}</p>}
