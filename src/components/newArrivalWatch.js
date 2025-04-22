@@ -5,10 +5,13 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const NewArrivalWatch = () => {
+const NewArrivalWatch = ({ filtersApplied, searchInput }) => {
+    console.log('filter applied in new arrival----------', filtersApplied);
+    console.log('search input-------+++++_________', searchInput);
     const router = useRouter();
-    const [watchList, setWatchList] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [watchList, setWatchList] = useState(filtersApplied?.length > 0 ? filtersApplied : []);
+    console.log('watchList----------========---------------', watchList);
+    const [isLoading, setIsLoading] = useState(filtersApplied.length === 0);
     const [error, setError] = useState(null);
     const [pagination, setPagination] = useState({
         currentPage: 1,
@@ -21,11 +24,24 @@ const NewArrivalWatch = () => {
         const fetchWatchApi = async (page = 1) => {
             setIsLoading(true);
             try {
-                const response = await axios.get(
-                    `https://chronedo.webjerky.com/api/guestWatches?page=${page}`
-                );
+                let url = `https://chronedo.webjerky.com/api/guestWatches?page=${page}`;
+                
+                // Add brand parameter only if searchInput exists
+                if (searchInput.trim()) {
+                    url += `&brand=${encodeURIComponent(searchInput.trim())}`;
+                }
 
-                setWatchList(response.data?.data?.watches || []);
+                const response = await axios.get(url);
+                
+                // If there's a search input, filter the results by brand
+                let filteredWatches = response.data?.data?.watches || [];
+                if (searchInput.trim()) {
+                    filteredWatches = filteredWatches.filter(watch => 
+                        watch?.listing_title?.toLowerCase().includes(searchInput.trim().toLowerCase())
+                    );
+                }
+
+                setWatchList(filteredWatches);
                 setPagination({
                     currentPage: parseInt(response.data?.data?.meta?.page || 1),
                     totalPages: response.data?.data?.meta?.last_page || 1,
@@ -42,8 +58,25 @@ const NewArrivalWatch = () => {
             }
         };
 
-        fetchWatchApi(pagination.currentPage);
-    }, [pagination.currentPage]);
+        // Debounce the search to avoid too many API calls
+        const timeoutId = setTimeout(() => {
+            if (filtersApplied.length === 0) {
+                fetchWatchApi(pagination.currentPage);
+            } else {
+                // If filters are applied, filter those results by brand
+                if (searchInput.trim()) {
+                    const filteredByBrand = filtersApplied.filter(watch =>
+                        watch?.listing_title?.toLowerCase().includes(searchInput.trim().toLowerCase())
+                    );
+                    setWatchList(filteredByBrand);
+                } else {
+                    setWatchList(filtersApplied);
+                }
+            }
+        }, 300); // 300ms delay
+
+        return () => clearTimeout(timeoutId);
+    }, [searchInput, filtersApplied, pagination.currentPage]);
 
     const handlePageChange = (page) => {
         setPagination(prev => ({ ...prev, currentPage: page }));

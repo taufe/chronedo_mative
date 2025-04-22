@@ -14,7 +14,7 @@ const SoldCardInprogress = ({
   orderId
 }) => {
   const [showDetails, setShowDetails] = useState(false);
-
+  console.log('orderId in sold card in progress', orderId);
   const handleSellNow = () => {
     onSellNow({
       image,
@@ -72,7 +72,7 @@ const SoldCardInprogress = ({
 
           <div className={styles.sellerSection}>
             <div className={styles.sellerHeader}>
-              Seller Details
+              Buyer Details
               <Image
                 src="/assets/icons/dropdown.png"
                 alt="Dropdown"

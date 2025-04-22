@@ -81,7 +81,7 @@ export const MySellingInProgressDetails = ({
             }
           );
         setOrderData(response.data.data);
-        console.log('store token------------',response.data)
+        console.log('response in selling in progress details',response.data)
       } catch (error) {
         console.error("Error fetching order data:", error);
       }

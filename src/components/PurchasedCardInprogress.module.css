@@ -48,9 +48,10 @@
 .watchName {
   color: #fff;
   font-size: 22px;
-  font-weight: 500;
   margin: 0 0 16px 0;
   line-height: 1.2;
+  font-weight: 500;
+  font-family: 'Poppins';
 }
 
 .statusContainer {
@@ -63,18 +64,23 @@
 .statusText {
   color: #0075ff;
   font-size: 14px;
+  font-weight: 300;
+  font-family: 'Poppins';
 }
 
 .date {
   color: #8a8f98;
   font-size: 14px;
   margin-left: auto;
+  font-weight: 300;
+  font-family: 'Poppins';
 }
 
 .price {
   color: #fff;
   font-size: 20px;
   font-weight: 500;
+  font-family: 'Poppins';
 }
 
 .divider {
@@ -95,6 +101,8 @@
   gap: 8px;
   margin-bottom: 16px;
   cursor: pointer;
+  font-weight: 500;
+  font-family: 'Poppins';
 }
 
 .sellerDetails {
@@ -110,12 +118,16 @@
 
 .label {
   color: #8a8f98;
-  font-size: 16px;
+  /* font-size: 16px; */
+  font-weight: 300;
+  font-family: 'Poppins';
 }
 
 .value {
   color: #ff8a00;
-  font-size: 16px;
+  /* font-size: 14px; */
+  font-weight: 300;
+  font-family: 'Poppins';
 }
 
 .sellButton {
@@ -129,6 +141,8 @@
   font-size: 18px;
   font-weight: 500;
   margin-top: 12px;
+  font-weight: 500;
+  font-family: 'Poppins';
 }
 
 @media (max-width: 576px) {

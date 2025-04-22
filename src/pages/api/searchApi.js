@@ -31,7 +31,7 @@ export default async function handler(req, res) {
     } = req.body;
 
     const response = await axios.post(
-      "https://chronedo.webjerky.com/api/search",
+      "https://chronedo.webjerky.com/api/guestSearch",
       {
         brand,
         model,

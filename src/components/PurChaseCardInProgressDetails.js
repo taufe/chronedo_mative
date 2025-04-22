@@ -19,7 +19,7 @@ import axios from "axios";
 import { useData } from "../context/contextApi";
 
 export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChange, purchaseOrderId }) => {
-   console.log("purchaseOrderId",purchaseOrderId)
+   console.log("purchaseOrderId------------",purchaseOrderId)
     const [activeStep, setActiveStep] = useState(0);
     const [value, setValue] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,12 +48,12 @@ export const PurchaseCardInprogressDetails = ({ image, name, price, date, onChan
     const fetchGetApi = async () => {
 
         try {
-            const response = await axios.get(`https://chronedo.webjerky.com/api/orderStatus/150`, {
+            const response = await axios.get(`https://chronedo.webjerky.com/api/orderStatus/${purchaseOrderId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             })
-            console.log('purchase screen response-----', response?.data?.data?.pickup_details
+            console.log('response in purchase in progress', response?.data?.data
             )
             if (response.data.success) {
                 setOrderData(response.data.data?.pickup_details);

@@ -72,6 +72,7 @@
     flex: 1;
     padding: 16px 24px;
     overflow-y: auto;
+    margin-top: 40px;
 }
 
 .optionItem {
@@ -137,4 +138,48 @@
         border-right: none;
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
+}
+
+
+
+.optionsList select {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s ease;
+}
+
+.optionsList select:focus {
+    border-color: #A98754;
+    outline: none;
+}
+
+.optionsList select option {
+    color: #333;
+}
+
+.optionsList input[type="text"],
+.optionsList input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s ease;
+}
+
+.optionsList input[type="text"]:focus,
+.optionsList input[type="number"]:focus {
+    border-color: #A98754;
+    outline: none;
 } 

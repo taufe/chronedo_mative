@@ -190,7 +190,7 @@ const MyPurchase = () => {
                 email={purchase?.seller?.email}
                 onSellNow={handleSellNow}
                 showDetails={false}
-                purchaseOrderId={purchase?.buyer?.id}
+                purchaseOrderId={purchase?.id}
               />
             ))
           )

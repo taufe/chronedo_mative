@@ -2486,24 +2486,23 @@ const updateOrderStatus = async (orderId) => {
               ) : (
              
                 <div className={styles.sellingGrid}>
-  {inProgressSales.map((sale) => {
-    console.log(sale); 
-
-    return (
-      <div key={sale?.id} className={styles.gridItem}>
-        <SoldCardInprogress
-          image={sale?.watch?.cover}
-          name={sale?.watch?.listing_title}
-          price={sale?.watch?.fixed_price_value}
-          date={`${sale?.created_at?.split("T")[0]} ${sale?.created_at?.split("T")[1]?.split(".")[0]}`}
-          email={sale?.buyer?.email}
-          sellerName={`${sale?.seller?.first_name} ${sale?.seller?.last_name}`}
-          id={sale?.id}
-          onSellNow={(details) => handleSellNow({ ...details, id: sale.id })}
-          orderId={sale?.seller?.id}
-        />
-      </div>
-    );
+            {inProgressSales.map((sale) => {
+              console.log(sale); 
+              return (
+                <div key={sale?.id} className={styles.gridItem}>
+                  <SoldCardInprogress
+                    image={sale?.watch?.cover}
+                    name={sale?.watch?.listing_title}
+                    price={sale?.watch?.fixed_price_value}
+                    date={`${sale?.created_at?.split("T")[0]} ${sale?.created_at?.split("T")[1]?.split(".")[0]}`}
+                    email={sale?.buyer?.email}
+                    sellerName={`${sale?.seller?.first_name} ${sale?.seller?.last_name}`}
+                    id={sale?.id}
+                    onSellNow={(details) => handleSellNow({ ...details, id: sale.id })}
+                    orderId={sale?.id}
+                  />
+                </div>
+              );
   })}
 </div>
 

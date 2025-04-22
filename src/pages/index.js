@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import FilterPopup from "../components/FilterPopup";
 import styles from "./index.module.css";
 import  NewArrivalWatch  from "../components/NewArrivalWatch";
+import axios from 'axios';
 
 // Define PopularBrands component outside of Home
 const PopularBrands = () => {
@@ -14,13 +15,13 @@ const PopularBrands = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [maxScroll, setMaxScroll] = useState(0);
 
-  useEffect(() => {
-    if (containerRef.current) {
-      setMaxScroll(
-        containerRef.current.scrollWidth - containerRef.current.clientWidth
-      );
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (containerRef.current) {
+  //     setMaxScroll(
+  //       containerRef.current.scrollWidth - containerRef.current.clientWidth
+  //     );
+  //   }
+  // }, []);
 
   const scrollLeft = () => {
     if (containerRef.current) {
@@ -174,13 +175,13 @@ const Categories = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [maxScroll, setMaxScroll] = useState(0);
 
-  useEffect(() => {
-    if (containerRef.current) {
-      setMaxScroll(
-        containerRef.current.scrollWidth - containerRef.current.clientWidth
-      );
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (containerRef.current) {
+  //     setMaxScroll(
+  //       containerRef.current.scrollWidth - containerRef.current.clientWidth
+  //     );
+  //   }
+  // }, []);
 
   const scrollLeft = () => {
     if (containerRef.current) {
@@ -298,22 +299,13 @@ const Home = () => {
 
   const router = useRouter();
   const [searchInput, setSearchInput] = useState("");
+  console.log('taufeeq', searchInput);
   const [filteredWatches, setFilteredWatches] = useState(watches);
   const [sortBy, setSortBy] = useState("lowPrice");
   const [activeFilters, setActiveFilters] = useState(["New"]);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [filtersApplied, setFiltersApplied] = useState([]);
 
-  useEffect(() => {
-    if (searchInput.length > 1) {
-      setFilteredWatches(
-        watches.filter((watch) =>
-          watch.name.toLowerCase().includes(searchInput.toLowerCase())
-        )
-      );
-    } else {
-      setFilteredWatches(watches);
-    }
-  }, [searchInput, watches]);
 
   const handleFilterClick = (filter) => {
     if (activeFilters.includes(filter)) {
@@ -332,6 +324,11 @@ const Home = () => {
       default:
         return watches;
     }
+  };
+
+  const handleApplyFilters = (filters) => {
+    console.log('Filters applied:', filters);
+    setFiltersApplied(filters);
   };
 
   return (
@@ -438,6 +435,7 @@ const Home = () => {
             <FilterPopup
               isOpen={isFilterOpen}
               onClose={() => setIsFilterOpen(false)}
+              onApplyFilters={handleApplyFilters}
             />
           </div>
           <div className="hero-image hero-image-1">
@@ -478,7 +476,7 @@ const Home = () => {
           <h2 style={{marginBottom:10}}>Watches</h2>
         </div>
       </section>
-      <NewArrivalWatch />
+      <NewArrivalWatch filtersApplied={filtersApplied} searchInput={searchInput} />
     </>
   );
 };
